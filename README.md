@@ -113,6 +113,14 @@ linux-kernel-hacker-roadmap/
 5. Practice turning observations into a root-cause explanation and a verified fix.
 6. Repeat the loop: read code, form a hypothesis, instrument, measure, fix, verify.
 
+## Document Writing Principles
+
+- Split documents into roughly one-hour learning or practice units.
+- Each document should analyze one concrete problem, difficulty, or focused topic.
+- Prefer How, Q/A, and Why formats over purely What-style explanations.
+- Avoid generic tutorial articles that only explain concepts, because that material is already easy to find elsewhere.
+- Focus on practical skill growth: diagnosis steps, trade-offs, commands, experiments, observations, and verification.
+
 ## Stage Reference
 
 | Stage | Focus | Outcome |

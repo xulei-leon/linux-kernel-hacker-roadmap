@@ -18,6 +18,11 @@ Do not turn this into a generic operating systems course, a Linux user guide, or
 - Write project content in English.
 - Keep explanations practical and specific to Linux kernel development.
 - Prefer concise roadmap/checklist/lab material over long essays.
+- Split documents into roughly one-hour learning or practice units.
+- Each document should analyze one concrete problem, difficulty, or focused topic.
+- Prefer How, Q/A, and Why formats over purely What-style explanations.
+- Avoid generic tutorial articles that only explain concepts, because that material is already easy to find elsewhere.
+- Focus on practical skill growth: diagnosis steps, trade-offs, commands, experiments, observations, and verification.
 - Use real Linux kernel terminology where possible: mainline, stable, linux-next, kselftest, KUnit, perf, ftrace, lockdep, KASAN.
 - Do not invent commands, tools, or kernel workflows that are not real.
 - When adding resources that may change over time, verify current names and links before committing them.
