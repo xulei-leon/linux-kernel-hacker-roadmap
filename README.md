@@ -81,6 +81,8 @@ Choose one primary track and study it deeply. This is more effective than trying
 
 ## Suggested Directory Structure
 
+Debugging learning packages use `labs/day-*/README.md` as the canonical day document, with runnable code beside it.
+
 ```text
 linux-kernel-hacker-roadmap/
 ├── README.md
@@ -89,14 +91,17 @@ linux-kernel-hacker-roadmap/
 │   ├── 01-build-and-boot/
 │   ├── 02-core-kernel/
 │   ├── 03-subsystems/
-│   ├── 04-debugging/
+│   ├── 04-debugging/        # Index for debugging learning packages
 │   ├── 05-performance/
 │   └── 06-code-quality/
 ├── labs/
-│   ├── qemu-kernel/
-│   ├── tracing/
-│   ├── memory-debugging/
-│   └── performance-analysis/
+│   ├── day-01-debug-ready-kernel-lab/
+│   │   ├── README.md
+│   │   └── qemu-kernel/
+│   └── day-05-ftrace-path-time/
+│       ├── README.md
+│       ├── modules/
+│       └── tracing/
 └── resources/
     ├── books.md
     ├── talks.md
