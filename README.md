@@ -95,6 +95,8 @@ linux-kernel-hacker-roadmap/
 │   ├── 05-performance/
 │   └── 06-code-quality/
 ├── labs/
+│   ├── day-00-kernel-build-environment/
+│   │   └── README.md
 │   ├── day-01-debug-ready-kernel-lab/
 │   │   ├── README.md
 │   │   └── qemu-kernel/
@@ -111,12 +113,13 @@ linux-kernel-hacker-roadmap/
 
 ## Recommended Learning Method
 
-1. Build a repeatable QEMU-based kernel lab first.
-2. Choose one subsystem as the main track instead of chasing too many directions.
-3. Pair every mechanism you study with a minimal experiment: configure, boot, trigger, observe, record.
-4. For every bug, save the reproducer, kernel config, logs, stack traces, and analysis notes.
-5. Practice turning observations into a root-cause explanation and a verified fix.
-6. Repeat the loop: read code, form a hypothesis, instrument, measure, fix, verify.
+1. On Windows, complete `labs/day-00-kernel-build-environment/README.md` in WSL2 Ubuntu first.
+2. Build a repeatable QEMU-based kernel lab with `labs/day-01-debug-ready-kernel-lab/README.md`.
+3. Choose one subsystem as the main track instead of chasing too many directions.
+4. Pair every mechanism you study with a minimal experiment: configure, boot, trigger, observe, record.
+5. For every bug, save the reproducer, kernel config, logs, stack traces, and analysis notes.
+6. Practice turning observations into a root-cause explanation and a verified fix.
+7. Repeat the loop: read code, form a hypothesis, instrument, measure, fix, verify.
 
 ## Document Writing Principles
 
