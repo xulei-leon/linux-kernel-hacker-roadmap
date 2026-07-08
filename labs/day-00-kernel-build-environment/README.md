@@ -7,20 +7,20 @@ Build one reproducible Linux kernel under WSL2 Ubuntu, boot it once in QEMU, and
 The output of this lab is:
 
 ```text
-KERNEL_TREE=$HOME/src/linux
-Kernel tag: v6.6.144
-Kernel commit:
-Kernel image: $HOME/src/linux/arch/x86/boot/bzImage
-vmlinux: $HOME/src/linux/vmlinux
-ROOTFS_IMAGE:
-QEMU command:
+KERNEL_TREE=/home/xl/src/linux-6.12.95
+kernel_version=6.12.95
+kernel_commit=296aabce459470a4c1b68ffd0c0c0920e563aaad
+kernel_image=/home/xl/src/linux-6.12.95/arch/x86/boot/bzImage
+vmlinux=/home/xl/src/linux-6.12.95/vmlinux
+initramfs=/home/xl/kernel-lab/initramfs.cpio.xz
+qemu_command=qemu-system-x86_64 -kernel /home/xl/src/linux-6.12.95/arch/x86/boot/bzImage -initrd /home/xl/kernel-lab/initramfs.cpio.xz -append "console=ttyS0 rdinit=/init panic=-1" -m 2G -smp 2 -nographic
 ```
 
 ## Host Environment
 
 This lab assumes Windows with WSL2 Ubuntu.
 
-Keep the kernel tree under the WSL2 Linux filesystem, such as `~/src/linux`. Do not build under `/mnt/c/...`; kernel builds create many small files and are much slower on the Windows-mounted filesystem.
+Keep the kernel tree under the WSL2 Linux filesystem, such as `~/src/linux-6.12.95`. Do not build under `/mnt/c/...`; kernel builds create many small files and are much slower on the Windows-mounted filesystem.
 
 KVM acceleration may not be available in WSL2. The QEMU command below intentionally does not use `-enable-kvm`; it may boot slowly, but it should work in a plain terminal.
 
@@ -28,7 +28,7 @@ KVM acceleration may not be available in WSL2. The QEMU command below intentiona
 
 ```sh
 sudo apt update
-sudo apt install git build-essential flex bison libssl-dev libelf-dev bc dwarves qemu-system-x86 cpio rsync xz-utils busybox-static
+sudo apt install git build-essential flex bison libssl-dev libelf-dev bc dwarves qemu-system-x86 cpio rsync xz-utils busybox-static wget ca-certificates
 ```
 
 Check the tools:
@@ -52,35 +52,77 @@ Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project developers
 
 ## Step 2: Download the Linux kernel source
 
+The fixed version for this lab is `v6.12.95`.
+
+Method A uses Git and is recommended:
+
 ```sh
 mkdir -p ~/src ~/kernel-lab
-KERNEL_VERSION=v6.6.144
-git clone --branch "$KERNEL_VERSION" --single-branch \
-  https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git ~/src/linux
-cd ~/src/linux
+cd ~/src
+KERNEL_VERSION=v6.12.95
+git clone --depth=1 --single-branch --branch "$KERNEL_VERSION" \
+  https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git \
+  linux-6.12.95
+cd linux-6.12.95
 ```
 
-If you already cloned the tree, fetch and check out the same fixed tag:
+If Git HTTPS/TLS fails or the network is unstable, remove the partial checkout and retry with HTTP/1.1:
 
 ```sh
-cd ~/src/linux
-KERNEL_VERSION=v6.6.144
-git fetch origin "refs/tags/$KERNEL_VERSION:refs/tags/$KERNEL_VERSION"
-git checkout "$KERNEL_VERSION"
+cd ~/src
+rm -rf linux-6.12.95
+KERNEL_VERSION=v6.12.95
+git -c http.version=HTTP/1.1 clone --depth=1 --single-branch \
+  --branch "$KERNEL_VERSION" \
+  https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git \
+  linux-6.12.95
+cd linux-6.12.95
 ```
+
+If you are in mainland China, the BFSU mirror is usually faster. Use it as a backup source with the same fixed tag:
+
+```sh
+cd ~/src
+rm -rf linux-6.12.95
+git clone \
+  --depth=1 \
+  --single-branch \
+  --branch v6.12.95 \
+  https://mirrors.bfsu.edu.cn/git/linux-stable.git \
+  linux-6.12.95
+cd linux-6.12.95
+```
+
+Method B downloads the release tarball. Use it when Git access is slow or blocked and you only need this fixed version:
+
+```sh
+mkdir -p ~/src ~/kernel-lab
+cd ~/src
+wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.95.tar.xz
+tar -xf linux-6.12.95.tar.xz
+cd linux-6.12.95
+```
+
+The tarball method is simpler, but it does not provide Git history, tag switching, or `git rev-parse HEAD`.
 
 ## Step 3: Verify the fixed kernel version
 
 Confirm that the tree is on the exact tag used by this lab:
 
 ```sh
-git describe --tags --exact-match
-git rev-parse HEAD
+$ make kernelversion
+6.12.95
+
+$ git describe --tags --exact-match 2>/dev/null || true
+v6.12.95
+
+$ git rev-parse HEAD 2>/dev/null || true
+296aabce459470a4c1b68ffd0c0c0920e563aaad
 ```
 
-Expected tag: `v6.6.144`.
+Expected kernel version: `6.12.95`.
 
-Record both the tag and commit hash. Later debugging notes should never say only "latest kernel."
+If you used Git, record both the tag and commit hash. If you used the tarball, record `linux-6.12.95.tar.xz` as the source. Later debugging notes should never say only "latest kernel."
 
 ## Step 4: Configure a debug-capable kernel
 
@@ -97,7 +139,21 @@ make olddefconfig
 Check that the expected options are present:
 
 ```sh
-grep -E 'CONFIG_DEBUG_INFO|CONFIG_KALLSYMS' .config
+$ grep -E 'CONFIG_DEBUG_INFO|CONFIG_KALLSYMS' .config
+CONFIG_KALLSYMS=y
+# CONFIG_KALLSYMS_SELFTEST is not set
+CONFIG_KALLSYMS_ALL=y
+CONFIG_KALLSYMS_ABSOLUTE_PERCPU=y
+CONFIG_DEBUG_INFO=y
+# CONFIG_DEBUG_INFO_NONE is not set
+CONFIG_DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT=y
+# CONFIG_DEBUG_INFO_DWARF4 is not set
+# CONFIG_DEBUG_INFO_DWARF5 is not set
+# CONFIG_DEBUG_INFO_REDUCED is not set
+CONFIG_DEBUG_INFO_COMPRESSED_NONE=y
+# CONFIG_DEBUG_INFO_COMPRESSED_ZLIB is not set
+# CONFIG_DEBUG_INFO_COMPRESSED_ZSTD is not set
+# CONFIG_DEBUG_INFO_SPLIT is not set
 ```
 
 ## Step 5: Build bzImage and vmlinux
@@ -109,21 +165,14 @@ make -j"$(nproc)" bzImage vmlinux
 Check the build artifacts:
 
 ```sh
-test -r arch/x86/boot/bzImage
-test -r vmlinux
-ls -lh arch/x86/boot/bzImage vmlinux
+$ ls -lh arch/x86/boot/bzImage vmlinux
+-rw-r--r-- 1 xl xl  13M Jul  8 10:28 arch/x86/boot/bzImage
+-rwxr-xr-x 1 xl xl 371M Jul  8 10:28 vmlinux
 ```
 
-## Step 6: Prepare or select a rootfs image
+## Step 6: Prepare a BusyBox initramfs
 
-If you already have a bootable ext4 rootfs, copy or record its path:
-
-```sh
-ROOTFS_IMAGE="$HOME/kernel-lab/rootfs.ext4"
-test -r "$ROOTFS_IMAGE"
-```
-
-If you do not have one yet, create a minimal BusyBox initramfs so this lab can still prove the kernel boots:
+Create a minimal BusyBox initramfs. This is enough to prove that QEMU can load your kernel and reach a shell:
 
 ```sh
 mkdir -p ~/kernel-lab/initramfs/{bin,dev,proc,sys}
@@ -140,27 +189,13 @@ EOF
 chmod +x ~/kernel-lab/initramfs/init
 cd ~/kernel-lab/initramfs
 find . -print0 | cpio --null -ov --format=newc | xz -9 --check=crc32 > ~/kernel-lab/initramfs.cpio.xz
+test -r ~/kernel-lab/initramfs.cpio.xz && echo "initramfs is readable: ~/kernel-lab/initramfs.cpio.xz"
 ```
-
-Use the ext4 rootfs for day-01 if you have one. Use the initramfs only as the smallest WSL2-friendly boot check.
 
 ## Step 7: Boot the kernel once with QEMU
 
-For an ext4 rootfs:
-
 ```sh
-cd ~/src/linux
-qemu-system-x86_64 \
-  -kernel arch/x86/boot/bzImage \
-  -append "console=ttyS0 root=/dev/vda rw panic=-1" \
-  -drive file="$ROOTFS_IMAGE",format=raw,if=virtio \
-  -m 2G -smp 2 -nographic
-```
-
-For the minimal initramfs:
-
-```sh
-cd ~/src/linux
+cd ~/src/linux-6.12.95
 qemu-system-x86_64 \
   -kernel arch/x86/boot/bzImage \
   -initrd ~/kernel-lab/initramfs.cpio.xz \
@@ -168,39 +203,53 @@ qemu-system-x86_64 \
   -m 2G -smp 2 -nographic
 ```
 
-Expected result: the serial console prints kernel boot logs and eventually reaches either the rootfs login prompt or a BusyBox shell.
+Expected result: the serial console prints kernel boot logs and reaches a BusyBox shell.
+
+```sh
+BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+sh: can't access tty; job control turned off
+
+~ # uname -a
+Linux (none) 6.12.95 #1 SMP PREEMPT_DYNAMIC Wed Jul  8 10:27:07 CST 2026 x86_64 GNU/Linux
+```
 
 Exit QEMU from `-nographic` mode with:
 
 ```text
 Ctrl-a x
+
+~ # QEMU: Terminated
 ```
+
+Press `Ctrl-a` first, release `Ctrl`, then press `x` by itself. Do not press `Ctrl-a-x` all at once.
 
 ## Step 8: Record the baseline for day-01
 
 Save these values in your lab note:
 
 ```sh
-cd ~/src/linux
-printf 'KERNEL_TREE=%s\n' "$HOME/src/linux"
-printf 'kernel_commit=%s\n' "$(git rev-parse HEAD)"
-printf 'kernel_image=%s\n' "$HOME/src/linux/arch/x86/boot/bzImage"
-printf 'vmlinux=%s\n' "$HOME/src/linux/vmlinux"
-printf 'rootfs_image=%s\n' "${ROOTFS_IMAGE:-not set; initramfs was used for boot check}"
+cd ~/src/linux-6.12.95
+printf 'KERNEL_TREE=%s\n' "$HOME/src/linux-6.12.95"
+printf 'kernel_version=%s\n' "$(make -s kernelversion)"
+printf 'kernel_commit=%s\n' "$(git rev-parse HEAD 2>/dev/null || echo tarball-source)"
+printf 'kernel_image=%s\n' "$HOME/src/linux-6.12.95/arch/x86/boot/bzImage"
+printf 'vmlinux=%s\n' "$HOME/src/linux-6.12.95/vmlinux"
+printf 'initramfs=%s\n' "$HOME/kernel-lab/initramfs.cpio.xz"
+printf 'qemu_command=%s\n' "qemu-system-x86_64 -kernel $HOME/src/linux-6.12.95/arch/x86/boot/bzImage -initrd $HOME/kernel-lab/initramfs.cpio.xz -append \"console=ttyS0 rdinit=/init panic=-1\" -m 2G -smp 2 -nographic"
 ```
 
-If you have an ext4 rootfs, run this from the roadmap repository root and copy the values into `labs/day-01-debug-ready-kernel-lab/qemu-kernel/lab.env`:
-
-```sh
-cp labs/day-01-debug-ready-kernel-lab/qemu-kernel/lab.env.example \
-  labs/day-01-debug-ready-kernel-lab/qemu-kernel/lab.env
-```
-
-Then edit:
+Example output:
 
 ```text
-KERNEL_TREE="$HOME/src/linux"
-ROOTFS_IMAGE="$HOME/kernel-lab/rootfs.ext4"
+KERNEL_TREE=/home/xl/src/linux-6.12.95
+kernel_version=6.12.95
+kernel_commit=296aabce459470a4c1b68ffd0c0c0920e563aaad
+kernel_image=/home/xl/src/linux-6.12.95/arch/x86/boot/bzImage
+vmlinux=/home/xl/src/linux-6.12.95/vmlinux
+initramfs=/home/xl/kernel-lab/initramfs.cpio.xz
+qemu_command=qemu-system-x86_64 -kernel /home/xl/src/linux-6.12.95/arch/x86/boot/bzImage -initrd /home/xl/kernel-lab/initramfs.cpio.xz -append "console=ttyS0 rdinit=/init panic=-1" -m 2G -smp 2 -nographic
 ```
 
 ## Completion Check
@@ -208,8 +257,8 @@ ROOTFS_IMAGE="$HOME/kernel-lab/rootfs.ext4"
 This lab is complete when you can answer all of these without guessing:
 
 - Which WSL2 Ubuntu environment built the kernel?
-- Which kernel tag or commit was checked out?
+- Which kernel version and source method were used?
 - Where is `arch/x86/boot/bzImage`?
 - Where is `vmlinux`?
-- Which rootfs or initramfs booted?
+- Which initramfs booted?
 - What exact QEMU command reached a serial console?
