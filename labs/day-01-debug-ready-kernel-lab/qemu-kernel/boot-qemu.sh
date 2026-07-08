@@ -14,13 +14,12 @@ fi
 source "$env_file"
 
 : "${KERNEL_TREE:?set KERNEL_TREE in lab.env}"
-: "${ROOTFS_IMAGE:?set ROOTFS_IMAGE in lab.env}"
+: "${INITRAMFS_IMAGE:?set INITRAMFS_IMAGE in lab.env}"
 : "${QEMU:=qemu-system-x86_64}"
 : "${KERNEL_IMAGE:=arch/x86/boot/bzImage}"
 : "${MEMORY:=2G}"
 : "${SMP:=2}"
-: "${DRIVE_OPTS:=format=raw,if=virtio}"
-: "${KERNEL_APPEND:=console=ttyS0 root=/dev/vda rw panic=-1}"
+: "${KERNEL_APPEND:=console=ttyS0 rdinit=/init panic=-1}"
 
 kernel_path="$KERNEL_TREE/$KERNEL_IMAGE"
 
@@ -29,15 +28,24 @@ if [[ ! -r "$kernel_path" ]]; then
   exit 1
 fi
 
-if [[ ! -r "$ROOTFS_IMAGE" ]]; then
-  echo "rootfs image not found: $ROOTFS_IMAGE" >&2
+if [[ ! -r "$INITRAMFS_IMAGE" ]]; then
+  echo "initramfs image not found: $INITRAMFS_IMAGE" >&2
   exit 1
 fi
 
-exec "$QEMU" \
+cmd=(
+  "$QEMU"
   -kernel "$kernel_path" \
+  -initrd "$INITRAMFS_IMAGE" \
   -append "$KERNEL_APPEND" \
-  -drive "file=$ROOTFS_IMAGE,$DRIVE_OPTS" \
   -m "$MEMORY" \
   -smp "$SMP" \
   -nographic
+)
+
+if [[ -n "${SERIAL_LOG:-}" ]]; then
+  printf -v qemu_cmd '%q ' "${cmd[@]}"
+  exec script -q -f -e -c "$qemu_cmd" "$SERIAL_LOG"
+fi
+
+exec "${cmd[@]}"

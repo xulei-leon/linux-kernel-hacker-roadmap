@@ -17,10 +17,21 @@ source "$env_file"
 : "${CONFIG_TARGET:=defconfig}"
 : "${MAKE_JOBS:=$(nproc)}"
 : "${MAKE_TARGETS:=bzImage vmlinux}"
+: "${CLEAN_TREE:=0}"
+
+if [[ ! -d "$KERNEL_TREE" ]]; then
+  echo "KERNEL_TREE not a directory: $KERNEL_TREE" >&2
+  exit 2
+fi
 
 cd "$KERNEL_TREE"
 
-echo "kernel_commit=$(git rev-parse HEAD)"
+echo "kernel_commit=$(git rev-parse HEAD 2>/dev/null || echo tarball-source)"
+
+if [[ "$CLEAN_TREE" == "1" ]]; then
+  make mrproper
+fi
+
 make "$CONFIG_TARGET"
 
 scripts/config --enable DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
@@ -29,3 +40,6 @@ scripts/config --enable KALLSYMS_ALL
 
 make olddefconfig
 make -j"$MAKE_JOBS" $MAKE_TARGETS
+
+test -r arch/x86/boot/bzImage && echo "kernel image is readable: $KERNEL_TREE/arch/x86/boot/bzImage"
+test -r vmlinux && echo "vmlinux is readable: $KERNEL_TREE/vmlinux"
