@@ -177,20 +177,28 @@ Create a minimal BusyBox initramfs. This is enough to prove that QEMU can load y
 ```sh
 mkdir -p ~/kernel-lab/initramfs/{bin,dev,proc,sys}
 cp /bin/busybox ~/kernel-lab/initramfs/bin/
-ln -sf busybox ~/kernel-lab/initramfs/bin/sh
+for applet in sh mount cat uname ls dmesg grep; do
+  ln -sf busybox ~/kernel-lab/initramfs/bin/"$applet"
+done
 cat > ~/kernel-lab/initramfs/init <<'EOF'
 #!/bin/sh
-mount -t devtmpfs none /dev 2>/dev/null || true
-mount -t proc none /proc
-mount -t sysfs none /sys
+mount -t devtmpfs devtmpfs /dev 2>/dev/null || true
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
 echo "booted debug-ready kernel"
-exec /bin/busybox sh
+exec /bin/sh
 EOF
 chmod +x ~/kernel-lab/initramfs/init
 cd ~/kernel-lab/initramfs
 find . -print0 | cpio --null -ov --format=newc | xz -9 --check=crc32 > ~/kernel-lab/initramfs.cpio.xz
 test -r ~/kernel-lab/initramfs.cpio.xz && echo "initramfs is readable: ~/kernel-lab/initramfs.cpio.xz"
 ```
+
+The symlinks matter. BusyBox provides many commands through one binary, but a
+minimal initramfs still needs command names such as `mount`, `cat`, and `uname`
+to resolve to `/bin/busybox`. Without those links, `/init` can reach a shell but
+print errors such as `mount: not found`, and checks like `cat /proc/cmdline`
+will fail.
 
 ## Step 7: Boot the kernel once with QEMU
 
@@ -213,6 +221,9 @@ sh: can't access tty; job control turned off
 
 ~ # uname -a
 Linux (none) 6.12.95 #1 SMP PREEMPT_DYNAMIC Wed Jul  8 10:27:07 CST 2026 x86_64 GNU/Linux
+
+~ # cat /proc/cmdline
+console=ttyS0 rdinit=/init panic=-1
 ```
 
 Exit QEMU from `-nographic` mode with:
