@@ -169,7 +169,11 @@ The generated files are written to `.vitepress/dist/`.
 2. Open the repository settings.
 3. Go to **Pages**.
 4. Set **Source** to **GitHub Actions**.
-5. Push to `main`, or run the **Deploy GitHub Pages** workflow manually.
+5. When GitHub asks for a workflow template, choose **Static HTML**.
+6. Open the repository **Actions** tab.
+7. Select the **Deploy GitHub Pages** workflow.
+8. Open file `.github/workflows/deploy-pages.yml` Click **Run workflow**, and wait for the
+   deployment to complete.
 
 For a repository named `linux-kernel-hacker-roadmap`, the default GitHub Pages
 URL is:
@@ -178,7 +182,8 @@ URL is:
 https://<github-user>.github.io/linux-kernel-hacker-roadmap/
 ```
 
-No custom domain is required.
+https://xulei-leon.github.io/linux-kernel-hacker-roadmap/
+
 
 ## License
 
