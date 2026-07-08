@@ -141,6 +141,45 @@ linux-kernel-hacker-roadmap/
 | Code Quality | Local fixes, tests, static checks | Produce maintainable and verified kernel changes |
 | Performance | perf, tracing, contention, cache behavior | Explain and improve measurable bottlenecks |
 
+## Publishing with GitHub Pages
+
+This repository can be published as a static documentation site with GitHub Pages.
+The site is built with VitePress from the existing Markdown files.
+
+### Local preview
+
+Install Node.js, then run:
+
+```sh
+npm install
+npm run docs:dev
+```
+
+Build the static site locally:
+
+```sh
+npm run docs:build
+```
+
+The generated files are written to `.vitepress/dist/`.
+
+### GitHub Pages deployment
+
+1. Push this repository to GitHub.
+2. Open the repository settings.
+3. Go to **Pages**.
+4. Set **Source** to **GitHub Actions**.
+5. Push to `main`, or run the **Deploy GitHub Pages** workflow manually.
+
+For a repository named `linux-kernel-hacker-roadmap`, the default GitHub Pages
+URL is:
+
+```text
+https://<github-user>.github.io/linux-kernel-hacker-roadmap/
+```
+
+No custom domain is required.
+
 ## License
 
 MIT
