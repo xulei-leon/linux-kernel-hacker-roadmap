@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+orin_check="${ORIN_CHECK:-$script_dir/../../common/check-orin-env.sh}"
+
 function_name="${1:-}"
 shift || true
 
@@ -15,8 +18,15 @@ if [[ ! -d "$tracefs" && -d /sys/kernel/debug/tracing ]]; then
   tracefs="/sys/kernel/debug/tracing"
 fi
 
+ORIN_TRACEFS="${ORIN_TRACEFS:-$tracefs}" "$orin_check" --require-tracefs
+
 if [[ ! -w "$tracefs/tracing_on" ]]; then
   echo "tracefs is not writable; run as root or mount tracefs at /sys/kernel/tracing" >&2
+  exit 1
+fi
+
+if ! grep -Fqx "$function_name" "$tracefs/available_filter_functions"; then
+  echo "function is not traceable on this kernel: $function_name" >&2
   exit 1
 fi
 
@@ -26,8 +36,12 @@ if [[ ${#cmd[@]} -eq 0 ]]; then
   cmd=(cat /proc/version)
 fi
 
+previous_tracer="$(cat "$tracefs/current_tracer")"
+
 cleanup() {
   echo 0 > "$tracefs/tracing_on" || true
+  echo > "$tracefs/set_graph_function" || true
+  echo "$previous_tracer" > "$tracefs/current_tracer" || true
 }
 trap cleanup EXIT
 
@@ -44,4 +58,3 @@ echo 0 > "$tracefs/tracing_on"
 
 cat "$tracefs/trace" > "$out"
 echo "wrote $out"
-
