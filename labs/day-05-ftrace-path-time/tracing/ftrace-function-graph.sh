@@ -18,7 +18,7 @@ if [[ ! -d "$tracefs" && -d /sys/kernel/debug/tracing ]]; then
   tracefs="/sys/kernel/debug/tracing"
 fi
 
-ORIN_TRACEFS="${ORIN_TRACEFS:-$tracefs}" "$orin_check" --require-tracefs
+ORIN_TRACEFS="${ORIN_TRACEFS:-$tracefs}" bash "$orin_check" --require-tracefs
 
 if [[ ! -w "$tracefs/tracing_on" ]]; then
   echo "tracefs is not writable; run as root or mount tracefs at /sys/kernel/tracing" >&2

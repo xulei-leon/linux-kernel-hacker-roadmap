@@ -4,7 +4,7 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 orin_check="${ORIN_CHECK:-$script_dir/../../common/check-orin-env.sh}"
 tracefs="${TRACEFS:-/sys/kernel/tracing}"
-ORIN_TRACEFS="${ORIN_TRACEFS:-$tracefs}" "$orin_check"
+ORIN_TRACEFS="${ORIN_TRACEFS:-$tracefs}" bash "$orin_check"
 
 duration="${1:-10}"
 out_dir="${OUT_DIR:-fs-block-trace-$(date +%Y%m%d-%H%M%S)}"

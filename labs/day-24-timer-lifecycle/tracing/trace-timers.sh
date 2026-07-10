@@ -5,7 +5,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 orin_check="${ORIN_CHECK:-$script_dir/../../common/check-orin-env.sh}"
 tracefs="${TRACEFS:-/sys/kernel/tracing}"
 ORIN_TRACEFS="${ORIN_TRACEFS:-$tracefs}" \
-  "$orin_check" --require-tracefs --require-tool trace-cmd
+  bash "$orin_check" --require-tracefs --require-tool trace-cmd
 
 duration="${1:-10}"
 out_dir="${OUT_DIR:-timer-trace-$(date +%Y%m%d-%H%M%S)}"
