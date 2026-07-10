@@ -38,7 +38,12 @@ This project is not suitable for learners with no Linux, C, or operating system 
   kernel, device-tree model, boot arguments, and recovery path before flashing
   a kernel, DTB, or bootloader component.
 
-Start with the [Jetson Orin Nano Super baseline lab](docs/jetson-orin-nano-super-bsp-kernel-driver-diagnostic-lab.md).
+The fixed primary environment selected on 2026-07-10 is JetPack 7.2, Jetson
+Linux 39.2, Linux kernel 6.8, and L4T Ubuntu 24.04.
+
+Start with [Day 01: Orin debug-ready kernel lab](labs/day-01-debug-ready-kernel-lab/README.md).
+Use the [Jetson Orin Nano Super platform overview](docs/jetson-orin-nano-super-bsp-kernel-driver-diagnostic-lab.md)
+for the official release, installation, and recovery context.
 
 ## Capability Map
 
@@ -117,10 +122,12 @@ linux-kernel-hacker-roadmap/
 │   └── 06-code-quality/
 ├── labs/
 │   ├── day-00-kernel-build-environment/
-│   │   └── README.md
-│   ├── day-01-debug-ready-kernel-lab/
 │   │   ├── README.md
 │   │   └── qemu-kernel/
+│   ├── day-01-debug-ready-kernel-lab/
+│   │   └── README.md
+│   ├── common/
+│   │   └── check-orin-env.sh
 │   └── day-05-ftrace-path-time/
 │       ├── README.md
 │       ├── modules/
@@ -134,14 +141,13 @@ linux-kernel-hacker-roadmap/
 
 ## Recommended Learning Method
 
-1. Establish and record the Orin baseline with
-   `docs/jetson-orin-nano-super-bsp-kernel-driver-diagnostic-lab.md`.
+1. Establish and record the fixed Orin baseline with
+   `labs/day-01-debug-ready-kernel-lab/README.md`.
 2. Choose one subsystem as the main track instead of chasing too many directions.
 3. Run safe observation and driver experiments on Orin: configure, trigger,
    observe, record, and restore.
-4. Use `labs/day-00-kernel-build-environment/README.md` and
-   `labs/day-01-debug-ready-kernel-lab/README.md` only when a later experiment
-   needs the disposable QEMU environment.
+4. Use `labs/day-00-kernel-build-environment/README.md` only when a later
+   experiment needs a disposable QEMU environment, GDB stub, or automated boot.
 5. For every bug, save the reproducer, kernel config, logs, stack traces, and analysis notes.
 6. Practice turning observations into a root-cause explanation and a verified fix.
 7. Repeat the loop: read code, form a hypothesis, instrument, measure, fix, verify.

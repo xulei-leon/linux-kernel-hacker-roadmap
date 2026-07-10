@@ -18,6 +18,10 @@ orin-baseline/
 
 This unit does not flash a custom kernel, DTB, or bootloader.
 
+Use [Day 01](../labs/day-01-debug-ready-kernel-lab/README.md) as the canonical
+hands-on baseline. This document explains the platform choice, official
+release, and safety boundary.
+
 ## Prerequisites
 
 - Jetson Linux is installed and the board reaches a shell.
@@ -33,9 +37,11 @@ flashing command from a blog:
 | [JetPack SDK Downloads and Notes](https://developer.nvidia.com/embedded/jetpack/downloads) | Current releases and supported hardware |
 | [Jetson Linux Developer Guide r39.2](https://docs.nvidia.com/jetson/archives/r39.2/DeveloperGuide/) | Current BSP, kernel, flashing, and driver reference |
 
-NVIDIA currently lists JetPack 7.2 with Jetson Linux 39.2 as supporting the
-Jetson Orin family. Treat the version installed on the board as the source of
-truth; do not write only `latest` in a lab report.
+This roadmap fixes the environment selected on 2026-07-10 to JetPack 7.2,
+Jetson Linux 39.2, Linux kernel 6.8, and L4T Ubuntu 24.04. NVIDIA lists that
+release as supporting the Jetson Orin family. Record the exact installed
+package versions and reject a mismatched board rather than writing only
+`latest` in a lab report.
 
 ## Why Orin is the primary platform
 

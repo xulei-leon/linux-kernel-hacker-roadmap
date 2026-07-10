@@ -81,7 +81,7 @@ export default defineConfig({
     nav: [
       { text: 'Roadmap', link: '/' },
       { text: 'Docs', link: '/docs/04-debugging/README.html' },
-      { text: 'Labs', link: '/labs/day-00-kernel-build-environment/README.html' },
+      { text: 'Labs', link: '/labs/day-01-debug-ready-kernel-lab/README.html' },
       { text: 'GitHub', link: 'https://github.com/xulei-leon/linux-kernel-hacker-roadmap' },
     ],
     sidebar: [

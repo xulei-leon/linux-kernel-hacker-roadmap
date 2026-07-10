@@ -11,7 +11,8 @@ before running a fault-injection module on the board.
 
 | Day | Topic | Learning package | Lab material |
 |---:|---|---|---|
-| 1 | Debug-ready kernel lab | [Day 1](../../labs/day-01-debug-ready-kernel-lab/README.md) | `qemu-kernel` |
+| 0 | Disposable QEMU fallback | [Day 0](../../labs/day-00-kernel-build-environment/README.md) | `qemu-kernel` |
+| 1 | Orin debug-ready kernel baseline | [Day 1](../../labs/day-01-debug-ready-kernel-lab/README.md) | `labs/common/check-orin-env.sh` |
 | 2 | Panic and oops log annotation | [Day 2](../../labs/day-02-panic-oops-log/README.md) | none |
 | 3 | Symbols and source mapping | [Day 3](../../labs/day-03-symbols-and-source/README.md) | none |
 | 4 | Logging discipline | [Day 4](../../labs/day-04-logging-discipline/README.md) | `modules` |

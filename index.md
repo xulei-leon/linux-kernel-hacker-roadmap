@@ -7,10 +7,10 @@ understanding, and code quality skills.
 ## Start Here
 
 - [Project overview](./README.html)
+- [Orin Day 01: Debug-ready kernel lab](./labs/day-01-debug-ready-kernel-lab/README.html)
 - [Orin Nano Super: primary hardware lab](./docs/jetson-orin-nano-super-bsp-kernel-driver-diagnostic-lab.html)
 - [Debugging roadmap](./docs/04-debugging/README.html)
-- [QEMU Day 00: Kernel build environment](./labs/day-00-kernel-build-environment/README.html)
-- [QEMU Day 01: Debug-ready kernel lab](./labs/day-01-debug-ready-kernel-lab/README.html)
+- [QEMU Day 00: Disposable fallback](./labs/day-00-kernel-build-environment/README.html)
 
 ## Learning Method
 
