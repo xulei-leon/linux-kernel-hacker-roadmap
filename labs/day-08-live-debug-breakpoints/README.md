@@ -6,6 +6,8 @@
 This lab requires QEMU's reliable GDB stub and disposable boot. Real-board
 KGDB over a tested serial channel is an advanced extension, not the default.
 
+Prerequisite: [Day 00 QEMU fallback](../day-00-kernel-build-environment/README.md).
+
 ## Problem
 
 The failure happens after a specific function is entered, but logs are too late or too noisy. The symptom is a reproducible bug where inspecting arguments before the crash would decide the next step.

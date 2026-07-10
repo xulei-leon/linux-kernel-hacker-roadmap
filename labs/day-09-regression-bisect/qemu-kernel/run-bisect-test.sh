@@ -2,11 +2,12 @@
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-env_file="${1:-$script_dir/../../day-01-debug-ready-kernel-lab/qemu-kernel/lab.env}"
+env_file="${1:-$script_dir/../../day-00-kernel-build-environment/qemu-kernel/lab.env}"
 log="${BISECT_LOG:-run.log}"
 
 if [[ ! -r "$env_file" ]]; then
   echo "usage: $0 [lab.env]" >&2
+  echo "expected the Day 00 QEMU lab.env by default: $env_file" >&2
   exit 125
 fi
 

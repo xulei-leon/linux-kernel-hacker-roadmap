@@ -7,6 +7,8 @@ environment for automated build, boot, trigger, and classification. Hardware
 regressions that exist only on Orin require a separate recovery-gated manual
 bisect after the automated test contract is stable.
 
+Prerequisite: [Day 00 QEMU fallback](../day-00-kernel-build-environment/README.md).
+
 ## Problem
 
 A kernel behavior works on one release and fails on another, but the suspected patch is a guess. The symptom is "it regressed between two kernels" without a deterministic test.
