@@ -1,246 +1,215 @@
-# Day 1: How do you prepare a debug-ready kernel lab?
+# Day 1: How do you prepare an Orin debug-ready kernel lab?
 
 ## Goal
 
-Turn the day-00 kernel build into a repeatable debugging lab. The purpose is to make sure later crash, trace, and
-performance labs can be rebuilt and rerun without guessing the kernel commit,
-config, initramfs, boot arguments, or evidence file.
+Capture a reproducible debugging baseline for the NVIDIA Jetson Orin Nano
+Super 8GB Developer Kit without replacing its kernel, device tree, or
+bootloader. Later labs should be able to name the exact board, release, kernel,
+configuration, symbol interfaces, module build tree, evidence paths, and
+recovery method.
 
-At the end of this lab, you should have:
+Keep the generated evidence under `~/kernel-lab/orin-day01/`, outside this
+repository. It may contain host names, network addresses, serial numbers, and
+other machine-specific data.
 
-```text
-Kernel tree:
-Kernel commit or source archive:
-Config source:
-Debug config changes:
-Kernel image:
-vmlinux:
-Initramfs image:
-QEMU command:
-Serial log path:
-How to rerun:
-```
+## Fixed Environment
+
+This roadmap fixes its primary hands-on environment to the latest official
+NVIDIA release selected on 2026-07-10:
+
+| Component | Fixed value |
+|---|---|
+| Developer kit | NVIDIA Jetson Orin Nano Super 8GB |
+| JetPack | 7.2 |
+| Jetson Linux | 39.2, released 2026-06-02 |
+| Kernel | 6.8 |
+| Distribution | L4T Ubuntu 24.04 |
+
+Use NVIDIA's official material for installation and recovery:
+
+- [JetPack SDK Downloads and Notes](https://developer.nvidia.com/embedded/jetpack/downloads)
+- [Jetson Linux 39.2 Developer Guide](https://docs.nvidia.com/jetson/archives/r39.2/DeveloperGuide/)
+- [Jetson Linux 39.2 Release Notes](https://docs.nvidia.com/jetson/archives/r39.2/ReleaseNotes/Jetson_Linux_Release_Notes_r39.2.pdf)
+- [Jetson Orin Nano Developer Kit User Guide](https://docs.nvidia.com/jetson/orin-nano-devkit/user-guide/latest/index.html)
+
+JetPack 7 does not provide an SD card image for this developer kit. Use the
+unified JetPack ISO and USB installation path documented by NVIDIA. Do not
+reuse an older flashing command merely because it mentions Orin Nano.
+
+For the shorter platform overview, see the
+[Orin baseline lab](../../docs/jetson-orin-nano-super-bsp-kernel-driver-diagnostic-lab.md).
 
 ## Prerequisites
 
-Complete `labs/day-00-kernel-build-environment/README.md` first.
+- The board boots JetPack 7.2 and reaches a local or SSH shell.
+- The repository is available on the board or its commands can be copied
+  exactly.
+- You have `sudo` access.
+- SSH is configured for normal work.
+- A tested serial-console and recovery path are known before any later BSP,
+  kernel, DTB, or early-boot modification.
 
-This lab assumes:
+This lab records evidence only. It does not flash or replace boot components.
 
-- Linux `v6.12.95` is available under `~/src/linux-6.12.95`.
-- A minimal initramfs exists at `~/kernel-lab/initramfs.cpio.xz`.
-- `qemu-system-x86_64` can boot the day-00 kernel with `-nographic`.
-- You are working in WSL2 Ubuntu or another Linux shell with the same tools.
+## Step 1: Verify the fixed Orin release
 
-Keep the kernel tree on the Linux filesystem, not under `/mnt/c/...`, because
-kernel builds create many small files.
-
-## Step 1: Check the baseline inputs
-
-Start by confirming the exact tree and boot image that later labs will use:
+From the repository root on Orin, run:
 
 ```sh
-cd ~/src/linux-6.12.95
-make -s kernelversion
-git rev-parse HEAD 2>/dev/null || echo tarball-source
-test -r arch/x86/boot/bzImage && echo "bzImage is readable"
-test -r vmlinux && echo "vmlinux is readable"
-test -r ~/kernel-lab/initramfs.cpio.xz && echo "initramfs is readable"
+bash labs/common/check-orin-env.sh --require-headers
 ```
 
-Expected kernel version:
+The check fails if the model is not Jetson Orin Nano, the architecture is not
+`aarch64`, Jetson Linux is not 39.2, the kernel does not begin with 6.8, or
+the running kernel lacks a matching build directory.
 
-```text
-6.12.95
-```
-
-If `git rev-parse HEAD` fails because you used the release tarball, record the
-tarball name instead, such as `linux-6.12.95.tar.xz`. Do not write only
-"latest kernel" in lab notes.
-
-## Step 2: Configure the kernel for debugging
-
-Rebuild from a known config source. For this lab, use x86_64 `defconfig` plus
-debug symbols and full kallsyms:
+Create the evidence directory:
 
 ```sh
-cd ~/src/linux-6.12.95
-make defconfig
-scripts/config --enable DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
-scripts/config --enable KALLSYMS
-scripts/config --enable KALLSYMS_ALL
-make olddefconfig
+mkdir -p ~/kernel-lab/orin-day01
+cd ~/kernel-lab/orin-day01
 ```
 
-Check the options that matter for early debugging:
+## Step 2: Capture the boot and storage baseline
 
 ```sh
-~/src/linux-6.12.95$ grep -E 'CONFIG_DEBUG_INFO|CONFIG_KALLSYMS' .config
-CONFIG_KALLSYMS=y
-# CONFIG_KALLSYMS_SELFTEST is not set
-CONFIG_KALLSYMS_ALL=y
-CONFIG_KALLSYMS_ABSOLUTE_PERCPU=y
-CONFIG_DEBUG_INFO=y
-# CONFIG_DEBUG_INFO_NONE is not set
-CONFIG_DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT=y
-# CONFIG_DEBUG_INFO_DWARF4 is not set
-# CONFIG_DEBUG_INFO_DWARF5 is not set
-# CONFIG_DEBUG_INFO_REDUCED is not set
-CONFIG_DEBUG_INFO_COMPRESSED_NONE=y
-# CONFIG_DEBUG_INFO_COMPRESSED_ZLIB is not set
-# CONFIG_DEBUG_INFO_COMPRESSED_ZSTD is not set
-# CONFIG_DEBUG_INFO_SPLIT is not set
+{
+  printf 'captured_at=%s\n' "$(date --iso-8601=seconds)"
+  printf 'model='
+  tr -d '\0' < /proc/device-tree/model
+  printf '\n'
+  uname -a
+  cat /etc/nv_tegra_release
+  dpkg-query -W 'nvidia-l4t-*'
+  printf 'cmdline='
+  cat /proc/cmdline
+  printf '\n## Storage\n'
+  lsblk -o NAME,MODEL,SIZE,FSTYPE,MOUNTPOINTS
+  df -hT
+} | tee platform-baseline.txt
+
+sudo dmesg -T | tee boot-dmesg.log
 ```
 
-Why these options matter:
+Record whether the root filesystem and kernel work area use microSD, USB
+storage, or NVMe. Prefer NVMe for source trees, build artifacts, traces, and
+repeated I/O experiments.
 
-- `CONFIG_DEBUG_INFO` keeps source-level information in `vmlinux`.
-- `CONFIG_KALLSYMS` makes kernel symbols visible in stack traces.
-- `CONFIG_KALLSYMS_ALL` keeps more symbols available for decoding addresses.
-
-## Step 3: Build the kernel artifacts
-
-Build both the bootable image and the uncompressed symbol file:
+## Step 3: Check symbols and kernel configuration
 
 ```sh
-make -j"$(nproc)" bzImage vmlinux
+if test -r /proc/config.gz; then
+  zcat /proc/config.gz > running-kernel.config
+elif test -r "/boot/config-$(uname -r)"; then
+  cp "/boot/config-$(uname -r)" running-kernel.config
+else
+  echo "running kernel config is not exposed" >&2
+  exit 1
+fi
+
+grep -E 'CONFIG_(KALLSYMS|DEBUG_INFO|FTRACE|FUNCTION_TRACER|BPF|BPF_SYSCALL)=' \
+  running-kernel.config | tee debug-config.txt
+
+test -r /proc/kallsyms
+head -5 /proc/kallsyms | tee kallsyms-sample.txt
+test -r /sys/kernel/btf/vmlinux && echo 'BTF is available' | tee btf-status.txt
 ```
 
-Verify the files before booting:
+Zeroed addresses in `/proc/kallsyms` can reflect `kptr_restrict`; they do
+not prove that symbols are absent. Record the setting with:
 
 ```sh
-ls -lh arch/x86/boot/bzImage vmlinux
-file arch/x86/boot/bzImage vmlinux
+sysctl kernel.kptr_restrict | tee kptr-restrict.txt
 ```
 
-Later debugging commands usually need `vmlinux`, even when QEMU boots
-`arch/x86/boot/bzImage`.
-
-## Step 4: Boot once by hand
-
-Run QEMU manually before relying on wrappers:
+## Step 4: Verify the module build interface
 
 ```sh
-qemu-system-x86_64 \
-  -kernel arch/x86/boot/bzImage \
-  -initrd ~/kernel-lab/initramfs.cpio.xz \
-  -append "console=ttyS0 rdinit=/init panic=-1" \
-  -m 2G -smp 2 -nographic
+kernel_release="$(uname -r)"
+build_dir="/lib/modules/$kernel_release/build"
+test -d "$build_dir"
+test -r "$build_dir/Makefile"
+printf 'kernel_release=%s\nbuild_dir=%s\n' \
+  "$kernel_release" "$(readlink -f "$build_dir")" | tee module-build.txt
 ```
 
-Expected result: the serial console prints kernel boot messages and reaches the
-BusyBox shell from the initramfs.
-
-Useful checks inside the guest:
+The directory must match the running Jetson kernel ABI. Do not install generic
+Ubuntu headers merely because their version number looks similar. Later module
+labs use:
 
 ```sh
-~ # uname -a
-Linux (none) 6.12.95 #2 SMP PREEMPT_DYNAMIC Wed Jul  8 23:49:27 CST 2026 x86_64 GNU/Linux
-
-~ # cat /proc/cmdline
-console=ttyS0 rdinit=/init panic=-1
+make -C "/lib/modules/$(uname -r)/build" M="$PWD" modules
 ```
-Exit QEMU from `-nographic` mode by pressing `Ctrl-a`, releasing `Ctrl`, then
-pressing `x` by itself.
 
-## Step 5: Capture a serial log
-
-Rerun the same QEMU command through `script` so the boot evidence survives after
-the terminal closes:
+## Step 5: Check tracing and performance tools
 
 ```sh
-script -fec 'qemu-system-x86_64 -kernel arch/x86/boot/bzImage -initrd ~/kernel-lab/initramfs.cpio.xz -append "console=ttyS0 rdinit=/init panic=-1" -m 2G -smp 2 -nographic' qemu-serial.log
+tracefs=/sys/kernel/tracing
+mountpoint -q "$tracefs" || sudo mount -t tracefs tracefs "$tracefs"
+test -r "$tracefs/available_events"
+
+for tool in perf trace-cmd bpftool bpftrace; do
+  if command -v "$tool" >/dev/null 2>&1; then
+    printf '%s=%s\n' "$tool" "$(command -v "$tool")"
+  else
+    printf '%s=missing\n' "$tool"
+  fi
+done | tee tool-status.txt
 ```
 
-After exiting QEMU, check that the log exists and contains boot output:
+A missing optional tool is a recorded limitation, not proof that the kernel
+mechanism is unavailable. Each later lab states which tool or tracepoint it
+actually requires.
+
+## Step 6: Record serial and recovery access
 
 ```sh
-test -s qemu-serial.log && echo "serial log captured"
-grep -m1 'Linux version' qemu-serial.log
+{
+  systemctl is-active ssh
+  hostname -I
+  printf 'serial_console=%s\n' 'record the tested adapter and host command'
+  printf 'recovery_method=%s\n' 'record the tested power-cycle or recovery path'
+} | tee access-and-recovery.txt
 ```
 
-```text
-[    0.000000] Linux version 6.12.95 (xxx) (gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.46
+Replace the two descriptive values with the local setup. SSH cannot capture a
+failure before networking starts. A serial console is mandatory before later
+kernel, DTB, bootloader, or suspend/resume experiments that may prevent SSH
+from returning.
+
+## Step 7: Write the reproducible lab note
+
+Create `lab-note.md` beside the captured evidence:
+
+```markdown
+# Orin Day 01 Baseline
+
+- Board model:
+- JetPack: 7.2
+- Jetson Linux: 39.2
+- Kernel release:
+- Root storage:
+- Kernel config source:
+- Module build directory:
+- Available tracing tools:
+- SSH path:
+- Serial-console command:
+- Recovery method:
+- Evidence directory:
 ```
 
-This log is the minimum evidence channel for later labs. Graphical QEMU output
-is not enough because early boot messages can disappear.
-
-## Step 6: Write the lab note
-
-Record one concrete run:
-
-```text
-Kernel tree:
-Kernel version:
-Kernel commit or source archive:
-Config source:
-Debug config changes:
-Build command:
-Kernel image:
-vmlinux:
-Initramfs image:
-QEMU command:
-Boot arguments:
-Serial log path:
-Expected boot result:
-How to exit QEMU:
-```
-
-Fill it with real paths and command output. The note is incomplete if another
-developer cannot rebuild the same kernel and rerun the same QEMU command.
-
-## Step 7: Use the reusable wrappers
-
-After the manual path works once, use the scripts in `qemu-kernel/` to avoid
-typing long commands by hand:
-
-```sh
-cd labs/day-01-debug-ready-kernel-lab/qemu-kernel
-cp lab.env.example lab.env
-```
-
-Edit `lab.env` and check these values:
-
-```sh
-KERNEL_TREE="$HOME/src/linux-6.12.95"
-INITRAMFS_IMAGE="$HOME/kernel-lab/initramfs.cpio.xz"
-KERNEL_APPEND="console=ttyS0 rdinit=/init panic=-1"
-SERIAL_LOG="$PWD/qemu-serial.log"
-```
-
-Build and boot through the wrappers:
-
-```sh
-bash build-kernel.sh
-bash boot-qemu.sh
-```
-
-Script roles:
-
-- `lab.env.example` documents the expected local paths and QEMU settings.
-- `build-kernel.sh` runs the same debug config and builds `bzImage vmlinux`.
-- `boot-qemu.sh` boots the kernel with `-initrd` and captures `SERIAL_LOG` when
-  that variable is set.
-- `smoke-test.sh` checks script syntax and the missing-kernel error path.
-
-Run the smoke test after editing scripts, not as proof that the kernel boots:
-
-```sh
-bash smoke-test.sh
-```
+Fill every field from observed output. Do not write only `latest`, `default
+kernel`, or `the Jetson`.
 
 ## Completion Check
 
-This lab is complete when all of these are true:
+The lab is complete when all of these are true:
 
-- You can name the exact kernel version and commit or source archive.
-- `arch/x86/boot/bzImage` and `vmlinux` both exist and are readable.
-- QEMU reaches the initramfs shell with `console=ttyS0 rdinit=/init panic=-1`.
-- A serial log file captures the boot.
-- The manual QEMU command and the `qemu-kernel/` wrapper path both work.
-- The lab note contains enough detail for a second run without guessing.
-
-Stop here before starting real bug analysis. If the lab is not reproducible,
-later stack traces, ftrace output, sanitizer reports, or performance numbers
-will be hard to compare.
+- The fixed-release checker passes on the Orin Nano Super.
+- The exact board, JetPack, Jetson Linux, kernel, command line, and storage are
+  recorded.
+- The running kernel configuration and symbol interfaces are identified.
+- The matching module build directory is readable.
+- tracefs and installed diagnostic tools are recorded.
+- SSH, serial-console, and recovery methods are documented.
+- Machine-specific evidence is stored outside this repository.
