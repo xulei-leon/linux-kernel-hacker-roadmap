@@ -1,5 +1,13 @@
 # Day 29: Why do suspend/resume bugs look like deadlocks?
 
+## Platform
+
+**Mode: Orin with recovery gate. Risk: loss of SSH or incomplete resume.**
+Before testing, save the Day 01 baseline, confirm serial capture, remove
+unsaved work, and verify a remote power-cycle or recovery path. QEMU cannot
+validate Tegra firmware, clocks, regulators, devices, or real suspend/resume
+ordering.
+
 ## Problem
 
 The system hangs during suspend or resume, and the stack looks blocked. The symptom may be a freezer issue, device PM callback stall, IRQ wake problem, or ordering failure.
@@ -39,10 +47,14 @@ cat /sys/power/pm_debug_messages
 echo 1 > /sys/power/pm_debug_messages
 ```
 
-Boot with initcall timing if early PM setup is suspect:
+If early PM setup is suspect, use the Jetson Linux 39.2 boot-argument workflow
+from NVIDIA's Developer Guide to add `initcall_debug` only after the recovery
+gate is complete. Verify the next Orin boot rather than assuming the argument
+was applied:
 
 ```sh
-qemu-system-x86_64 ... -append "console=ttyS0 initcall_debug"
+grep -w initcall_debug /proc/cmdline
+dmesg -T | grep -E 'initcall|suspend|resume'
 ```
 
 Collect:
@@ -76,4 +88,3 @@ Classify a suspend/resume hang as freezer, device PM callback, IRQ wake, or orde
 ## Evidence Check
 
 The note must identify suspend or resume phase and the blocking device or task.
-

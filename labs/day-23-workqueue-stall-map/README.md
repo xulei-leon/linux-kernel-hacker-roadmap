@@ -1,5 +1,12 @@
 # Day 23: Why do workqueues stall or amplify memory pressure?
 
+## Platform
+
+**Mode: Orin. Risk: low with bounded defaults.** Continue only after
+`test -d "/lib/modules/$(uname -r)/build"` succeeds, keep `block_ms`
+bounded, unload with
+`rmmod workqueue_demo`, and save the final worker and `dmesg` evidence.
+
 ## Problem
 
 A delayed operation never finishes, or memory reclaim appears stuck behind background work. The symptom is a workqueue item queued but not making visible progress.
@@ -63,4 +70,3 @@ Map one delayed work item from queue site to worker execution and blocking point
 ## Evidence Check
 
 The map must identify whether the queue is starved, blocked, or overloaded.
-

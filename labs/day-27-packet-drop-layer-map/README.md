@@ -1,5 +1,11 @@
 # Day 27: How do packet drops become kernel debugging tasks?
 
+## Platform
+
+**Mode: Orin. Risk: low observation.** Use the real Jetson Ethernet or wireless
+interface and a bounded traffic source. Record the interface driver, link
+state, IRQ affinity, offloads, and thermal/frequency state.
+
 ## Problem
 
 Packets are lost, but "network is flaky" does not identify the kernel layer. The symptom can come from driver RX/TX, NAPI, qdisc, socket buffers, or protocol drops.
@@ -67,4 +73,3 @@ Map one packet-loss symptom to driver, NAPI, qdisc, socket buffer, or protocol e
 ## Evidence Check
 
 The map must include counter source, kernel layer, and next probe.
-

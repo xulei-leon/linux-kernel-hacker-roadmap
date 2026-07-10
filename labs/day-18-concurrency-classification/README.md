@@ -1,5 +1,13 @@
 # Day 18: How do races and illegal sleeps differ from deadlocks?
 
+## Platform
+
+**Mode: Orin analysis, QEMU trigger. Risk: invalid atomic context.** Use Orin
+for configuration and report analysis. Run `trigger_atomic_sleep=1` only in
+Day 00 QEMU.
+
+Do not run the destructive trigger on the primary Orin installation.
+
 ## Problem
 
 Concurrency symptoms are often grouped as "locking bugs." The symptom may actually be a deadlock, data race, illegal sleep, or lock contention.
@@ -74,4 +82,3 @@ Classify one concurrency symptom as deadlock, race, illegal sleep, or contention
 ## Evidence Check
 
 The note must name the detector, expected report, and verification stress loop.
-

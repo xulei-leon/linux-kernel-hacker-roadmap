@@ -1,5 +1,13 @@
 # Day 5: How do you find where a kernel path spends time without adding logs?
 
+## Platform
+
+**Mode: Orin. Risk: low.** Run the function-graph experiment on the fixed Day
+01 environment and verify the selected function exists in
+`available_filter_functions`. Build the optional module only after
+`test -d "/lib/modules/$(uname -r)/build"` succeeds; unload it with
+`rmmod ftrace_target_demo` and capture a bounded final log.
+
 ## Problem
 
 A kernel operation is slow, but adding logs would perturb the path. The symptom is a latency complaint with no evidence about where time is spent.
@@ -74,4 +82,3 @@ Produce one ftrace excerpt and a short interpretation. The excerpt should show e
 ## Evidence Check
 
 The output must include the trace command, selected filter or event, and one sentence explaining what the trace proves.
-

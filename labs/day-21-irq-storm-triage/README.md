@@ -1,5 +1,11 @@
 # Day 21: Why can interrupt storms look like system hangs?
 
+## Platform
+
+**Mode: Orin. Risk: low observation.** Measure real Tegra interrupt lines and
+device drivers. Establish an idle baseline before applying a bounded device
+workload; do not synthesize an uncontrolled IRQ storm.
+
 ## Problem
 
 The machine is responsive only in short bursts, but no single process explains the load. The symptom is high interrupt activity that looks like a hang from user space.
@@ -75,4 +81,3 @@ Inspect interrupt-rate evidence and identify IRQ line, CPU skew, device, and han
 ## Evidence Check
 
 The note must include before/after interrupt counters and likely device source.
-

@@ -1,5 +1,13 @@
 # Day 10: Given a NULL-pointer oops, how do you prove the bad access?
 
+## Platform
+
+**Mode: Orin analysis, QEMU trigger. Risk: destructive.** Build and load the
+module with `trigger_null=1` only in Day 00 QEMU. Use Orin for saved-oops
+decoding and safe fix verification.
+
+Do not run the destructive trigger on the primary Orin installation.
+
 ## Problem
 
 The log says the kernel hit a NULL pointer or invalid address, but the root cause might be earlier. The symptom is an oops with a fault address such as `0000000000000008`.
@@ -74,4 +82,3 @@ Analyze one invalid-address trace and fill the triage note.
 ## Evidence Check
 
 The note must connect fault address, instruction, access type, and context before naming a fix direction.
-

@@ -1,5 +1,12 @@
 # Day 15: Why does a task get stuck in D state?
 
+## Platform
+
+**Mode: Orin. Risk: read-only diagnosis.** Diagnose an observed D-state task on
+the real storage or driver stack. Do not create an unkillable task on the
+primary board merely to obtain a sample; use saved evidence when no natural
+case is available.
+
 ## Problem
 
 A process will not exit and appears in `D` state. The symptom is a hung task warning or a process blocked in uninterruptible sleep.
@@ -63,4 +70,3 @@ Inspect one hung task trace and fill the annotation.
 ## Evidence Check
 
 The note must distinguish runnable, interruptible sleep, and uninterruptible wait.
-

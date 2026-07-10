@@ -1,5 +1,13 @@
 # Day 11: Why must allocator anatomy come before UAF debugging?
 
+## Platform
+
+**Mode: Orin. Risk: low with default parameters.** The supplied module only
+allocates and frees its own cache object. Verify
+`/lib/modules/$(uname -r)/build`, load it with defaults, unload it with
+`rmmod slab_lifecycle_demo`, and capture the final log. Use Day 00 QEMU for
+boot-time `slub_debug` changes or any added UAF trigger.
+
 ## Problem
 
 A report says "use-after-free," but the object owner and free path are unknown. The symptom is a KASAN or poisoning report that names an address but not the lifetime rule that was violated.
@@ -35,10 +43,14 @@ cat /proc/slabinfo | head
 grep -E 'kmalloc-|dentry|inode' /proc/slabinfo
 ```
 
-Enable SLUB debugging for a lab boot:
+Enable SLUB debugging only in the Day 00 QEMU fallback. Add the parameter to
+the local `KERNEL_APPEND` value in Day 00 `lab.env`, then boot through its
+wrapper:
 
 ```sh
-qemu-system-x86_64 ... -append "console=ttyS0 slub_debug=FZPU"
+grep '^KERNEL_APPEND=.*slub_debug=FZPU' \
+  labs/day-00-kernel-build-environment/qemu-kernel/lab.env
+bash labs/day-00-kernel-build-environment/qemu-kernel/boot-qemu.sh
 ```
 
 When a report names a cache, write:
@@ -71,4 +83,3 @@ Build a slab object lifecycle map for one object type. Name the cache, object ow
 ## Evidence Check
 
 The map is complete only if it can explain who is allowed to hold the object and which event releases the final reference.
-

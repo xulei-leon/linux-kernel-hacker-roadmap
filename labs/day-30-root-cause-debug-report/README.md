@@ -1,5 +1,12 @@
 # Day 30: How do you write a senior-level root-cause debug report?
 
+## Platform
+
+**Mode: Orin. Risk: read-only synthesis.** Base the report on the fixed Day 01
+environment and record the exact Jetson Linux release, kernel, board, device,
+commands, and recovery constraints. If QEMU generated a destructive trigger,
+separate that evidence from Orin fix verification.
+
 ## Problem
 
 Debug notes often end as tool dumps. The symptom is a report full of logs that never proves mechanism, root cause, fix direction, or verification.
@@ -70,4 +77,3 @@ Draft one root-cause report from an earlier day. It may be a realistic hypotheti
 ## Evidence Check
 
 The report must include raw evidence, mechanism reasoning, and a reproducible verification step.
-

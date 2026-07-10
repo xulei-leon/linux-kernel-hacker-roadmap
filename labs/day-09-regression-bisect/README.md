@@ -1,5 +1,12 @@
 # Day 9: How do you prove which commit introduced a regression?
 
+## Platform
+
+**Mode: QEMU. Risk: repeated disposable boots.** Use the Day 00 QEMU
+environment for automated build, boot, trigger, and classification. Hardware
+regressions that exist only on Orin require a separate recovery-gated manual
+bisect after the automated test contract is stable.
+
 ## Problem
 
 A kernel behavior works on one release and fails on another, but the suspected patch is a guess. The symptom is "it regressed between two kernels" without a deterministic test.
@@ -77,4 +84,3 @@ Write a bisect plan for one symptom with deterministic pass/fail output.
 ## Evidence Check
 
 The plan must avoid manual judgment and define a `git bisect run` compatible exit code for each outcome.
-

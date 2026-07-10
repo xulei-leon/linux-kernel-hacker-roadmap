@@ -1,5 +1,12 @@
 # Day 2: Why is a panic or oops log often not enough?
 
+## Platform
+
+**Mode: Orin analysis, QEMU trigger. Risk: destructive.** Generate a panic or
+oops only in the disposable Day 00 QEMU environment. Use Orin to inspect a
+saved log, compare its Jetson kernel configuration and symbols, and verify a
+safe fix. Do not run the destructive trigger on the primary Orin installation.
+
 ## Problem
 
 A panic or oops log shows where the kernel noticed failure, not always where the bug started. The common symptom is a report that pastes only the call trace and says "kernel crashed."
@@ -67,4 +74,3 @@ Annotate one panic or oops sample using the format above. Keep the raw excerpt n
 ## Evidence Check
 
 The annotation is acceptable only if it identifies the faulting function and names one missing piece of evidence needed before proposing a fix.
-

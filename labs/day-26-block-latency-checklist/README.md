@@ -1,5 +1,11 @@
 # Day 26: Why does block I/O latency require queue-level evidence?
 
+## Platform
+
+**Mode: Orin. Risk: low observation.** Use the actual Jetson NVMe or selected
+storage device. Record the device name, model, scheduler, queue settings, and
+filesystem before collecting block tracepoints.
+
 ## Problem
 
 File operations are slow, but the filesystem may only be waiting on block I/O. The symptom is high read or write latency without queue-level proof.
@@ -72,4 +78,3 @@ Separate filesystem delay, queue delay, and device delay for one I/O latency sym
 ## Evidence Check
 
 The checklist must have at least one observable signal per layer.
-

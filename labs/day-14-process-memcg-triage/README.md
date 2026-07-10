@@ -1,5 +1,11 @@
 # Day 14: Why is process memory growth not always a kernel leak?
 
+## Platform
+
+**Mode: Orin. Risk: low.** Use the fixed Day 01 environment and a bounded
+cgroup v2 workload. Record the cgroup path and limits before comparing process,
+memcg, page-cache, and kernel-memory evidence.
+
 ## Problem
 
 A process grows in memory and the first guess is "kernel leak." The symptom is rising RSS, a memcg OOM, or global OOM while a workload is active.
@@ -76,4 +82,3 @@ Analyze one process growth scenario versus memcg OOM versus global OOM.
 ## Evidence Check
 
 The note must include RSS, mapped file or anonymous split, memcg event evidence, and OOM source.
-

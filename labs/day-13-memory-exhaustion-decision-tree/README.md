@@ -1,5 +1,12 @@
 # Day 13: How do you debug memory leaks and system memory exhaustion?
 
+## Platform
+
+**Mode: Orin. Risk: read-only observation.** Capture real 8GB target memory,
+reclaim, slab, and cgroup evidence. Do not force global OOM on the primary
+board; use natural pressure evidence or a bounded cgroup workload with an SSH
+and recovery path.
+
 ## Problem
 
 The machine runs out of memory, but "kernel leak" is only one possibility. The symptom is rising memory pressure, OOM kills, or allocation failures.
@@ -77,4 +84,3 @@ Build a memory exhaustion decision tree for one symptom.
 ## Evidence Check
 
 The tree must separate workload growth, reclaim pressure, slab growth, and leak suspicion.
-

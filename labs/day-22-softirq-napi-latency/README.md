@@ -1,5 +1,11 @@
 # Day 22: How do softirq and NAPI problems become latency?
 
+## Platform
+
+**Mode: Orin. Risk: low observation.** Use a bounded network workload on the
+real Jetson interface and record IRQ affinity, NAPI and softirq availability,
+CPU frequency state, and thermal state with the latency evidence.
+
 ## Problem
 
 Network or storage latency spikes while CPUs appear busy, but application stacks only show waiting. The symptom may come from softirq or NAPI backlog.
@@ -67,4 +73,3 @@ Decide whether work is running in interrupt context, softirq, or `ksoftirqd` und
 ## Evidence Check
 
 The note must contain per-CPU softirq counters and one trace or perf signal.
-

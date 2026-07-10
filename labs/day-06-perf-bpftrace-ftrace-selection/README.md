@@ -1,5 +1,12 @@
 # Day 6: How do sampling and dynamic probes complement ftrace?
 
+## Platform
+
+**Mode: Orin. Risk: low.** Use the real ARM64 BSP workload and drivers. Verify
+that `perf`, `bpftrace`, BTF, and the required tracepoints are available
+before selecting a tool; record missing capabilities instead of switching the
+primary experiment to QEMU.
+
 ## Problem
 
 Tracing every function can be too much, but sampling alone may miss the exact branch. The symptom is high CPU or latency with no clear choice of tool.
@@ -76,4 +83,3 @@ Pick one high-CPU or latency symptom and fill the selection note with one comman
 ## Evidence Check
 
 The note must explain why the chosen tool is better as the first measurement than the other two common choices.
-

@@ -1,5 +1,13 @@
 # Day 17: Why do deadlocks need lock ordering evidence?
 
+## Platform
+
+**Mode: Orin analysis, QEMU trigger. Risk: may hang.** Inspect Orin's lockdep
+configuration and analyze a saved report, but run `trigger_inversion=1` only
+in Day 00 QEMU.
+
+Do not run the destructive trigger on the primary Orin installation.
+
 ## Problem
 
 Two lock names in a stack trace do not prove a deadlock. The symptom is a lockdep splat or hang where the real issue is lock order inversion.
@@ -67,4 +75,3 @@ Annotate one lockdep report and extract the two chains, inversion point, and val
 ## Evidence Check
 
 The annotation must explain the cycle and avoid confusing it with ordinary contention.
-

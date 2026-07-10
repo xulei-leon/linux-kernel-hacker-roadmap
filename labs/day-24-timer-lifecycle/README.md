@@ -1,5 +1,12 @@
 # Day 24: How do timer bugs create delayed or repeated failures?
 
+## Platform
+
+**Mode: Orin. Risk: low with bounded defaults.** Continue only after
+`test -d "/lib/modules/$(uname -r)/build"` succeeds, use the module's
+one-shot rearm behavior, unload with
+`rmmod timer_demo`, and capture the final timer trace and `dmesg`.
+
 ## Problem
 
 A failure happens later than the triggering action, repeats unexpectedly, or fires after teardown. The symptom points to timers, hrtimers, or delayed work.
@@ -68,4 +75,3 @@ Analyze one timeout symptom and fill the timer lifecycle note.
 ## Evidence Check
 
 The note must state whether the failure is missed cancel, wrong delay, or bad callback context.
-

@@ -1,5 +1,11 @@
 # Day 25: How do filesystem stalls surface as process hangs?
 
+## Platform
+
+**Mode: Orin. Risk: low observation.** Trace the real root or NVMe filesystem
+with a bounded workload. Record the filesystem, mount options, backing block
+device, dirty/writeback state, and thermal state before interpreting latency.
+
 ## Problem
 
 An application hangs in file I/O, but the root cause may be VFS locking, page cache, writeback, or the block layer. The symptom is a task stuck in `D` state during a filesystem operation.
@@ -71,4 +77,3 @@ Trace a stuck process to VFS, writeback, page cache, or block layer evidence.
 ## Evidence Check
 
 The note must name the layer needing deeper inspection and the signal that proves it.
-

@@ -1,5 +1,13 @@
 # Day 7: How do you inspect a crash after the machine is gone?
 
+## Platform
+
+**Mode: Orin analysis, QEMU trigger. Risk: destructive.** Generate the crash
+and vmcore in Day 00 QEMU or use a supplied dump. Analyze it with the exact
+matching `vmlinux` and modules.
+
+Do not run the destructive trigger on the primary Orin installation.
+
 ## Problem
 
 The system panicked and rebooted before anyone could inspect it. The symptom is a saved console log with no live machine left to query.
@@ -71,4 +79,3 @@ Draft the checklist and fill it with one real or sample vmcore scenario. Include
 ## Evidence Check
 
 The checklist must recover task evidence, stack evidence, memory pressure, and loaded-module evidence.
-

@@ -1,5 +1,11 @@
 # Day 19: How do you tell hung task, soft lockup, hard lockup, and RCU stall apart?
 
+## Platform
+
+**Mode: Orin analysis, QEMU trigger. Risk: destructive.** Analyze Orin watchdog
+and saved-console evidence, but generate soft or hard lockups only in Day 00
+QEMU. Do not run the destructive trigger on the primary Orin installation.
+
 ## Problem
 
 The system appears frozen, but the detector matters. The symptom may be a hung task, soft lockup, hard lockup, or RCU stall.
@@ -64,4 +70,3 @@ Build the classification table and apply it to one log.
 ## Evidence Check
 
 The table must separate the four symptoms using observable log signatures.
-

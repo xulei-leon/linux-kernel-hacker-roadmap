@@ -1,5 +1,11 @@
 # Day 8: How do you stop a kernel at the failure site?
 
+## Platform
+
+**Mode: QEMU. Risk: guest is intentionally stopped.** Complete Day 00 first.
+This lab requires QEMU's reliable GDB stub and disposable boot. Real-board
+KGDB over a tested serial channel is an advanced extension, not the default.
+
 ## Problem
 
 The failure happens after a specific function is entered, but logs are too late or too noisy. The symptom is a reproducible bug where inspecting arguments before the crash would decide the next step.
@@ -73,4 +79,3 @@ Define one live-debug session for stopping before a suspected function and inspe
 ## Evidence Check
 
 The note must include the breakpoint target, connection command, and one limitation of live debugging for the symptom.
-

@@ -1,5 +1,13 @@
 # Day 12: How do you classify memory corruption beyond UAF?
 
+## Platform
+
+**Mode: Orin analysis, QEMU trigger. Risk: destructive.** Run out-of-bounds,
+use-after-free, and intentional corruption parameters only in Day 00 QEMU.
+Use Orin to inspect detector availability and verify a safe fix.
+
+Do not run the destructive trigger on the primary Orin installation.
+
 ## Problem
 
 "Memory corruption" is too vague to debug. The symptom could be slab out-of-bounds, use-after-free, double free, stack overflow, or undefined behavior.
@@ -56,4 +64,3 @@ Compare three report types and decide which detector catches each symptom.
 ## Evidence Check
 
 The matrix must map symptom to detector, config, report field, and likely next step.
-

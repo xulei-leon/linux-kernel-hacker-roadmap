@@ -1,5 +1,12 @@
 # Day 3: Why do symbols decide whether a trace is useful?
 
+## Platform
+
+**Mode: Orin. Risk: read-only.** Complete Day 01 first, then use the exact
+Jetson Linux 39.2 kernel image, `vmlinux`, modules, and source that match the
+captured Orin report. Do not decode an Orin address with generic upstream or
+x86_64 artifacts.
+
 ## Problem
 
 An oops with raw addresses is hard to act on. The symptom is a trace containing offsets such as `foo_bar+0x38/0x90`, but no source line or clear instruction.
@@ -68,4 +75,3 @@ Map one address or symbol offset from an oops to source. Include the command, in
 ## Evidence Check
 
 The note must prove that the `vmlinux` or module artifact matches the crashed kernel closely enough to trust the decoded line.
-

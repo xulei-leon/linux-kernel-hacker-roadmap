@@ -1,5 +1,13 @@
 # Day 28: How do module, driver, and hotplug races fail at teardown?
 
+## Platform
+
+**Mode: Orin. Risk: low for the synthetic platform device.** Continue only
+after `test -d "/lib/modules/$(uname -r)/build"` succeeds, load the supplied
+self-contained module, unload it with
+`rmmod platform_lifecycle_demo`, and confirm work and timer cleanup in the
+final `dmesg` excerpt. Do not bind it to a real Tegra device.
+
 ## Problem
 
 A module unload, device unbind, or hotplug operation crashes after the device appears removed. The symptom is often a UAF, warning, or hang during teardown.
@@ -68,4 +76,3 @@ Analyze one load/unload or hotplug failure and fill the lifecycle checklist.
 ## Evidence Check
 
 The checklist must name refcount, active users, work or timer cleanup, and device state.
-

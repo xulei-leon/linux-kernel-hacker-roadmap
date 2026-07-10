@@ -1,5 +1,12 @@
 # Day 4: When should you use printk, dynamic debug, or trace_printk?
 
+## Platform
+
+**Mode: Orin. Risk: low.** Build against the running Jetson kernel only after
+`test -d "/lib/modules/$(uname -r)/build"` succeeds. Load the demo with safe
+defaults, unload it with `rmmod debug_log_demo`, and save a bounded
+`dmesg -T | tail -100` excerpt.
+
 ## Problem
 
 Adding raw `printk()` calls can hide timing bugs, flood logs, or make a reproducer slower than the bug. The symptom is a noisy debug patch that produces many lines but no decision.
@@ -27,10 +34,13 @@ Never turn a high-frequency path into a serial-console benchmark by accident.
 
 ## Debug Path
 
-Enable timestamps:
+Check whether the running Orin kernel already prefixes messages with monotonic
+timestamps, then enable the writable printk parameter if it is disabled:
 
 ```sh
-qemu-system-x86_64 ... -append "console=ttyS0 printk.time=1"
+cat /sys/module/printk/parameters/time
+echo Y | sudo tee /sys/module/printk/parameters/time
+dmesg | tail -20
 ```
 
 Enable one dynamic debug site:
@@ -74,4 +84,3 @@ Turn one hypothetical noisy debug patch into the checklist above. Name the exact
 ## Evidence Check
 
 The checklist is acceptable only if it chooses a less invasive method than unconditional `printk()` for high-frequency paths and names the rate-limit risk.
-

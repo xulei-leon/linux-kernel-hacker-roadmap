@@ -1,5 +1,11 @@
 # Day 16: How do missed wakeups, signals, and IPC waits look different?
 
+## Platform
+
+**Mode: Orin. Risk: low.** Trace a bounded user-space wait/wake or IPC example
+on the real ARM64 scheduler. Verify the chosen scheduler and signal tracepoints
+exist before recording.
+
 ## Problem
 
 A user-visible hang may be a missed wakeup, a signal handling issue, or an IPC wait. The symptom is "process stuck" with no clear kernel layer.
@@ -69,4 +75,3 @@ Map one user-visible hang to a wait condition and the event that should wake it.
 ## Evidence Check
 
 The map must show wait site, wake site, condition, lock, and signal behavior.
-

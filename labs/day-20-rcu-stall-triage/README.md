@@ -1,5 +1,13 @@
 # Day 20: Why can RCU stalls be hard to localize?
 
+## Platform
+
+**Mode: Orin analysis, QEMU trigger. Risk: destructive.** Inspect the Jetson
+kernel's RCU configuration and analyze saved evidence. Generate an RCU stall
+only in Day 00 QEMU.
+
+Do not run the destructive trigger on the primary Orin installation.
+
 ## Problem
 
 An RCU stall report names a CPU, but the bad code may be a long reader, disabled preemption, IRQ pressure, or a blocked grace-period path. The symptom looks like a generic hang unless the RCU fields are read.
@@ -72,4 +80,3 @@ Analyze one RCU stall report and fill the triage note.
 ## Evidence Check
 
 The note must explain why the stall is RCU-specific rather than merely a generic hang.
-
