@@ -19,4 +19,4 @@ if bash "$script_dir/boot-qemu.sh" "$tmp_dir/lab.env" 2>"$tmp_dir/stderr"; then
 fi
 
 grep -q "kernel image not found" "$tmp_dir/stderr"
-echo "smoke test passed"
+echo "Day 00 QEMU smoke test passed"

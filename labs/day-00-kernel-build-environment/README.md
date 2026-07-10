@@ -1,8 +1,13 @@
-# Day 0: How do you set up a WSL2 Ubuntu kernel build lab?
+# Day 0: How do you build a disposable QEMU kernel lab?
+
+> **Platform: QEMU fallback.** The roadmap's primary target is the Jetson Orin
+> Nano Super. Complete this lab only before a destructive,
+> virtualization-dependent, GDB-stub, or automated-bisection exercise.
 
 ## Goal
 
-Build one reproducible Linux kernel under WSL2 Ubuntu, boot it once in QEMU, and record the paths that later labs need.
+Build one reproducible x86_64 Linux kernel under WSL2 Ubuntu, boot it once in
+QEMU, and record the paths that later QEMU labs need.
 
 The output of this lab is:
 
@@ -18,7 +23,9 @@ qemu_command=qemu-system-x86_64 -kernel /home/xl/src/linux-6.12.95/arch/x86/boot
 
 ## Host Environment
 
-This lab assumes Windows with WSL2 Ubuntu.
+This lab assumes Windows with WSL2 Ubuntu. It creates a disposable VM for
+experiments that should not run on the primary Orin installation; it is not the
+Jetson BSP build environment.
 
 Keep the kernel tree under the WSL2 Linux filesystem, such as `~/src/linux-6.12.95`. Do not build under `/mnt/c/...`; kernel builds create many small files and are much slower on the Windows-mounted filesystem.
 
@@ -236,7 +243,7 @@ Ctrl-a x
 
 Press `Ctrl-a` first, release `Ctrl`, then press `x` by itself. Do not press `Ctrl-a-x` all at once.
 
-## Step 8: Record the baseline for day-01
+## Step 8: Record the baseline for later QEMU labs
 
 Save these values in your lab note:
 
@@ -263,6 +270,28 @@ initramfs=/home/xl/kernel-lab/initramfs.cpio.xz
 qemu_command=qemu-system-x86_64 -kernel /home/xl/src/linux-6.12.95/arch/x86/boot/bzImage -initrd /home/xl/kernel-lab/initramfs.cpio.xz -append "console=ttyS0 rdinit=/init panic=-1" -m 2G -smp 2 -nographic
 ```
 
+## Step 9: Use the reusable QEMU wrappers
+
+After the manual build and boot work once, configure the wrappers owned by this
+lab:
+
+```sh
+cd labs/day-00-kernel-build-environment/qemu-kernel
+cp lab.env.example lab.env
+```
+
+Edit `lab.env` so `KERNEL_TREE`, `INITRAMFS_IMAGE`, and the optional
+`ROOTFS_IMAGE` point to local artifacts. Then run:
+
+```sh
+bash build-kernel.sh
+bash boot-qemu.sh
+bash smoke-test.sh
+```
+
+The smoke test checks script syntax and a missing-input failure path. It does
+not prove that QEMU booted the kernel.
+
 ## Completion Check
 
 This lab is complete when you can answer all of these without guessing:
@@ -273,3 +302,4 @@ This lab is complete when you can answer all of these without guessing:
 - Where is `vmlinux`?
 - Which initramfs booted?
 - What exact QEMU command reached a serial console?
+- Where is the reusable Day 00 `lab.env` used by later QEMU labs?
