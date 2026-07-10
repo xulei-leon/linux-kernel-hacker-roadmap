@@ -6,6 +6,11 @@ A structured roadmap for Linux kernel developers who want to grow beyond basic c
 
 This project is a long-term capability map for Linux kernel developers. It helps developers with basic Linux kernel development experience build the knowledge, tools, and practical methods required to become stronger Linux kernel hackers.
 
+The primary hands-on target for this roadmap is the NVIDIA Jetson Orin Nano
+Super 8GB Developer Kit. A Linux or WSL2 host is still useful for source
+management and cross-builds, while QEMU is reserved for experiments that need
+fast rollback, virtual-machine introspection, or deliberate kernel failure.
+
 It focuses on three core capabilities expected from advanced kernel developers:
 
 - High quality: write readable, maintainable, and testable kernel code
@@ -18,6 +23,22 @@ It focuses on three core capabilities expected from advanced kernel developers:
 - Developers who want to improve kernel debugging and performance analysis skills
 
 This project is not suitable for learners with no Linux, C, or operating system background. If those foundations are missing, start with C, computer architecture, operating system fundamentals, and basic Linux usage.
+
+## Lab Platform Strategy
+
+- **Orin first:** run normal tracing, performance, driver, storage, networking,
+  IRQ, and power-management practice on the Jetson board.
+- **Host support:** use Linux or WSL2 for source management, documentation,
+  cross-compilation, and log analysis when that is faster than building on the
+  8GB target.
+- **QEMU when necessary:** use QEMU for controlled panic and oops injection,
+  sanitizer failures, lockups, GDB-stub debugging, and automated regression
+  bisection. Do not risk the board installation merely to avoid QEMU.
+- **Evidence before modification:** record the exact Jetson Linux release,
+  kernel, device-tree model, boot arguments, and recovery path before flashing
+  a kernel, DTB, or bootloader component.
+
+Start with the [Jetson Orin Nano Super baseline lab](docs/jetson-orin-nano-super-bsp-kernel-driver-diagnostic-lab.md).
 
 ## Capability Map
 
@@ -32,8 +53,8 @@ This project is not suitable for learners with no Linux, C, or operating system 
 ### 2. Kernel Build and Lab Environment
 
 - Source trees: mainline, stable, linux-next, subsystem trees
-- Configuration and build: `defconfig`, `menuconfig`, `olddefconfig`, cross-compilation
-- Boot environment: QEMU, KVM, initramfs, rootfs, kernel parameters
+- Configuration and build: Jetson BSP config, `defconfig`, `menuconfig`, `olddefconfig`, cross-compilation
+- Boot environment: Jetson UEFI, device tree, initramfs, rootfs, kernel parameters, QEMU fallback
 - Fast iteration: ccache, partial builds, module builds, symbol tables, debug information
 - Test entry points: kselftest, KUnit, LTP, xfstests, blktests, syzbot reproducers
 
@@ -113,10 +134,14 @@ linux-kernel-hacker-roadmap/
 
 ## Recommended Learning Method
 
-1. On Windows, complete `labs/day-00-kernel-build-environment/README.md` in WSL2 Ubuntu first.
-2. Build a repeatable QEMU-based kernel lab with `labs/day-01-debug-ready-kernel-lab/README.md`.
-3. Choose one subsystem as the main track instead of chasing too many directions.
-4. Pair every mechanism you study with a minimal experiment: configure, boot, trigger, observe, record.
+1. Establish and record the Orin baseline with
+   `docs/jetson-orin-nano-super-bsp-kernel-driver-diagnostic-lab.md`.
+2. Choose one subsystem as the main track instead of chasing too many directions.
+3. Run safe observation and driver experiments on Orin: configure, trigger,
+   observe, record, and restore.
+4. Use `labs/day-00-kernel-build-environment/README.md` and
+   `labs/day-01-debug-ready-kernel-lab/README.md` only when a later experiment
+   needs the disposable QEMU environment.
 5. For every bug, save the reproducer, kernel config, logs, stack traces, and analysis notes.
 6. Practice turning observations into a root-cause explanation and a verified fix.
 7. Repeat the loop: read code, form a hypothesis, instrument, measure, fix, verify.
@@ -134,7 +159,7 @@ linux-kernel-hacker-roadmap/
 | Stage | Focus | Outcome |
 |------|------|------|
 | Foundation | C, architecture, OS, Linux tools | Explain basic control flow and data structures in kernel code |
-| Build & Boot | Source, config, build, QEMU/rootfs | Boot a custom kernel repeatably |
+| Build & Boot | Jetson BSP, source, config, UEFI/device tree, QEMU fallback | Boot and recover a custom kernel repeatably |
 | Core Kernel | Scheduling, memory, VFS, synchronization, interrupts | Analyze core mechanisms through call chains |
 | Subsystem Deep Dive | Long-term focus on one subsystem | Locate real problems inside that subsystem |
 | Debugging | Crash, trace, perf, sanitizers | Produce evidence-based problem analysis |

@@ -7,9 +7,10 @@ understanding, and code quality skills.
 ## Start Here
 
 - [Project overview](./README.html)
+- [Orin Nano Super: primary hardware lab](./docs/jetson-orin-nano-super-bsp-kernel-driver-diagnostic-lab.html)
 - [Debugging roadmap](./docs/04-debugging/README.html)
-- [Day 00: Kernel build environment](./labs/day-00-kernel-build-environment/README.html)
-- [Day 01: Debug-ready kernel lab](./labs/day-01-debug-ready-kernel-lab/README.html)
+- [QEMU Day 00: Kernel build environment](./labs/day-00-kernel-build-environment/README.html)
+- [QEMU Day 01: Debug-ready kernel lab](./labs/day-01-debug-ready-kernel-lab/README.html)
 
 ## Learning Method
 
@@ -19,7 +20,8 @@ or trade-off behind the result.
 
 ## Main Tracks
 
-- Kernel build and QEMU lab setup
+- Orin BSP, boot, device-tree, and driver practice
+- QEMU setup for destructive and virtualization-dependent experiments
 - Crash, oops, and postmortem debugging
 - Tracing with ftrace, perf, and bpftrace
 - Memory, concurrency, IRQ, filesystem, block, and networking triage

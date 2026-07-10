@@ -1,6 +1,13 @@
-# Kernel Debugging 30-Day Learning Packages
+# Kernel Debugging Learning Packages
 
 This directory is an index for the debugging track. The canonical day documents live with their runnable lab material under `labs/day-*/README.md`.
+
+Use Orin Nano Super as the default target for safe observation, tracing,
+performance, driver, storage, networking, IRQ, and PM work. Use QEMU for labs
+that deliberately panic, corrupt, deadlock, or stop the kernel, and for the
+QEMU GDB and automated bisection workflows. Check the
+[Orin platform matrix](../jetson-orin-nano-super-bsp-kernel-driver-diagnostic-lab.md)
+before running a fault-injection module on the board.
 
 | Day | Topic | Learning package | Lab material |
 |---:|---|---|---|
@@ -34,4 +41,3 @@ This directory is an index for the debugging track. The canonical day documents 
 | 28 | Driver lifecycle teardown | [Day 28](../../labs/day-28-driver-lifecycle-teardown/README.md) | `modules` |
 | 29 | PM hang triage | [Day 29](../../labs/day-29-pm-hang-triage/README.md) | none |
 | 30 | Root-cause debug report | [Day 30](../../labs/day-30-root-cause-debug-report/README.md) | none |
-
