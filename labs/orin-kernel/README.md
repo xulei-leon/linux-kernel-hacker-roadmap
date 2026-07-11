@@ -60,8 +60,14 @@ QEMU-capable lessons do not create a lesson-local `qemu/` directory. Their
 scripts reuse the shared environment below and document any lesson-specific
 arguments or rootfs preparation in the lesson README.
 
+Observation-only lessons such as A01 do not create a fake `module/` directory.
+They provide the smallest real structure required by the skill—in A01, read-only
+collection/validation scripts, fixture tests, and an expected evidence contract.
+
 ## Available shared environment
 
+- [A01 Platform Evidence Lab](a01-identify-exact-orin-platform/README.md) —
+  read-only Orin identity collection and evidence validation.
 - [QEMU Auxiliary Environment](qemu-auxiliary/README.md) — reusable kernel
   build, boot, and smoke-test infrastructure for generic or destructive labs.
 

@@ -1,0 +1,13 @@
+architecture.txt
+carrier-board.txt
+collected-at.txt
+compatible.txt
+device-tree-serial.txt
+kernel-command-line.txt
+kernel-release.txt
+memory.txt
+model.txt
+nv-tegra-release.txt
+nvidia-packages.txt
+os-release.txt
+soc-revision.txt
