@@ -55,6 +55,11 @@ The Track guides define sequencing and acceptance; they are not claims that all
 document and lab directory provide exact commands, demo or workload, expected
 evidence, minimal fix, negative verification, and cleanup.
 
+Module-based executable lessons use the fixed directory contract documented in
+the [Labs index](../../labs/orin-kernel/README.md). The repository creates a
+lesson directory only when the README, buggy and fixed modules, lifecycle
+scripts, and stable expected-result files are implemented together.
+
 Start with Track A and B if you own an Orin. Without a board, establish the
 [QEMU auxiliary environment](../../labs/orin-kernel/qemu-auxiliary/README.md),
 then follow the lessons marked for full or partial QEMU coverage in Tracks C–O.

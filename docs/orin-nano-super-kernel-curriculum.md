@@ -643,18 +643,19 @@ labs/orin-kernel/<lesson-id>-<topic>/
 │   ├── collect.sh
 │   ├── verify-fixed.sh
 │   └── cleanup.sh
-├── qemu/
-│   ├── run.sh
-│   └── lab.env.example
 └── expected/
     ├── failure-patterns.txt
     └── fixed-result.txt
 ```
 
-Create `qemu/` only when that lesson has a useful QEMU path. Reuse the shared
-`labs/orin-kernel/qemu-auxiliary/` build and boot infrastructure; lesson
-directories contain only lesson-specific arguments, rootfs additions, or
-trigger logic.
+This is the required layout for every module-based executable lesson. Do not
+add a lesson-local `qemu/` directory. QEMU-capable lessons reuse the shared
+`labs/orin-kernel/qemu-auxiliary/` build and boot infrastructure. Put
+lesson-specific QEMU selection, arguments, rootfs setup, and trigger behavior in
+the six required scripts, with configuration documented in the lesson README.
+
+Do not create this directory until every listed file has real lesson content.
+Empty Track folders, placeholder source files, and no-op scripts are forbidden.
 
 Where appropriate, demos expose:
 
