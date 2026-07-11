@@ -1,101 +1,58 @@
-import { existsSync, readdirSync } from 'node:fs'
-import { join, parse } from 'node:path'
 import { defineConfig } from 'vitepress'
 
 const repoName = 'linux-kernel-hacker-roadmap'
 
-function titleFromSlug(slug: string) {
-  const words = slug.split('-').filter(Boolean)
-  const title: string[] = []
-
-  if (words[0] === 'day' && /^\d+$/.test(words[1] ?? '')) {
-    title.push(`Day ${words[1]}`)
-    words.splice(0, 2)
-  } else if (/^\d+$/.test(words[0] ?? '')) {
-    words.shift()
-  }
-
-  return [
-    ...title,
-    ...words.map((word) => {
-      const known = new Map([
-        ['abi', 'ABI'],
-        ['bpftrace', 'bpftrace'],
-        ['debug', 'Debug'],
-        ['ftrace', 'ftrace'],
-        ['gdb', 'gdb'],
-        ['ipc', 'IPC'],
-        ['irq', 'IRQ'],
-        ['kernel', 'Kernel'],
-        ['kunit', 'KUnit'],
-        ['linux', 'Linux'],
-        ['memcg', 'memcg'],
-        ['napi', 'NAPI'],
-        ['perf', 'perf'],
-        ['pm', 'PM'],
-        ['qemu', 'QEMU'],
-        ['rcu', 'RCU'],
-        ['slab', 'slab'],
-        ['softirq', 'softirq'],
-        ['vmcore', 'vmcore'],
-        ['wsl2', 'WSL2'],
-      ])
-
-      return known.get(word) ?? word[0].toUpperCase() + word.slice(1)
-    }),
-  ]
-    .join(' ')
-}
-
-function readmeLinks(root: string) {
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((name) => name !== '4-Reviews')
-    .filter((name) => existsSync(join(root, name, 'README.md')))
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-    .map((name) => ({
-      text: titleFromSlug(name),
-      link: `/${root}/${name}/README.html`,
-    }))
-}
-
-function markdownLinks(root: string) {
-  return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
-    .map((entry) => parse(entry.name).name)
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-    .map((name) => ({
-      text: titleFromSlug(name),
-      link: `/${root}/${name}.html`,
-    }))
-}
+const tracks = [
+  ['Track A — Orin Baseline and Recovery', '/docs/orin-kernel/track-a-baseline-recovery.html'],
+  ['Track B — BSP Source and Build', '/docs/orin-kernel/track-b-bsp-build.html'],
+  ['Track C — QEMU Auxiliary Environment', '/docs/orin-kernel/track-c-qemu.html'],
+  ['Track D — Device Tree and Probe', '/docs/orin-kernel/track-d-device-tree.html'],
+  ['Track E — Driver Lifecycle and Hardware I/O', '/docs/orin-kernel/track-e-driver-lifecycle.html'],
+  ['Track F — Observability', '/docs/orin-kernel/track-f-observability.html'],
+  ['Track G — Oops and Panic', '/docs/orin-kernel/track-g-oops-panic.html'],
+  ['Track H — Memory Failures', '/docs/orin-kernel/track-h-memory.html'],
+  ['Track I — Concurrency and CPU Stalls', '/docs/orin-kernel/track-i-concurrency.html'],
+  ['Track J — IRQ, Deferred Work, and Latency', '/docs/orin-kernel/track-j-irq-latency.html'],
+  ['Track K — Storage and Filesystems', '/docs/orin-kernel/track-k-storage.html'],
+  ['Track L — Networking', '/docs/orin-kernel/track-l-networking.html'],
+  ['Track M — Power, Thermal, and Frequency', '/docs/orin-kernel/track-m-power.html'],
+  ['Track N — Performance Engineering', '/docs/orin-kernel/track-n-performance.html'],
+  ['Track O — Tests, Reports, and Upstream Work', '/docs/orin-kernel/track-o-upstream.html'],
+].map(([text, link]) => ({ text, link }))
 
 export default defineConfig({
   base: `/${repoName}/`,
-  title: 'Linux Kernel Hacker Roadmap',
-  description: 'A practical roadmap for advanced Linux kernel development skills.',
-  srcExclude: ['AGENTS.md', 'docs/4-Reviews/**'],
-  ignoreDeadLinks: true,
+  title: 'Orin Nano Super Kernel Course',
+  description: 'An advanced, problem-driven Linux kernel development course.',
+  srcExclude: [
+    'AGENTS.md',
+    'docs/1-Requirement/**',
+    'docs/3-Plan/**',
+    'docs/4-Reviews/**',
+  ],
   themeConfig: {
     nav: [
-      { text: 'Roadmap', link: '/' },
-      { text: 'Docs', link: '/docs/04-debugging/README.html' },
-      { text: 'Labs', link: '/labs/day-01-debug-ready-kernel-lab/README.html' },
+      { text: 'Course', link: '/docs/orin-kernel/README.html' },
+      { text: 'Tracks', link: '/docs/orin-kernel/track-a-baseline-recovery.html' },
+      { text: 'Labs', link: '/labs/orin-kernel/README.html' },
+      { text: 'QEMU', link: '/labs/orin-kernel/qemu-auxiliary/README.html' },
       { text: 'GitHub', link: 'https://github.com/xulei-leon/linux-kernel-hacker-roadmap' },
     ],
     sidebar: [
       {
-        text: 'Roadmap',
-        items: [{ text: 'Overview', link: '/' }],
+        text: 'Course',
+        items: [
+          { text: 'Overview', link: '/' },
+          { text: 'Course Map', link: '/docs/orin-kernel/README.html' },
+        ],
       },
-      {
-        text: 'Docs',
-        items: [...markdownLinks('docs'), ...readmeLinks('docs')],
-      },
+      { text: 'Tracks', items: tracks },
       {
         text: 'Labs',
-        items: readmeLinks('labs'),
+        items: [
+          { text: 'Labs Index', link: '/labs/orin-kernel/README.html' },
+          { text: 'QEMU Auxiliary Environment', link: '/labs/orin-kernel/qemu-auxiliary/README.html' },
+        ],
       },
     ],
     socialLinks: [

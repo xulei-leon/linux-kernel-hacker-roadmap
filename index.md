@@ -1,28 +1,21 @@
-# Linux Kernel Hacker Roadmap
+# Jetson Orin Nano Super Kernel Course
 
-A practical roadmap for Linux kernel developers who want to grow beyond basic
-contribution and build stronger debugging, performance analysis, subsystem
-understanding, and code quality skills.
+Build advanced Linux kernel skills through focused diagnosis, repair, and
+verification exercises.
 
-## Start Here
+## Course entry points
 
-- [Project overview](./README.html)
-- [Orin Day 01: Debug-ready kernel lab](./labs/day-01-debug-ready-kernel-lab/README.html)
-- [Orin Nano Super: primary hardware lab](./docs/jetson-orin-nano-super-bsp-kernel-driver-diagnostic-lab.html)
-- [Debugging roadmap](./docs/04-debugging/README.html)
-- [QEMU Day 00: Disposable fallback](./labs/day-00-kernel-build-environment/README.html)
+- [Course overview and Track map](./docs/orin-kernel/README.html)
+- [QEMU auxiliary environment](./labs/orin-kernel/qemu-auxiliary/README.html)
+- [Runnable labs](./labs/orin-kernel/README.html)
 
-## Learning Method
+## What this course trains
 
-Work through the material as practical one-hour units. For each topic, build a
-small experiment, capture observations, and write down the root-cause reasoning
-or trade-off behind the result.
+- safe BSP builds, deployment, serial evidence, and recovery;
+- device-tree, driver-lifecycle, IRQ, DMA/SMMU, and PM diagnosis;
+- oops, memory corruption, concurrency, stall, and latency analysis;
+- storage, networking, thermal, and performance investigation;
+- KUnit, kselftest, static analysis, root-cause reports, and upstream patches.
 
-## Main Tracks
-
-- Orin BSP, boot, device-tree, and driver practice
-- QEMU setup for destructive and virtualization-dependent experiments
-- Crash, oops, and postmortem debugging
-- Tracing with ftrace, perf, and bpftrace
-- Memory, concurrency, IRQ, filesystem, block, and networking triage
-- Root-cause reports and verification discipline
+Orin is the primary hardware platform. QEMU provides a practical route for
+generic kernel skills and destructive experiments when a board is unavailable.
