@@ -68,6 +68,8 @@ collection/validation scripts, fixture tests, and an expected evidence contract.
 
 - [A01 Platform Evidence Lab](a01-identify-exact-orin-platform/README.md) —
   read-only Orin identity collection and evidence validation.
+- [A02 Software Baseline Lab](a02-capture-software-baseline/README.md) —
+  reproducible config, module, FDT, boot-artifact, and package fingerprints.
 - [QEMU Auxiliary Environment](qemu-auxiliary/README.md) — reusable kernel
   build, boot, and smoke-test infrastructure for generic or destructive labs.
 

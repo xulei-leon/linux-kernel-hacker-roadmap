@@ -21,7 +21,7 @@ safety-classification method in A07.
 | ID | Focus | Evidence required |
 |---|---|---|
 | [A01](a01-identify-exact-orin-platform.md) | Identify the exact Orin platform | Module, carrier, RAM, SoC, JetPack, L4T, and kernel record |
-| A02 | Capture a reproducible software baseline | Config, modules, command line, DTB identity, packages |
+| [A02](a02-capture-software-baseline.md) | Capture a reproducible software baseline | Config, modules, command line, DTB identity, packages |
 | A03 | Establish serial evidence collection | One timestamped UEFI-to-userspace capture |
 | A04 | Enter Force Recovery Mode safely | Host-side USB enumeration and recovery-tool record |
 | A05 | Back up boot-critical artifacts | Kernel, DTB, initramfs, modules, and boot-selection manifest |

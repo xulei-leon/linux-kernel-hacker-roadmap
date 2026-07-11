@@ -1,0 +1,14 @@
+a01-reference.txt
+a01-validation.txt
+boot-artifacts.sha256
+boot-selection.txt
+collected-at.txt
+debian-packages.txt
+kernel-command-line.txt
+kernel-config-source.txt
+kernel-config.txt
+kernel-release.txt
+loaded-modules.txt
+module-tree.txt
+nvidia-packages.txt
+runtime-fdt.sha256
