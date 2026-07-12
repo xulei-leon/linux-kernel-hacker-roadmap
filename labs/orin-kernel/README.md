@@ -4,6 +4,28 @@ Runnable labs are added one verified problem at a time. A lab is complete only
 when it includes an explicit trigger, expected evidence, source localization,
 minimal fix, negative verification, and cleanup.
 
+## Project delivery contract
+
+Every new lab must name the portfolio project and acceptance blocker it
+supports. Its README records platform and safety metadata, versioned inputs,
+exact bounded commands, expected stable signatures, and the output artifact
+that the project will link as evidence.
+
+A delivered lab follows this evidence loop:
+
+1. Capture platform identity and a quiet baseline.
+2. Run one explicit trigger or controlled workload within a stated bound.
+3. Preserve raw evidence before diagnosis or repair.
+4. Connect symptom, hypotheses, source path, root cause, and minimal fix or
+   disposition.
+5. Repeat the identical trigger or workload and verify both the expected result
+   and absence of the original failure signature.
+6. Run cleanup/recovery and report incomplete cleanup as failure.
+
+The project acceptance criteria, not completion of every A–O entry, determine
+delivery. A guide entry remains planning material until this contract and any
+project-specific evidence requirements are met.
+
 ## Required module-based lesson layout
 
 Every executable lesson that uses a demo kernel module must use this exact
@@ -73,6 +95,8 @@ collection/validation scripts, fixture tests, and an expected evidence contract.
 - [QEMU Auxiliary Environment](qemu-auxiliary/README.md) — reusable kernel
   build, boot, and smoke-test infrastructure for generic or destructive labs.
 
-The Track guides under [`docs/orin-kernel/`](../../docs/orin-kernel/README.md)
-define the planned lesson order. A guide entry does not imply that its runnable
-lab has already been delivered.
+The A–O guides under
+[`docs/orin-kernel/`](../../docs/orin-kernel/README.md) are an on-demand skill
+library mapped to the three portfolio projects. Their identifiers and existing
+lab paths remain stable, but a guide entry does not imply that its runnable lab
+has been delivered.

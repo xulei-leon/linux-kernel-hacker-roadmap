@@ -1,21 +1,25 @@
-# Jetson Orin Nano Super Kernel Course
+# NVIDIA CPU System Software Roadmap
 
-Build advanced Linux kernel skills through focused diagnosis, repair, and
-verification exercises.
+Build demonstrable Linux, ARM, and Tegra system software capability through
+three evidence-driven portfolio projects aligned with NVIDIA role JR2019268.
 
-## Course entry points
+## Start with the role
 
-- [Course overview and Track map](./docs/orin-kernel/README.html)
-- [QEMU auxiliary environment](./labs/orin-kernel/qemu-auxiliary/README.html)
-- [Runnable labs](./labs/orin-kernel/README.html)
+- [Roadmap overview](./docs/orin-system-software/README.html)
+- [Role competency map](./docs/orin-system-software/role-competency-map.html)
+- [Kernel skill library](./docs/orin-kernel/README.html)
 
-## What this course trains
+## Portfolio sequence
 
-- safe BSP builds, deployment, serial evidence, and recovery;
-- device-tree, driver-lifecycle, IRQ, DMA/SMMU, and PM diagnosis;
-- oops, memory corruption, concurrency, stall, and latency analysis;
-- storage, networking, thermal, and performance investigation;
-- KUnit, kselftest, static analysis, root-cause reports, and upstream patches.
+1. Build a modular CPU/SoC diagnostic suite.
+2. Build a safe MMIO diagnostic platform driver.
+3. Validate DVFS, thermal behavior, and performance regressions.
 
-Orin is the primary hardware platform. QEMU provides a practical route for
-generic kernel skills and destructive experiments when a board is unavailable.
+The three projects are planned. Current runnable evidence is available in the
+[A01 platform evidence lab](./labs/orin-kernel/a01-identify-exact-orin-platform/README.html),
+the [A02 software baseline lab](./labs/orin-kernel/a02-capture-software-baseline/README.html),
+and the [QEMU auxiliary environment](./labs/orin-kernel/qemu-auxiliary/README.html).
+
+Orin is the authority for Tegra and physical-board claims. QEMU supports
+generic kernel work and destructive experiments, but its results are not Tegra
+hardware evidence.

@@ -1,47 +1,54 @@
-# linux-kernel-hacker-roadmap
+# NVIDIA CPU System Software Roadmap
 
-An advanced, problem-driven Linux kernel development course for the NVIDIA
-Jetson Orin Nano Super 8GB Developer Kit.
+A project-driven Linux and Tegra system software roadmap aligned with the
+public NVIDIA Senior System Software Engineer, CPU role (JR2019268).
 
 ## Start here
 
-- [Orin kernel course](docs/orin-kernel/README.md)
-- [QEMU auxiliary environment](labs/orin-kernel/qemu-auxiliary/README.md)
+- [Role-aligned roadmap](docs/orin-system-software/README.md)
+- [Role competency map](docs/orin-system-software/role-competency-map.md)
+- [Kernel skill library](docs/orin-kernel/README.md)
+- [A01 platform evidence lab](labs/orin-kernel/a01-identify-exact-orin-platform/README.md)
+- [A02 software baseline lab](labs/orin-kernel/a02-capture-software-baseline/README.md)
 - [Runnable labs index](labs/orin-kernel/README.md)
+- [QEMU auxiliary environment](labs/orin-kernel/qemu-auxiliary/README.md)
 
-The course assumes that you can already modify and build a kernel driver. It
-focuses on evidence-based debugging, performance analysis, subsystem reasoning,
-safe board work, and reviewable kernel changes rather than introductory C or
-operating-system theory.
+The target learner can already write and debug C/C++, work comfortably in a
+Linux shell, read kernel code, and build or modify a kernel driver. The roadmap
+does not replace those prerequisites with an introductory operating-systems
+course.
 
-## Platform strategy
+The public role also calls for a BS or MS in Electrical Engineering or Computer
+Science and 5+ years of relevant experience. This repository can help produce
+technical portfolio evidence; it cannot create academic credentials or years
+of professional experience.
 
-- **Orin first:** NVIDIA BSP, Tegra device tree, buses, DMA/SMMU, power,
-  thermal, storage, networking, and board performance are verified on Orin.
-- **QEMU when truthful:** generic kernel mechanisms, destructive failures,
-  sanitizers, GDB, fault injection, regression automation, and bisection can be
-  practiced without a board.
-- **No false equivalence:** virtio or virtual-machine results are not presented
-  as Tegra hardware evidence.
-- **Recovery before modification:** boot-critical Orin work starts only after
+## Portfolio objective
+
+The primary sequence will deliver three reviewable projects:
+
+1. a modular CPU/SoC diagnostic suite;
+2. a safe MMIO diagnostic platform driver;
+3. a repeatable DVFS, thermal, and performance validation workflow.
+
+These projects are planned deliverables, not claims about current repository
+contents. Today, the repository provides runnable A01 and A02 Orin evidence
+labs, a verified QEMU bootstrap, and the A–O kernel skill library.
+
+## Platform policy
+
+- **Orin is authoritative** for NVIDIA BSP behavior, Tegra device trees,
+  physical buses, DMA/SMMU, power, thermal behavior, and board performance.
+- **QEMU is supporting evidence** for generic kernel builds, debugging,
+  sanitizers, fault injection, regression automation, and destructive
+  experiments.
+- **Evidence stays platform-specific:** x86_64, virtio, or emulated results are
+  never presented as ARM64 or Tegra hardware evidence.
+- **Hardware access stays bounded:** future diagnostic drivers must use
+  allow-listed platform resources; the roadmap does not teach arbitrary
+  physical-memory access or claim access to NVIDIA-private interfaces.
+- **Recovery precedes modification:** boot-critical Orin work starts only after
   serial capture, backup, and rollback are demonstrated.
-
-The initial project baseline is JetPack 7.2, Jetson Linux 39.2, Linux 6.8, and
-L4T Ubuntu 24.04. The first executable hardware lesson must cite the dated
-official NVIDIA release mapping used for verification.
-
-## Learning model
-
-Tracks A–O organize 156 atomic lesson goals. A runnable lesson is delivered
-only when it provides a concrete symptom, exact environment, demo or workload,
-trigger, evidence, source-level diagnosis, minimal fix, retest, and cleanup.
-The repository does not create empty lesson scaffolds.
-
-For every problem, follow:
-
-```text
-symptom -> hypothesis -> evidence -> source path -> root cause -> fix -> verification
-```
 
 ## Local documentation build
 

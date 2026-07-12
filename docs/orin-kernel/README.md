@@ -1,9 +1,11 @@
-# Jetson Orin Nano Super Kernel Course
+# Orin Kernel On-Demand Skill Library
 
-This is the learner-facing entry point for an advanced, problem-driven Linux
-kernel course built around the Jetson Orin Nano Super 8GB Developer Kit.
+This library supports the three-project
+[NVIDIA CPU System Software Roadmap](../orin-system-software/README.md). The
+portfolio projects are the primary delivery sequence; Tracks A–O provide
+focused kernel practice when a project exposes a blocker.
 
-The course assumes that you can already modify and build a kernel driver. It
+The library assumes that you can already modify and build a kernel driver. It
 does not repeat general C, operating-system, or Linux-user material. Each future
 executable lesson will address one concrete problem through the loop:
 
@@ -28,7 +30,7 @@ Virtio evidence must never be presented as Tegra hardware evidence.
 Every executable lesson will state its primary platform, QEMU coverage, and
 safety level before any command.
 
-## Course tracks
+## Skill tracks
 
 | Track | Guide | Outcome |
 |---|---|---|
@@ -48,21 +50,44 @@ safety level before any command.
 | N | [Performance Engineering](track-n-performance.md) | Produce reproducible, statistically defensible optimizations |
 | O | [Tests, Reports, and Upstream Work](track-o-upstream.md) | Turn a reproducer and fix into reviewable kernel work |
 
-## How to use the guides
+## How to use the library
 
-The Track guides define sequencing and acceptance; they are not claims that all
-156 executable labs already exist. A lesson becomes runnable only when its own
+The Track guides are a searchable skill catalog, not a required sequence or a
+portfolio completion checklist. A lesson becomes runnable only when its own
 document and lab directory provide exact commands, demo or workload, expected
 evidence, minimal fix, negative verification, and cleanup.
+
+The following are common, non-exhaustive blockers. The
+[canonical track-to-project map](../orin-nano-super-kernel-curriculum.md#track-to-project-map)
+governs authoring; select the smallest guide entry that resolves the current
+project blocker:
+
+- **Project 1, CPU/SoC diagnostics:** A and F establish platform evidence and
+  observability; G–I support injected-failure diagnosis; O supplies testing and
+  reporting practice. Use C for isolated generic-kernel experiments.
+- **Project 2, safe MMIO driver:** B, D, and E cover build, device-tree,
+  resource, and lifecycle work; F–J support diagnosis; O covers KUnit,
+  lifecycle tests, and reviewable fixes.
+- **Project 3, DVFS/thermal validation:** A and M establish controlled platform
+  and power evidence; J and N cover latency, benchmark design, noise, and
+  comparisons; O covers reproducible reports. K or L applies only when storage
+  or network activity is part of the measured workload.
+
+Return to the named project's acceptance criteria after the blocker is
+resolved. Completion means satisfying all three project acceptance lists and
+the [portfolio delivery gates](../orin-system-software/delivery-roadmap.md),
+not exhausting this library.
 
 Module-based executable lessons use the fixed directory contract documented in
 the [Labs index](../../labs/orin-kernel/README.md). The repository creates a
 lesson directory only when the README, buggy and fixed modules, lifecycle
 scripts, and stable expected-result files are implemented together.
 
-Start with Track A and B if you own an Orin. Without a board, establish the
+Start with A01 and A02 when a project needs Orin evidence. Without a board,
+establish the
 [QEMU auxiliary environment](../../labs/orin-kernel/qemu-auxiliary/README.md),
-then follow the lessons marked for full or partial QEMU coverage in Tracks C–O.
+then use lessons marked for full or partial QEMU coverage while keeping target
+acceptance items planned.
 
-Content authors maintain the normative authoring contract separately in
+Content authors maintain the normative authoring and safety contract in
 `docs/orin-nano-super-kernel-curriculum.md`; it is not required learner reading.
