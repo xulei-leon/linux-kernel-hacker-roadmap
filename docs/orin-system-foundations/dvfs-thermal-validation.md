@@ -1,4 +1,4 @@
-# Project 3: DVFS, Thermal, and Performance Validation
+# DVFS, Thermal, and Performance Validation
 
 **Status:** Blueprint. The method is current; measurements and regression
 conclusions remain planned.
@@ -16,7 +16,8 @@ or power configurations as if they were equivalent.
 
 ## Experiment design
 
-- `capture-environment` records A01/A02 identifiers, kernel and BSP, CPU
+- `capture-environment` records the platform and software baseline identifiers,
+  kernel and BSP, CPU
   topology, active frequency driver/governor, online CPUs, power mode, cooling
   setup, ambient-temperature method, workload versions, and command lines.
 - `run-trial` reserves the manifest's `sampler_cpu` for the harness and pins

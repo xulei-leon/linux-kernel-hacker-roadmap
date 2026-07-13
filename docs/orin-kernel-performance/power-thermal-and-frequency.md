@@ -1,4 +1,4 @@
-# Track M — Power, Thermal, and Frequency
+# Power, Thermal, and Frequency
 
 ## Outcome
 
@@ -7,8 +7,11 @@ power-mode limits from kernel-code regressions.
 
 ## Prerequisites
 
-Complete Tracks A, E, and F; establish serial recovery before suspend/resume
-work and record the active Orin power mode and cooling conditions.
+Complete [Orin Platform Recovery](../orin-kernel-debugging/platform-recovery.md),
+[Driver Lifecycle and Hardware I/O](../orin-kernel-debugging/driver-lifecycle-and-hardware-io.md),
+and [Kernel Observability](../orin-kernel-debugging/kernel-observability.md).
+Establish serial recovery before suspend/resume work and record the active Orin
+power mode and cooling conditions.
 
 ## Platform boundary
 
@@ -16,20 +19,18 @@ Frequency, thermal, suspend/resume, and wake evidence is Orin-only. QEMU is a
 partial teaching environment for generic runtime-PM reference and callback
 logic, not physical power behavior.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Focus |
-|---|---|
-| M01 | Identify the active power mode |
-| M02 | Trace CPU frequency changes |
-| M03 | Diagnose thermal throttling |
-| M04 | Diagnose a runtime-PM reference leak |
-| M05 | Diagnose runtime suspend failure |
-| M06 | Diagnose runtime resume failure |
-| M07 | Diagnose system suspend entry failure |
-| M08 | Diagnose system resume hang |
-| M09 | Diagnose unexpected wakeups |
-| M10 | Separate power limits from regressions |
+- Identify the active power mode
+- Trace CPU frequency changes
+- Diagnose thermal throttling
+- Diagnose a runtime-PM reference leak
+- Diagnose runtime suspend failure
+- Diagnose runtime resume failure
+- Diagnose system suspend entry failure
+- Diagnose system resume hang
+- Diagnose unexpected wakeups
+- Separate power limits from regressions
 
 ## Concrete diagnostic decision
 

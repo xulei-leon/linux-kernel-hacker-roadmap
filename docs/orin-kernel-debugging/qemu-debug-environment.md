@@ -1,4 +1,4 @@
-# Track C — QEMU Auxiliary Environment
+# QEMU Debug Environment
 
 ## Outcome
 
@@ -12,20 +12,18 @@ and permission to create disposable local images.
 
 ## Platform boundary
 
-This Track is QEMU-only. It teaches generic kernel mechanisms and cannot prove
+This guide is QEMU-only. It teaches generic kernel mechanisms and cannot prove
 Tegra device-tree, bus, DMA/SMMU, power, thermal, or performance behavior.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Focus | Evidence required |
-|---|---|---|
-| C01 | Build a kernel for QEMU | Source/config/toolchain and image/vmlinux paths |
-| C02 | Boot a minimal root filesystem | Console, rootfs, modules, clean exit |
-| C03 | Debug early boot with GDB | Breakpoint, registers, source, resume |
-| C04 | Preserve evidence after panic | Console, QEMU arguments, config, trigger |
-| C05 | Restore a disposable image | Snapshot/overlay discard and base integrity |
-| C06 | Run an automated reproducer | Timeout, exit code, stable classifier |
-| C07 | Drive `git bisect run` | Automated good/bad/skip result |
+- **Build a kernel for QEMU:** Source/config/toolchain and image/vmlinux paths
+- **Boot a minimal root filesystem:** Console, rootfs, modules, clean exit
+- **Debug early boot with GDB:** Breakpoint, registers, source, resume
+- **Preserve evidence after panic:** Console, QEMU arguments, config, trigger
+- **Restore a disposable image:** Snapshot/overlay discard and base integrity
+- **Run an automated reproducer:** Timeout, exit code, stable classifier
+- **Drive `git bisect run`:** Automated good/bad/skip result
 
 ## Concrete diagnostic decision
 

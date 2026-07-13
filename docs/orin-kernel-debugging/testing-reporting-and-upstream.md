@@ -1,4 +1,4 @@
-# Track O — Tests, Reports, and Upstream Work
+# Testing, Reporting, and Upstream Work
 
 ## Outcome
 
@@ -7,8 +7,9 @@ regression test and a reviewable kernel patch series.
 
 ## Prerequisites
 
-Bring one completed diagnosis/fix pair from Tracks D–N, including its original
-reproducer, evidence bundle, patch, and before/after verification.
+Bring one completed diagnosis/fix pair from the debugging or performance
+guides, including its original reproducer, evidence bundle, patch, and
+before/after verification.
 
 ## Platform boundary
 
@@ -16,22 +17,20 @@ KUnit, kselftest, static analysis, reports, Git, and patch preparation work on a
 host and QEMU. NVIDIA BSP ownership and hardware validation require Orin
 evidence where applicable.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Focus |
-|---|---|
-| O01 | Turn a demo into KUnit |
-| O02 | Turn a reproducer into kselftest |
-| O03 | Test probe failure paths |
-| O04 | Repeat load and unload |
-| O05 | Use sparse on a driver |
-| O06 | Use Smatch on error paths |
-| O07 | Write a root-cause report |
-| O08 | Produce a minimal fix |
-| O09 | Write a regression test |
-| O10 | Determine BSP versus upstream ownership |
-| O11 | Prepare an upstream commit message |
-| O12 | Prepare a reviewable patch series |
+- Turn a demo into KUnit
+- Turn a reproducer into kselftest
+- Test probe failure paths
+- Repeat load and unload
+- Use sparse on a driver
+- Use Smatch on error paths
+- Write a root-cause report
+- Produce a minimal fix
+- Write a regression test
+- Determine BSP versus upstream ownership
+- Prepare an upstream commit message
+- Prepare a reviewable patch series
 
 ## Concrete diagnostic decision
 

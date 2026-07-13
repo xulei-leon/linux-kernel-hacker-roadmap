@@ -1,61 +1,58 @@
-# Orin Kernel Skill Library and Portfolio Authoring Contract
+# Orin Kernel Guide Authoring Contract
 
 ## Purpose
 
-This document defines how the Orin kernel material supports the three-project
-[NVIDIA CPU System Software Roadmap](orin-system-software/README.md). The
-portfolio projects are the primary delivery sequence. Tracks A–O are an
-on-demand skill library: select the smallest relevant lesson when a project
+This document defines how the Orin kernel material supports the
+[integrated system projects](../docs/orin-system-foundations/README.md). The
+projects are the primary delivery sequence. Debugging and performance guides
+are on-demand references: select the smallest relevant topic when a project
 blocker appears, then return to the project acceptance criteria.
 
 The library develops practical ability in high-quality kernel code, debugging,
 performance analysis, and subsystem reasoning. It is not a general C course,
 an operating-systems survey, a Linux user guide, or a fixed training plan.
 
-## Portfolio-first use
+## Project-first use
 
 Deliver projects in this order:
 
-1. [CPU/SoC health diagnostic suite](orin-system-software/project-1-cpu-soc-diagnostics.md)
-2. [Safe MMIO diagnostic platform driver](orin-system-software/project-2-mmio-diagnostic-driver.md)
-3. [DVFS, thermal, and performance validation](orin-system-software/project-3-dvfs-thermal-validation.md)
+1. [CPU/SoC health diagnostic suite](../docs/orin-system-foundations/cpu-soc-diagnostics.md)
+2. [Safe MMIO diagnostic platform driver](../docs/orin-system-foundations/mmio-diagnostic-driver.md)
+3. [DVFS, thermal, and performance validation](../docs/orin-system-foundations/dvfs-thermal-validation.md)
 
-Use [A01](../labs/orin-kernel/a01-identify-exact-orin-platform/README.md) and
-[A02](../labs/orin-kernel/a02-capture-software-baseline/README.md) before making
-Orin-specific claims. Use the
+Use the [platform evidence lab](../labs/orin-kernel/a01-identify-exact-orin-platform/README.md)
+and [software baseline lab](../labs/orin-kernel/a02-capture-software-baseline/README.md)
+before making Orin-specific claims. Use the
 [QEMU auxiliary environment](../labs/orin-kernel/qemu-auxiliary/README.md) for
 generic kernel mechanisms and failures that should be isolated from hardware.
 
-A track entry is guidance, not a delivered lab. A lab is runnable only when its
+A guide entry is guidance, not a delivered lab. A lab is runnable only when its
 document, implementation, scripts, expected evidence, verification, and
-cleanup are present. Portfolio completion is determined by the three project
-acceptance lists and the [delivery gates](orin-system-software/delivery-roadmap.md),
-not by completing every track entry.
+cleanup are present. Completion is determined by the three project acceptance
+lists and the
+[delivery gates](../docs/orin-system-foundations/integrated-project-roadmap.md),
+not by completing every guide entry.
 
-## Track-to-project map
+## Guide-to-project map
 
-| Track | Skill area | Typical project blocker |
-|---|---|---|
-| A | Orin baseline and recovery | All projects: platform identity, software fingerprints, recovery evidence |
-| B | BSP source and build | Projects 2–3: reproducible kernel artifacts, deployment, BSP ownership |
-| C | QEMU auxiliary environment | Projects 1–2: host-safe kernel experiments, injected failures, automation |
-| D | Device tree and probe | Project 2: compatible matching, resources, probe failures |
-| E | Driver lifecycle and hardware I/O | Project 2: MMIO access, teardown, IRQ/DMA/PM boundaries |
-| F | Observability | All projects: minimal instrumentation and bounded evidence collection |
-| G | Oops and panic | Projects 1–2: failure triage when kernel-facing tests crash |
-| H | Memory failures | Projects 1–2: corruption, leaks, pressure, and allocation failures |
-| I | Concurrency and CPU stalls | Projects 1–2: worker lifecycle, locking, teardown, and hangs |
-| J | IRQ, deferred work, and latency | Projects 2–3: IRQ attribution and latency interference |
-| K | Storage and filesystems | Projects 1 and 3 when evidence I/O or storage affects results |
-| L | Networking | Any project only when remote collection or network load is in scope |
-| M | Power, thermal, and frequency | Project 3: DVFS, thermal controls, PM failures, wakeups |
-| N | Performance engineering | Project 3: benchmark design, noise, profiling, comparisons |
-| O | Tests, reports, and upstream work | All projects: KUnit/kselftest, failure reports, patches, review evidence |
+| Guide area | Typical project blocker |
+|---|---|
+| Platform identity and recovery | All projects: platform identity, software fingerprints, and recovery evidence |
+| BSP build and deployment | Reproducible kernel artifacts, deployment, and BSP ownership |
+| QEMU debugging | Host-safe kernel experiments, injected failures, and automation |
+| Device tree and driver lifecycle | Compatible matching, resources, MMIO access, teardown, IRQ/DMA/PM boundaries |
+| Kernel observability | Minimal instrumentation and bounded evidence collection |
+| Crash, memory, and concurrency diagnosis | Corruption, leaks, locking, teardown, stalls, and kernel crashes |
+| IRQ and scheduler latency | IRQ attribution and latency interference |
+| Storage and network performance | Evidence I/O, queueing, tail latency, throughput, and packet-path bottlenecks |
+| Power, thermal, and frequency | DVFS, thermal controls, PM failures, and wakeups |
+| Performance engineering | Benchmark design, noise, profiling, and comparisons |
+| Tests, reports, and upstream work | KUnit/kselftest, failure reports, patches, and review evidence |
 
-The detailed A–O guides remain under [docs/orin-kernel](orin-kernel/README.md).
-They retain their identifiers so existing lab paths and references remain
-stable. A project plan should cite only the selected entries and state the
-blocker each entry resolves.
+Detailed guides live under
+[kernel debugging](../docs/orin-kernel-debugging/README.md) and
+[kernel performance](../docs/orin-kernel-performance/README.md). A project plan
+cites only the selected guides and states the blocker each one resolves.
 
 ## Platform truth policy
 
@@ -154,7 +151,7 @@ fault injection, or real peripheral when a module would be less truthful.
 When a demo module is the smallest truthful reproducer, retain this layout:
 
 ```text
-labs/orin-kernel/<lesson-id>-<topic>/
+labs/orin-kernel/<topic>/
 ├── README.md
 ├── module/
 │   ├── Makefile
@@ -213,7 +210,6 @@ safety claim from a guessed Orin register.
 
 Benchmarks record tool and workload versions, inputs, command lines, warm-up,
 repetitions, affinity, controls, raw results, exclusions, and analysis method.
-Job-posting snapshots support role interpretation only, not hardware claims.
 
 ## Version and compatibility policy
 

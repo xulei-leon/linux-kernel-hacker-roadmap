@@ -1,4 +1,4 @@
-# Track K — Storage and Filesystems
+# Storage and Filesystem Performance
 
 ## Outcome
 
@@ -7,27 +7,26 @@ block layer, and device completion, then localize errors or tail latency.
 
 ## Prerequisites
 
-Complete Track F and prepare disposable storage for injected-error work; know
-the basic VFS, page-cache, and block-request path.
+Complete [Kernel Observability](../orin-kernel-debugging/kernel-observability.md)
+and prepare disposable storage for injected-error work; know the basic VFS,
+page-cache, and block-request path.
 
 ## Platform boundary
 
 QEMU supports generic paths, virtual block devices, and destructive error
 injection. NVMe throughput and Orin power/thermal interactions require Orin.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Focus |
-|---|---|
-| K01 | Trace a read to the block layer |
-| K02 | Trace write and writeback |
-| K03 | Diagnose page-cache miss latency |
-| K04 | Diagnose writeback throttling |
-| K05 | Diagnose filesystem lock contention |
-| K06 | Diagnose block tail latency |
-| K07 | Diagnose I/O error propagation |
-| K08 | Diagnose Orin NVMe throughput regression |
-| K09 | Separate storage and reclaim stalls |
+- Trace a read to the block layer
+- Trace write and writeback
+- Diagnose page-cache miss latency
+- Diagnose writeback throttling
+- Diagnose filesystem lock contention
+- Diagnose block tail latency
+- Diagnose I/O error propagation
+- Diagnose Orin NVMe throughput regression
+- Separate storage and reclaim stalls
 
 ## Concrete diagnostic decision
 
@@ -39,7 +38,8 @@ root-cause fix.
 ## Lab and evidence policy
 
 Use `loop`, `null_blk`, `scsi_debug`, or disposable QEMU storage for injected
-errors. K07 is S3 and must use a snapshot/overlay. Orin NVMe measurements record
+errors. The I/O error-propagation exercise is S3 and must use a snapshot or
+overlay. Orin NVMe measurements record
 filesystem, mount options, capacity, temperature, clocks, power mode, workload,
 and latency distribution.
 

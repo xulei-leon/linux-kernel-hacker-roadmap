@@ -1,4 +1,4 @@
-# Project 2: Safe MMIO Diagnostic Platform Driver
+# Safe MMIO Diagnostic Platform Driver
 
 **Status:** Blueprint. The safety contract is current; driver code and target
 evidence remain planned.

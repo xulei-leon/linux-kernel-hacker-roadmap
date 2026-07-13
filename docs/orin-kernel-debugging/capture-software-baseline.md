@@ -1,4 +1,4 @@
-# A02 — How Do You Capture a Reproducible Software Baseline?
+# How Do You Capture a Reproducible Software Baseline?
 
 **Primary platform:** Jetson Orin Nano Super
 
@@ -10,9 +10,9 @@
 
 A board name and `uname -r` do not reproduce a kernel investigation. Two systems
 can report the same release while using different configs, modules, runtime
-FDTs, boot files, or packages. A02 consumes your validated A01 identity bundle
-and records the software state that later build, driver, and regression lessons
-must cite.
+FDTs, boot files, or packages. This guide consumes the validated platform
+identity bundle and records the software state that later build, driver, and
+regression work must cite.
 
 Completion produces a checksummed evidence directory and a short explanation
 of which facts are proven, which are only candidate files, and which remain
@@ -20,17 +20,19 @@ unavailable.
 
 ## Prerequisites
 
-- Complete A01 on the same running Orin and retain its validated bundle.
+- Complete [platform identification](identify-orin-platform.md) on the same
+  running Orin and retain its validated bundle.
 - Bash, GNU findutils, `gzip`, `awk`, `sort`, `sha256sum`, `uname`, `date`, and
   `dpkg-query`.
 - Read access to `/proc`, `/sys/firmware/fdt`, `/boot`, `/lib/modules`, and the
   Debian package database.
-- The dated NVIDIA baseline sources cited in [A01](a01-identify-exact-orin-platform.md).
+- The dated NVIDIA baseline sources cited in the
+  [platform-identification guide](identify-orin-platform.md).
 
 The collector never loads `configs.ko`. It reads `/proc/config.gz` only if the
 file is already available.
 
-## Step 1 — Validate the A01 dependency
+## Step 1 — Validate the platform identity dependency
 
 ```sh
 cd labs/orin-kernel/a02-capture-software-baseline
@@ -39,8 +41,9 @@ a01="$HOME/kernel-lab/a01-platform-<UTC timestamp>"
   "$a01" ../a01-identify-exact-orin-platform/expected/required-files.txt
 ```
 
-Do not continue if the A01 checksum, model, architecture, or compatible checks
-fail. A02 calls this same validator again and records its output.
+Do not continue if the platform bundle checksum, model, architecture, or
+compatible checks fail. The software-baseline collector calls this same
+validator again and records its output.
 
 ## Step 2 — Collect the software baseline
 
@@ -80,7 +83,7 @@ so source provenance matters as much as content.
 
 | Evidence | What it constrains | What it does not prove |
 |---|---|---|
-| `a01-reference.txt` | Exact A01 bundle and manifest used | That the board has not changed since A01 |
+| `a01-reference.txt` | Exact platform identity bundle and manifest used | That the board has not changed since collection |
 | `kernel-command-line.txt` | Arguments visible to this running kernel | Which boot entry supplied them |
 | `loaded-modules.txt` | Modules loaded at collection time | All modules installed or previously loaded |
 | `module-tree.txt` | Relative regular files under this release's module tree | That each file matches the running image |
@@ -110,11 +113,11 @@ Ask three separate questions:
 1. Does `kernel-release.txt` match the module-tree directory and package names?
 2. Does the selected extlinux/UEFI evidence point at one of the hashed image and
    DTB candidates?
-3. Is there an operational record—serial log in A03 or later boot evidence—that
+3. Is there an operational record—such as a serial log or later boot evidence—that
    connects the selected entry to the runtime kernel/FDT?
 
-A02 answers the first two as far as read-only files allow. It deliberately does
-not claim the third. File presence is not boot proof.
+This guide answers the first two as far as read-only files allow. It
+deliberately does not claim the third. File presence is not boot proof.
 
 ## Step 6 — Verify integrity and archive
 
@@ -124,18 +127,21 @@ tar -C "$(dirname "$output")" -caf "${output}.tar.xz" "$(basename "$output")"
 sha256sum "${output}.tar.xz" > "${output}.tar.xz.sha256"
 ```
 
-Every manifest entry must report `OK`. Keep the A01 and A02 archives together;
-the path and manifest hash in `a01-reference.txt` preserve their relationship.
+Every manifest entry must report `OK`. Keep the platform and software baseline
+archives together; the path and manifest hash in `a01-reference.txt` preserve
+their relationship.
 
 ## Failure decisions
 
-- **A01 validation fails:** stop and repair provenance; never bypass it.
+- **Platform identity validation fails:** stop and repair provenance; never
+  bypass it.
 - **Kernel config unavailable:** obtain the correct config through a read-only
   source or explicit operator override; do not load a module in this S0 lesson.
 - **Runtime FDT unavailable:** record the environment gap and stop; hashing an
   arbitrary on-disk DTB is not an equivalent substitute.
 - **Boot artifacts unavailable:** identify the actual boot filesystem/mount
-  before B09–B11; do not search and hash the entire root filesystem.
+  before kernel, module, or DTB deployment work; do not search and hash the
+  entire root filesystem.
 - **Package snapshot unavailable:** restore access to `dpkg-query`; do not copy
   package data from another machine.
 
@@ -147,7 +153,7 @@ how its change propagates into top-level `SHA256SUMS`.
 
 ## Completion checklist
 
-- The A01 validator output is present and successful.
+- The platform identity validator output is present and successful.
 - Kernel config source and fallback are explicit.
 - Loaded and installed modules are not confused.
 - Runtime FDT and boot candidate hashes are interpreted separately.

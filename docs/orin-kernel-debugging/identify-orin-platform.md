@@ -1,4 +1,4 @@
-# A01 — How Do You Identify the Exact Orin Platform?
+# How Do You Identify the Exact Orin Platform?
 
 **Primary platform:** Jetson Orin Nano Super
 
@@ -166,8 +166,8 @@ firmware/board configuration
 ```
 
 A wrong active DTB can therefore make later probe debugging target the wrong
-hardware description. A01 captures the runtime end of that chain before Track
-D traces it back to source DTS files.
+hardware description. This guide captures the runtime end of that chain before
+the device-tree guide traces it back to source DTS files.
 
 ## Cleanup and preservation
 
@@ -178,8 +178,8 @@ tar -C "$(dirname "$output")" -caf "${output}.tar.xz" "$(basename "$output")"
 sha256sum "${output}.tar.xz" > "${output}.tar.xz.sha256"
 ```
 
-Do not delete the original bundle until A02 has incorporated its identity into
-the broader software baseline.
+Do not delete the original bundle until the software-baseline guide has
+incorporated its identity into the broader baseline.
 
 ## Independent exercise
 

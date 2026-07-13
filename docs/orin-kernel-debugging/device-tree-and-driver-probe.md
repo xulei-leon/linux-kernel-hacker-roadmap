@@ -1,4 +1,4 @@
-# Track D — Device Tree and Probe
+# Device Tree and Driver Probe
 
 ## Outcome
 
@@ -7,7 +7,9 @@ then prove a minimal source-to-runtime correction.
 
 ## Prerequisites
 
-Complete Tracks A and B for Orin work, or Track C for generic QEMU variants;
+Complete [Orin Platform Recovery](platform-recovery.md) and
+[BSP Build and Deployment](bsp-build-and-deployment.md) for Orin work, or use
+the [QEMU Debug Environment](qemu-debug-environment.md) for generic variants;
 understand platform-driver matching and basic DTS syntax.
 
 ## Platform boundary
@@ -16,23 +18,21 @@ QEMU can reproduce generic matching, disabled-node, MMIO, IRQ, and deferred
 probe errors. Tegra clock, reset, regulator, pinctrl, and active-board DTB
 conclusions require Orin.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Focus |
-|---|---|
-| D01 | Identify the active device tree |
-| D02 | Decompile and compare the running DTB |
-| D03 | Trace DTS include and override order |
-| D04 | Match `compatible` to a driver |
-| D05 | Diagnose a disabled node |
-| D06 | Diagnose a missing MMIO resource |
-| D07 | Diagnose an IRQ description error |
-| D08 | Diagnose a clock dependency |
-| D09 | Diagnose a reset dependency |
-| D10 | Diagnose a regulator dependency |
-| D11 | Diagnose a pinctrl state error |
-| D12 | Diagnose `-EPROBE_DEFER` |
-| D13 | Validate a DTB change on Orin |
+- Identify the active device tree
+- Decompile and compare the running DTB
+- Trace DTS include and override order
+- Match `compatible` to a driver
+- Diagnose a disabled node
+- Diagnose a missing MMIO resource
+- Diagnose an IRQ description error
+- Diagnose a clock dependency
+- Diagnose a reset dependency
+- Diagnose a regulator dependency
+- Diagnose a pinctrl state error
+- Diagnose `-EPROBE_DEFER`
+- Validate a DTB change on Orin
 
 ## Concrete diagnostic decision
 

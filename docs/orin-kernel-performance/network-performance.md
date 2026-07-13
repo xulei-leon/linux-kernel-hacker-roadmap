@@ -1,4 +1,4 @@
-# Track L — Networking
+# Network Performance
 
 ## Outcome
 
@@ -7,8 +7,9 @@ and diagnose TCP throughput using layer-specific evidence.
 
 ## Prerequisites
 
-Complete Tracks F and J, and prepare a controlled peer, fixed topology, and
-repeatable traffic generator for performance lessons.
+Complete [Kernel Observability](../orin-kernel-debugging/kernel-observability.md)
+and [IRQ and Scheduler Latency](irq-and-scheduler-latency.md), then prepare a
+controlled peer, fixed topology, and repeatable traffic generator.
 
 ## Platform boundary
 
@@ -16,20 +17,18 @@ QEMU and virtio-net teach generic stack, NAPI, queue, and teardown mechanisms.
 Tegra MAC/PHY, physical IRQ topology, and Orin throughput conclusions require
 the board and a controlled peer.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Focus |
-|---|---|
-| L01 | Trace packet receive |
-| L02 | Trace packet transmit |
-| L03 | Locate a packet-drop layer |
-| L04 | Diagnose NAPI budget exhaustion |
-| L05 | Diagnose network IRQ imbalance |
-| L06 | Diagnose RX queue imbalance |
-| L07 | Diagnose TX queue congestion |
-| L08 | Diagnose network teardown races |
-| L09 | Diagnose TCP retransmissions |
-| L10 | Diagnose TCP throughput regression |
+- Trace packet receive
+- Trace packet transmit
+- Locate a packet-drop layer
+- Diagnose NAPI budget exhaustion
+- Diagnose network IRQ imbalance
+- Diagnose RX queue imbalance
+- Diagnose TX queue congestion
+- Diagnose network teardown races
+- Diagnose TCP retransmissions
+- Diagnose TCP throughput regression
 
 ## Concrete diagnostic decision
 

@@ -1,4 +1,4 @@
-# Track N — Performance Engineering
+# Performance Engineering
 
 ## Outcome
 
@@ -7,28 +7,27 @@ that a minimal optimization improves the intended metric without regression.
 
 ## Prerequisites
 
-Complete Track F and the subsystem Track being measured; prepare a repeatable
-workload and controls for frequency, temperature, background load, and input.
+Complete [Kernel Observability](../orin-kernel-debugging/kernel-observability.md)
+and the relevant subsystem guide; prepare a repeatable workload and controls
+for frequency, temperature, background load, and input.
 
 ## Platform boundary
 
 Methods and tools work on Orin and QEMU. QEMU is suitable for teaching and
 automation, but its numbers never characterize Orin hardware.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Focus |
-|---|---|
-| N01 | Define a reproducible benchmark |
-| N02 | Quantify measurement noise |
-| N03 | Profile CPU hotspots |
-| N04 | Analyze kernel call graphs |
-| N05 | Diagnose cache-miss bottlenecks |
-| N06 | Diagnose lock contention |
-| N07 | Diagnose memory-bandwidth saturation |
-| N08 | Diagnose IRQ-driven performance loss |
-| N09 | Compare a candidate optimization |
-| N10 | Automate performance bisect |
+- Define a reproducible benchmark
+- Quantify measurement noise
+- Profile CPU hotspots
+- Analyze kernel call graphs
+- Diagnose cache-miss bottlenecks
+- Diagnose lock contention
+- Diagnose memory-bandwidth saturation
+- Diagnose IRQ-driven performance loss
+- Compare a candidate optimization
+- Automate performance bisect
 
 ## Concrete diagnostic decision
 

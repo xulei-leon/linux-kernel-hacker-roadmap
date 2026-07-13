@@ -1,4 +1,4 @@
-# Track F — Observability
+# Kernel Observability
 
 ## Outcome
 
@@ -16,21 +16,19 @@ Logging, ftrace, trace-cmd, tracepoints, kprobes, perf, and bpftrace are broadly
 available on Orin and QEMU. Instrumentation overhead must be measured on the
 platform whose behavior is being characterized.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Focus |
-|---|---|
-| F01 | Write useful `printk` diagnostics |
-| F02 | Control dynamic debug |
-| F03 | Prevent log flooding |
-| F04 | Capture a tracepoint |
-| F05 | Trace a function with ftrace |
-| F06 | Save reproducible `trace-cmd` evidence |
-| F07 | Add a custom tracepoint |
-| F08 | Use a kprobe for a bounded question |
-| F09 | Profile kernel CPU samples with `perf` |
-| F10 | Choose ftrace, perf, or bpftrace |
-| F11 | Measure instrumentation overhead |
+- Write useful `printk` diagnostics
+- Control dynamic debug
+- Prevent log flooding
+- Capture a tracepoint
+- Trace a function with ftrace
+- Save reproducible `trace-cmd` evidence
+- Add a custom tracepoint
+- Use a kprobe for a bounded question
+- Profile kernel CPU samples with `perf`
+- Choose ftrace, perf, or bpftrace
+- Measure instrumentation overhead
 
 ## Concrete diagnostic decision
 

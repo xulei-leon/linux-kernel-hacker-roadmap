@@ -1,4 +1,4 @@
-# Track H — Memory Failures
+# Memory Failures
 
 ## Outcome
 
@@ -7,8 +7,9 @@ page-reference failures with the detector appropriate to each class.
 
 ## Prerequisites
 
-Complete Track C for destructive demos and Track F for evidence capture; know
-the basic slab, page-allocation, reclaim, and cgroup vocabulary.
+Use the [QEMU Debug Environment](qemu-debug-environment.md) for destructive
+demos and [Kernel Observability](kernel-observability.md) for evidence capture;
+know the basic slab, page-allocation, reclaim, and cgroup vocabulary.
 
 ## Platform boundary
 
@@ -16,20 +17,18 @@ KASAN, KMEMLEAK, allocation failure, and generic pressure work in QEMU. Orin is
 needed when the result depends on its memory capacity, BSP configuration, or
 device interaction.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Failure class | Primary evidence |
-|---|---|---|
-| H01 | Slab use-after-free | KASAN allocation/free/access stacks |
-| H02 | Slab/kmalloc out-of-bounds access | Object bounds and access size |
-| H03 | Double free | Allocator and KASAN report |
-| H04 | Memory leak | KMEMLEAK plus object count |
-| H05 | Allocation failure | Injected failure and error unwind |
-| H06 | Uninitialized state | Deterministic state and static/compiler evidence |
-| H07 | Memory pressure | Reclaim, compaction, allocation latency |
-| H08 | OOM kill | Allocation context, memory state, victim |
-| H09 | memcg limit failure | Cgroup-local versus global state |
-| H10 | Page-reference leak | Reference accounting across cleanup |
+- **Slab use-after-free:** KASAN allocation/free/access stacks
+- **Slab/kmalloc out-of-bounds access:** Object bounds and access size
+- **Double free:** Allocator and KASAN report
+- **Memory leak:** KMEMLEAK plus object count
+- **Allocation failure:** Injected failure and error unwind
+- **Uninitialized state:** Deterministic state and static/compiler evidence
+- **Memory pressure:** Reclaim, compaction, allocation latency
+- **OOM kill:** Allocation context, memory state, victim
+- **memcg limit failure:** Cgroup-local versus global state
+- **Page-reference leak:** Reference accounting across cleanup
 
 ## Concrete diagnostic decision
 

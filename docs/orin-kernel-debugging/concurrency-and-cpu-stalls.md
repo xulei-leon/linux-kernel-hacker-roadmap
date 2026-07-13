@@ -1,4 +1,4 @@
-# Track I — Concurrency and CPU Stalls
+# Concurrency and CPU Stalls
 
 ## Outcome
 
@@ -7,8 +7,9 @@ evidence to diagnose races, deadlocks, missed wakeups, and CPU stalls.
 
 ## Prerequisites
 
-Complete Track C for destructive triggers and Track F for tracing; understand
-mutex, spinlock, wait queue, completion, and RCU fundamentals.
+Use the [QEMU Debug Environment](qemu-debug-environment.md) for destructive
+triggers and [Kernel Observability](kernel-observability.md) for tracing;
+understand mutex, spinlock, wait queue, completion, and RCU fundamentals.
 
 ## Platform boundary
 
@@ -16,22 +17,20 @@ Generic concurrency failures are fully teachable in QEMU and destructive
 triggers are QEMU-only. Orin is used later when a real device or workload is
 required to reproduce timing.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Failure class |
-|---|---|
-| I01 | Lock-order inversion |
-| I02 | Self-deadlock |
-| I03 | Sleeping in atomic context |
-| I04 | Lost update |
-| I05 | Teardown use-after-free |
-| I06 | Lost wakeup |
-| I07 | Completion misuse |
-| I08 | RCU lifetime error |
-| I09 | Hung task |
-| I10 | Soft lockup |
-| I11 | Hard-lockup detection feasibility |
-| I12 | RCU stall |
+- Lock-order inversion
+- Self-deadlock
+- Sleeping in atomic context
+- Lost update
+- Teardown use-after-free
+- Lost wakeup
+- Completion misuse
+- RCU lifetime error
+- Hung task
+- Soft lockup
+- Hard-lockup detection feasibility
+- RCU stall
 
 ## Concrete diagnostic decision
 
@@ -44,8 +43,9 @@ RCU stall has grace-period evidence. Classify before selecting tools.
 
 Micro-modules expose one explicit race or ordering defect. Lockdep, KASAN,
 KCSAN, scheduling traces, and watchdog output are enabled only as required.
-I11 must preflight the ARM64 virtual watchdog and may teach a detector gap
-instead of falsely claiming a reproduced hard lockup.
+The hard-lockup detection exercise must preflight the ARM64 virtual watchdog
+and may teach a detector gap instead of falsely claiming a reproduced hard
+lockup.
 
 ## Completion criteria
 

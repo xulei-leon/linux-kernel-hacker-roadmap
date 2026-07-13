@@ -1,4 +1,4 @@
-# Track A — Orin Baseline and Recovery
+# Orin Platform Recovery
 
 ## Outcome
 
@@ -14,19 +14,19 @@ and a host capable of running the NVIDIA recovery tools.
 
 The Jetson release, board identity, serial boot, backup, flashing, and recovery
 lessons are Orin-only. QEMU is useful only when practicing the experiment
-safety-classification method in A07.
+safety-classification method.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Focus | Evidence required |
-|---|---|---|
-| [A01](a01-identify-exact-orin-platform.md) | Identify the exact Orin platform | Module, carrier, RAM, SoC, JetPack, L4T, and kernel record |
-| [A02](a02-capture-software-baseline.md) | Capture a reproducible software baseline | Config, modules, command line, DTB identity, packages |
-| A03 | Establish serial evidence collection | One timestamped UEFI-to-userspace capture |
-| A04 | Enter Force Recovery Mode safely | Host-side USB enumeration and recovery-tool record |
-| A05 | Back up boot-critical artifacts | Kernel, DTB, initramfs, modules, and boot-selection manifest |
-| A06 | Recover from an unbootable kernel | Controlled failure and successful fallback evidence |
-| A07 | Build an experiment safety matrix | S0–S3 classification with platform and recovery decision |
+- **[Identify the exact Orin platform](identify-orin-platform.md):** Module,
+  carrier, RAM, SoC, JetPack, L4T, and kernel record
+- **[Capture a reproducible software baseline](capture-software-baseline.md):**
+  Config, modules, command line, DTB identity, and packages
+- **Establish serial evidence collection:** One timestamped UEFI-to-userspace capture
+- **Enter Force Recovery Mode safely:** Host-side USB enumeration and recovery-tool record
+- **Back up boot-critical artifacts:** Kernel, DTB, initramfs, modules, and boot-selection manifest
+- **Recover from an unbootable kernel:** Controlled failure and successful fallback evidence
+- **Build an experiment safety matrix:** S0–S3 classification with platform and recovery decision
 
 ## Concrete diagnostic decision
 
@@ -37,7 +37,8 @@ started networking. Each boundary implies a different recovery action.
 
 ## Lab delivery policy
 
-A01–A05 use read-only commands and captured artifacts. A06 must preserve a
+Platform identification, baseline capture, serial evidence, and backup use
+read-only commands or captured artifacts. Recovery exercises preserve a
 known-good boot entry and show the exact rollback before introducing failure.
 The first hardware lesson must add the dated official NVIDIA release mapping
 required by the curriculum version policy.

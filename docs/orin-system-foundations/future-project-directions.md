@@ -1,30 +1,25 @@
-# Extension-Track Decision Analysis
+# Future Project Directions
 
-**Status:** Decision support. These tracks are conditional options, not active
+**Status:** Decision support. These directions are conditional options, not active
 projects or current capability claims.
 
-## Primary direction and boundary
+## Current direction and boundary
 
-The portfolio targets two roles:
-
-- Senior System Software Engineer, CPU;
-- Senior Software Engineer - Networking and Virtualization.
-
-The [CPU project sequence](README.md) remains the current delivery core. A
-networking-specific project must be designed and approved separately before it
-becomes part of that core. Do not start an extension track in parallel with an
-unfinished core project merely to broaden the portfolio.
+The [integrated project sequence](README.md) remains the current delivery core.
+A networking-specific project must be designed and approved separately before
+it becomes part of that core. Do not start an optional direction in parallel
+with an unfinished integrated project merely to broaden the project set.
 
 This document answers one question for each extension: what evidence and
 equipment must exist before the direction is worth a dedicated project?
 
 ## Direction comparison
 
-| Direction | Portfolio value | Entry constraint | Decision priority |
+| Direction | Engineering value | Entry constraint | Decision priority |
 |---|---|---|---|
 | HPC/AI Networking | Deepens the networking target with RDMA data-path and performance evidence | Supported RDMA hardware, a peer, and a reproducible test topology | First extension when the hardware gate is met |
-| Enterprise Solution | Adds container operations, reliability, and customer-issue diagnosis evidence | A supported Jetson container runtime and one reproducible inference workload | Alternative when enterprise platform roles become a target |
-| Robotics DevTech | Adds ROS 2 integration, sensor reliability, and edge inference evidence | A real supported sensor and a working ROS 2 environment | Defer unless robotics becomes an active application target |
+| Enterprise Platform Reliability | Adds container operations, reliability, and service-incident diagnosis evidence | A supported Jetson container runtime and one reproducible inference workload | Alternative when platform reliability becomes an active objective |
+| Robotics Systems Integration | Adds ROS 2 integration, sensor reliability, and edge inference evidence | A real supported sensor and a working ROS 2 environment | Defer unless robotics becomes an active engineering objective |
 
 ## HPC/AI Networking
 
@@ -71,7 +66,7 @@ but cannot be presented as RDMA, RoCE, NCCL, or multi-node AI networking
 experience. Add NCCL claims only after running a supported multi-GPU workload
 and retaining its actual communication evidence.
 
-## Enterprise Solution
+## Enterprise Platform Reliability
 
 ### Why consider it?
 
@@ -106,16 +101,16 @@ and application evidence, apply the smallest fix, and retest the same input.
 Do not add Kubernetes to the first project. A single Jetson cannot demonstrate
 DGX or distributed-cluster operations, so limit claims to the container,
 Linux, NVIDIA runtime, and failure paths actually exercised. Consider an
-orchestrator only when a real multi-node deployment or target role requires
+orchestrator only when a real multi-node deployment or system requirement needs
 it.
 
-## Robotics DevTech
+## Robotics Systems Integration
 
 ### Why consider it?
 
 This direction is valuable when it demonstrates reliable integration of a
 real sensor, ROS 2 communication, inference, diagnostics, and recovery. It does
-not require presenting the candidate as a robotics algorithm researcher.
+not require presenting the work as robotics algorithm research.
 
 ### Entry gate
 
@@ -150,11 +145,11 @@ directly and records reproducible evidence.
 
 ## Shared evidence gate
 
-Any extension that becomes active must satisfy the portfolio-wide gate in the
-[delivery roadmap](delivery-roadmap.md): source, exact build and run steps,
+Any direction that becomes active must satisfy the project-wide gate in the
+[integrated project roadmap](integrated-project-roadmap.md): source, exact build and run steps,
 dependency versions, platform identity, automated checks, raw success and
 failure evidence, bounded cleanup or recovery, one diagnosis and retest, and a
-five-minute interview demonstration.
+five-minute technical demonstration.
 
 Label every result as Orin/ARM64, generic host, or simulation/replay evidence.
 If an entry gate or required signal is missing, record the direction as

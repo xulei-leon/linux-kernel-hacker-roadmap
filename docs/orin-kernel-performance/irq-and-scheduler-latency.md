@@ -1,4 +1,4 @@
-# Track J — IRQ, Deferred Work, and Latency
+# IRQ and Scheduler Latency
 
 ## Outcome
 
@@ -8,28 +8,28 @@ latency.”
 
 ## Prerequisites
 
-Complete Tracks E and F, and record a stable workload plus the relevant IRQ and
-CPU topology before changing affinity or handler design.
+Complete [Driver Lifecycle and Hardware I/O](../orin-kernel-debugging/driver-lifecycle-and-hardware-io.md)
+and [Kernel Observability](../orin-kernel-debugging/kernel-observability.md),
+then record a stable workload plus the relevant IRQ and CPU topology before
+changing affinity or handler design.
 
 ## Platform boundary
 
 QEMU teaches generic handler and deferred-work mechanisms. Real interrupt
 topology, CPU placement, and latency claims require measurement on Orin.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Focus |
-|---|---|
-| J01 | Measure IRQ distribution |
-| J02 | Diagnose a long hard-IRQ handler |
-| J03 | Move work to a threaded IRQ |
-| J04 | Diagnose softirq saturation |
-| J05 | Diagnose a workqueue stall |
-| J06 | Diagnose workqueue starvation |
-| J07 | Diagnose timer teardown races |
-| J08 | Measure scheduler wakeup latency |
-| J09 | Separate IRQ and scheduler latency |
-| J10 | Diagnose affinity-induced latency |
+- Measure IRQ distribution
+- Diagnose a long hard-IRQ handler
+- Move work to a threaded IRQ
+- Diagnose softirq saturation
+- Diagnose a workqueue stall
+- Diagnose workqueue starvation
+- Diagnose timer teardown races
+- Measure scheduler wakeup latency
+- Separate IRQ and scheduler latency
+- Diagnose affinity-induced latency
 
 ## Concrete diagnostic decision
 

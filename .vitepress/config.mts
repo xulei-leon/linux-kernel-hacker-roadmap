@@ -2,28 +2,33 @@ import { defineConfig } from 'vitepress'
 
 const repoName = 'linux-kernel-hacker-roadmap'
 
-const tracks = [
-  ['Track A — Orin Baseline and Recovery', '/docs/orin-kernel/track-a-baseline-recovery.html'],
-  ['Track B — BSP Source and Build', '/docs/orin-kernel/track-b-bsp-build.html'],
-  ['Track C — QEMU Auxiliary Environment', '/docs/orin-kernel/track-c-qemu.html'],
-  ['Track D — Device Tree and Probe', '/docs/orin-kernel/track-d-device-tree.html'],
-  ['Track E — Driver Lifecycle and Hardware I/O', '/docs/orin-kernel/track-e-driver-lifecycle.html'],
-  ['Track F — Observability', '/docs/orin-kernel/track-f-observability.html'],
-  ['Track G — Oops and Panic', '/docs/orin-kernel/track-g-oops-panic.html'],
-  ['Track H — Memory Failures', '/docs/orin-kernel/track-h-memory.html'],
-  ['Track I — Concurrency and CPU Stalls', '/docs/orin-kernel/track-i-concurrency.html'],
-  ['Track J — IRQ, Deferred Work, and Latency', '/docs/orin-kernel/track-j-irq-latency.html'],
-  ['Track K — Storage and Filesystems', '/docs/orin-kernel/track-k-storage.html'],
-  ['Track L — Networking', '/docs/orin-kernel/track-l-networking.html'],
-  ['Track M — Power, Thermal, and Frequency', '/docs/orin-kernel/track-m-power.html'],
-  ['Track N — Performance Engineering', '/docs/orin-kernel/track-n-performance.html'],
-  ['Track O — Tests, Reports, and Upstream Work', '/docs/orin-kernel/track-o-upstream.html'],
+const debuggingGuides = [
+  ['Identify the Exact Orin Platform', '/docs/orin-kernel-debugging/identify-orin-platform.html'],
+  ['Capture a Reproducible Software Baseline', '/docs/orin-kernel-debugging/capture-software-baseline.html'],
+  ['Orin Platform Recovery', '/docs/orin-kernel-debugging/platform-recovery.html'],
+  ['BSP Build and Deployment', '/docs/orin-kernel-debugging/bsp-build-and-deployment.html'],
+  ['QEMU Debug Environment', '/docs/orin-kernel-debugging/qemu-debug-environment.html'],
+  ['Device Tree and Driver Probe', '/docs/orin-kernel-debugging/device-tree-and-driver-probe.html'],
+  ['Driver Lifecycle and Hardware I/O', '/docs/orin-kernel-debugging/driver-lifecycle-and-hardware-io.html'],
+  ['Kernel Observability', '/docs/orin-kernel-debugging/kernel-observability.html'],
+  ['Oops and Panic', '/docs/orin-kernel-debugging/oops-and-panic.html'],
+  ['Memory Failures', '/docs/orin-kernel-debugging/memory-failures.html'],
+  ['Concurrency and CPU Stalls', '/docs/orin-kernel-debugging/concurrency-and-cpu-stalls.html'],
+  ['Testing, Reporting, and Upstream Work', '/docs/orin-kernel-debugging/testing-reporting-and-upstream.html'],
+].map(([text, link]) => ({ text, link }))
+
+const performanceGuides = [
+  ['Performance Engineering', '/docs/orin-kernel-performance/performance-engineering.html'],
+  ['IRQ and Scheduler Latency', '/docs/orin-kernel-performance/irq-and-scheduler-latency.html'],
+  ['Storage and Filesystem Performance', '/docs/orin-kernel-performance/storage-and-filesystem-performance.html'],
+  ['Network Performance', '/docs/orin-kernel-performance/network-performance.html'],
+  ['Power, Thermal, and Frequency', '/docs/orin-kernel-performance/power-thermal-and-frequency.html'],
 ].map(([text, link]) => ({ text, link }))
 
 export default defineConfig({
   base: `/${repoName}/`,
-  title: 'NVIDIA CPU System Software Roadmap',
-  description: 'A project-driven Linux and Tegra system software roadmap aligned with NVIDIA JR2019268.',
+  title: 'Jetson Orin System Engineering Roadmap',
+  description: 'Project-driven Linux, Tegra, kernel debugging, and performance engineering on Jetson Orin.',
   srcExclude: [
     'AGENTS.md',
     'docs/1-Requirement/**',
@@ -34,31 +39,39 @@ export default defineConfig({
   ],
   themeConfig: {
     nav: [
-      { text: 'Roadmap', link: '/docs/orin-system-software/README.html' },
-      { text: 'Competencies', link: '/docs/orin-system-software/role-competency-map.html' },
-      { text: 'Kernel Library', link: '/docs/orin-kernel/README.html' },
+      { text: 'System Foundations', link: '/docs/orin-system-foundations/README.html' },
+      { text: 'Debugging', link: '/docs/orin-kernel-debugging/README.html' },
+      { text: 'Performance', link: '/docs/orin-kernel-performance/README.html' },
       { text: 'Labs', link: '/labs/orin-kernel/README.html' },
       { text: 'QEMU', link: '/labs/orin-kernel/qemu-auxiliary/README.html' },
       { text: 'GitHub', link: 'https://github.com/xulei-leon/linux-kernel-hacker-roadmap' },
     ],
     sidebar: [
       {
-        text: 'Role Roadmap',
+        text: 'Orin System Foundations',
         items: [
           { text: 'Overview', link: '/' },
-          { text: 'Roadmap', link: '/docs/orin-system-software/README.html' },
-          { text: 'Competency Map', link: '/docs/orin-system-software/role-competency-map.html' },
-          { text: 'Project 1 — CPU/SoC Diagnostics', link: '/docs/orin-system-software/project-1-cpu-soc-diagnostics.html' },
-          { text: 'Project 2 — MMIO Diagnostic Driver', link: '/docs/orin-system-software/project-2-mmio-diagnostic-driver.html' },
-          { text: 'Project 3 — DVFS/Thermal Validation', link: '/docs/orin-system-software/project-3-dvfs-thermal-validation.html' },
-          { text: 'Delivery Roadmap', link: '/docs/orin-system-software/delivery-roadmap.html' },
+          { text: 'Foundation Map', link: '/docs/orin-system-foundations/README.html' },
+          { text: 'Capability Map', link: '/docs/orin-system-foundations/capability-map.html' },
+          { text: 'CPU/SoC Diagnostics', link: '/docs/orin-system-foundations/cpu-soc-diagnostics.html' },
+          { text: 'MMIO Diagnostic Driver', link: '/docs/orin-system-foundations/mmio-diagnostic-driver.html' },
+          { text: 'DVFS/Thermal Validation', link: '/docs/orin-system-foundations/dvfs-thermal-validation.html' },
+          { text: 'Integrated Project Roadmap', link: '/docs/orin-system-foundations/integrated-project-roadmap.html' },
+          { text: 'Future Project Directions', link: '/docs/orin-system-foundations/future-project-directions.html' },
         ],
       },
       {
-        text: 'Kernel Skill Library',
+        text: 'Kernel Debugging',
         items: [
-          { text: 'Library Map', link: '/docs/orin-kernel/README.html' },
-          ...tracks,
+          { text: 'Debugging Guide Map', link: '/docs/orin-kernel-debugging/README.html' },
+          ...debuggingGuides,
+        ],
+      },
+      {
+        text: 'Kernel Performance',
+        items: [
+          { text: 'Performance Guide Map', link: '/docs/orin-kernel-performance/README.html' },
+          ...performanceGuides,
         ],
       },
       {

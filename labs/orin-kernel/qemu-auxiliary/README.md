@@ -6,7 +6,7 @@
 
 **Safety level:** S0
 
-The course's primary target is the Jetson Orin Nano Super. Complete this lab
+The roadmap's primary target is the Jetson Orin Nano Super. Complete this lab
 before any destructive,
 > virtualization-dependent, GDB-stub, or automated-bisection exercise.
 
@@ -17,8 +17,9 @@ QEMU, and record the paths that later QEMU labs need.
 
 This retained bootstrap uses x86_64 because that is the verified environment
 available in the repository. It teaches generic build, boot, symbol, initramfs,
-and automation skills. Track C will add a separately verified ARM64 `virt`
-variant; this x86_64 result must not be presented as ARM64 or Tegra evidence.
+and automation skills. The QEMU debugging guide may add a separately verified
+ARM64 `virt` variant; this x86_64 result must not be presented as ARM64 or
+Tegra evidence.
 
 The output of this lab is:
 

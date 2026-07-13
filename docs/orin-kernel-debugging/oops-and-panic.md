@@ -1,4 +1,4 @@
-# Track G — Oops and Panic
+# Oops and Panic
 
 ## Outcome
 
@@ -7,8 +7,9 @@ separating the corruption trigger from the later exposure point.
 
 ## Prerequisites
 
-Complete Track C and the symbol/instrumentation foundations in Track F; retain
-the exact kernel config, `vmlinux`, module binaries, and source revision.
+Complete the [QEMU Debug Environment](qemu-debug-environment.md) and
+[Kernel Observability](kernel-observability.md) foundations; retain the exact
+kernel config, `vmlinux`, module binaries, and source revision.
 
 ## Platform boundary
 
@@ -16,18 +17,16 @@ These S2 exercises are QEMU-first. Orin execution is unnecessary unless a
 future hardware-specific crash cannot be reproduced generically and has a
 separately reviewed recovery plan.
 
-## Ordered lessons
+## Focus areas
 
-| ID | Failure class |
-|---|---|
-| G01 | NULL pointer dereference |
-| G02 | Invalid function pointer |
-| G03 | Out-of-bounds exposure |
-| G04 | WARN, BUG, oops, and panic differences |
-| G05 | Explicit panic |
-| G06 | Kernel stack overflow |
-| G07 | Module-address decoding |
-| G08 | Trigger point versus root cause |
+- NULL pointer dereference
+- Invalid function pointer
+- Out-of-bounds exposure
+- WARN, BUG, oops, and panic differences
+- Explicit panic
+- Kernel stack overflow
+- Module-address decoding
+- Trigger point versus root cause
 
 ## Concrete diagnostic decision
 

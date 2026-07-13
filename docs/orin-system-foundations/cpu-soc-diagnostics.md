@@ -1,4 +1,4 @@
-# Project 1: CPU/SoC Health Diagnostic Suite
+# CPU/SoC Health Diagnostic Suite
 
 **Status:** Blueprint. The design is current; an implemented suite and Orin
 results remain planned.
@@ -101,7 +101,8 @@ unwritable output directory fails before plugin execution.
    behavior.
 3. Host integration tests use fixture trees instead of claiming host facts as
    Orin behavior.
-4. Orin integration tests consume A01/A02 baseline evidence and run read-only
+4. Orin integration tests consume the platform and software baseline evidence
+   and run read-only
    checks on the identified ARM64 target.
 5. End-to-end tests compare console and JSON states and verify bounded runtime,
    output limits, deadline exit codes, reporter timeout/atomic rename, minimal
@@ -112,7 +113,7 @@ unwritable output directory fails before plugin execution.
 - C++17 source, build instructions, dependency versions, and configuration
   examples.
 - Versioned JSON schema and sample `PASS`, `WARN`, `FAIL`, and `SKIP` reports.
-- Unit/contract test output and an Orin run tied to A01/A02 evidence.
+- Unit/contract test output and an Orin run tied to the recorded baselines.
 - One reproducible injected failure with hypothesis, diagnosis, fix or
   disposition, and retest.
 - Design note covering plugin isolation, timeout policy, evidence bounds, and
@@ -142,5 +143,5 @@ unwritable output directory fails before plugin execution.
 - Evidence and logs remain within configured limits, including timeout cases.
 - Orin results name the board, ARM64 architecture, kernel, configuration, and
   source interfaces; host fixtures are labeled non-Orin.
-- The portfolio contains success, unsupported, warning, and injected-failure
+- The project evidence contains success, unsupported, warning, and injected-failure
   evidence plus a retest, without private-interface or hardware-health claims.

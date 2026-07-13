@@ -1,43 +1,36 @@
-# NVIDIA CPU System Software Roadmap
+# Jetson Orin System Engineering Roadmap
 
-A project-driven Linux and Tegra system software roadmap for two primary
-targets: NVIDIA Senior System Software Engineer, CPU (JR2019268), and Senior
-Software Engineer - Networking and Virtualization. The current three-project
-delivery sequence remains the CPU-focused core; a networking-specific project
-will be frozen separately before implementation.
+A project-driven roadmap for Linux, ARM64, and Tegra system engineering on
+Jetson Orin. It focuses on reproducible system evidence, kernel debugging,
+driver development, and performance analysis.
 
 ## Start here
 
-- [Role-aligned roadmap](docs/orin-system-software/README.md)
-- [Role competency map](docs/orin-system-software/role-competency-map.md)
-- [Extension-track decision analysis](docs/orin-system-software/extension-track-analysis.md)
-- [Kernel skill library](docs/orin-kernel/README.md)
-- [A01 platform evidence lab](labs/orin-kernel/a01-identify-exact-orin-platform/README.md)
-- [A02 software baseline lab](labs/orin-kernel/a02-capture-software-baseline/README.md)
+- [Orin system foundations](docs/orin-system-foundations/README.md)
+- [System capability map](docs/orin-system-foundations/capability-map.md)
+- [Integrated project roadmap](docs/orin-system-foundations/integrated-project-roadmap.md)
+- [Future project directions](docs/orin-system-foundations/future-project-directions.md)
+- [Kernel debugging guides](docs/orin-kernel-debugging/README.md)
+- [Kernel performance guides](docs/orin-kernel-performance/README.md)
 - [Runnable labs index](labs/orin-kernel/README.md)
 - [QEMU auxiliary environment](labs/orin-kernel/qemu-auxiliary/README.md)
 
-The target learner can already write and debug C/C++, work comfortably in a
-Linux shell, read kernel code, and build or modify a kernel driver. The roadmap
-does not replace those prerequisites with an introductory operating-systems
-course.
+The material assumes working C/C++ skills, routine Linux shell use, the ability
+to read kernel code, and experience building or modifying a kernel driver. It
+does not replace those prerequisites with a generic operating-systems course.
 
-The public role also calls for a BS or MS in Electrical Engineering or Computer
-Science and 5+ years of relevant experience. This repository can help produce
-technical portfolio evidence; it cannot create academic credentials or years
-of professional experience.
+## Integrated projects
 
-## Portfolio objective
+The current project set applies the foundations and guides to three concrete
+system engineering problems:
 
-The primary sequence will deliver three reviewable projects:
+- a modular CPU/SoC diagnostic suite;
+- a safe MMIO diagnostic platform driver;
+- a repeatable DVFS, thermal, and performance validation workflow.
 
-1. a modular CPU/SoC diagnostic suite;
-2. a safe MMIO diagnostic platform driver;
-3. a repeatable DVFS, thermal, and performance validation workflow.
-
-These projects are planned deliverables, not claims about current repository
-contents. Today, the repository provides runnable A01 and A02 Orin evidence
-labs, a verified QEMU bootstrap, and the A–O kernel skill library.
+The blueprints are planning assets until source, tests, raw evidence, failure
+behavior, and target results are present. Current runnable evidence includes
+the platform-identification and software-baseline labs plus the QEMU bootstrap.
 
 ## Platform policy
 
@@ -48,23 +41,23 @@ labs, a verified QEMU bootstrap, and the A–O kernel skill library.
   experiments.
 - **Evidence stays platform-specific:** x86_64, virtio, or emulated results are
   never presented as ARM64 or Tegra hardware evidence.
-- **Hardware access stays bounded:** future diagnostic drivers must use
-  allow-listed platform resources; the roadmap does not teach arbitrary
-  physical-memory access or claim access to NVIDIA-private interfaces.
-- **Recovery precedes modification:** boot-critical Orin work starts only after
+- **Hardware access stays bounded:** diagnostic drivers use declared,
+  allow-listed platform resources rather than arbitrary physical-memory
+  access or private interfaces.
+- **Recovery precedes modification:** boot-critical work starts only after
   serial capture, backup, and rollback are demonstrated.
 
 ## Local documentation build
 
 ```sh
-npm install
-npm run docs:dev
+pnpm install
+pnpm run docs:dev
 ```
 
 Production check:
 
 ```sh
-npm run docs:build
+pnpm run docs:build
 ```
 
 ## License

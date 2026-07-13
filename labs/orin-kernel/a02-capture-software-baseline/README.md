@@ -1,4 +1,4 @@
-# A02 Software Baseline Lab
+# Software Baseline Lab
 
 **Primary platform:** Jetson Orin Nano Super
 
@@ -7,7 +7,7 @@
 **Safety level:** S0
 
 This observation-only lab has no module or trigger. Follow the complete
-[A02 lesson](../../../docs/orin-kernel/a02-capture-software-baseline.md).
+[software-baseline guide](../../../docs/orin-kernel-debugging/capture-software-baseline.md).
 
 ```sh
 a01="$HOME/kernel-lab/a01-platform-<UTC timestamp>"

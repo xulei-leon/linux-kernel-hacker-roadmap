@@ -1,4 +1,4 @@
-# A01 Platform Evidence Lab
+# Platform Evidence Lab
 
 **Primary platform:** Jetson Orin Nano Super
 
@@ -12,7 +12,7 @@ validation.
 
 Follow the complete lesson:
 
-- [A01 — How Do You Identify the Exact Orin Platform?](../../../docs/orin-kernel/a01-identify-exact-orin-platform.md)
+- [How Do You Identify the Exact Orin Platform?](../../../docs/orin-kernel-debugging/identify-orin-platform.md)
 
 Run from this directory on Orin:
 

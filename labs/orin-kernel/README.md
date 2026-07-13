@@ -4,9 +4,9 @@ Runnable labs are added one verified problem at a time. A lab is complete only
 when it includes an explicit trigger, expected evidence, source localization,
 minimal fix, negative verification, and cleanup.
 
-## Project delivery contract
+## Experiment delivery contract
 
-Every new lab must name the portfolio project and acceptance blocker it
+Every new lab must name the integrated project and acceptance blocker it
 supports. Its README records platform and safety metadata, versioned inputs,
 exact bounded commands, expected stable signatures, and the output artifact
 that the project will link as evidence.
@@ -22,9 +22,9 @@ A delivered lab follows this evidence loop:
    and absence of the original failure signature.
 6. Run cleanup/recovery and report incomplete cleanup as failure.
 
-The project acceptance criteria, not completion of every A–O entry, determine
-delivery. A guide entry remains planning material until this contract and any
-project-specific evidence requirements are met.
+The active project acceptance criteria, not completion of every guide,
+determine delivery. A guide entry remains planning material until this contract
+and any project-specific evidence requirements are met.
 
 ## Required module-based lesson layout
 
@@ -32,7 +32,7 @@ Every executable lesson that uses a demo kernel module must use this exact
 structure:
 
 ```text
-labs/orin-kernel/<lesson-id>-<topic>/
+labs/orin-kernel/<topic>/
 ├── README.md
 ├── module/
 │   ├── Makefile
@@ -82,21 +82,21 @@ QEMU-capable lessons do not create a lesson-local `qemu/` directory. Their
 scripts reuse the shared environment below and document any lesson-specific
 arguments or rootfs preparation in the lesson README.
 
-Observation-only lessons such as A01 do not create a fake `module/` directory.
-They provide the smallest real structure required by the skill—in A01, read-only
-collection/validation scripts, fixture tests, and an expected evidence contract.
+Observation-only lessons do not create a fake `module/` directory. They provide
+the smallest real structure required by the skill: read-only collection and
+validation scripts, fixture tests, and an expected evidence contract.
 
 ## Available shared environment
 
-- [A01 Platform Evidence Lab](a01-identify-exact-orin-platform/README.md) —
+- [Platform Evidence Lab](a01-identify-exact-orin-platform/README.md) —
   read-only Orin identity collection and evidence validation.
-- [A02 Software Baseline Lab](a02-capture-software-baseline/README.md) —
+- [Software Baseline Lab](a02-capture-software-baseline/README.md) —
   reproducible config, module, FDT, boot-artifact, and package fingerprints.
 - [QEMU Auxiliary Environment](qemu-auxiliary/README.md) — reusable kernel
   build, boot, and smoke-test infrastructure for generic or destructive labs.
 
-The A–O guides under
-[`docs/orin-kernel/`](../../docs/orin-kernel/README.md) are an on-demand skill
-library mapped to the three portfolio projects. Their identifiers and existing
-lab paths remain stable, but a guide entry does not imply that its runnable lab
-has been delivered.
+The [debugging guides](../../docs/orin-kernel-debugging/README.md) and
+[performance guides](../../docs/orin-kernel-performance/README.md) are
+on-demand references for the integrated projects. Existing lab paths remain
+stable, but a guide entry does not imply that its runnable lab has been
+delivered.

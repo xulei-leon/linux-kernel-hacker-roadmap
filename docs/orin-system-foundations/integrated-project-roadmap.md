@@ -1,19 +1,19 @@
-# Portfolio Delivery Roadmap
+# Integrated Project Roadmap
 
 **Status:** Planning guide. The order and gates are current; project
-implementations and evidence remain planned.
+implementations and target evidence remain planned.
 
 ## Delivery order
 
 Use this sequence because each project supplies evidence and interfaces needed
 by the next:
 
-1. [CPU/SoC health diagnostic suite](project-1-cpu-soc-diagnostics.md) is the
-   flagship. It establishes bounded execution, structured diagnostic results,
-   platform identity, and evidence discipline.
-2. [Safe MMIO diagnostic platform driver](project-2-mmio-diagnostic-driver.md)
-   adds a narrow kernel boundary, lifecycle testing, and KUnit-tested decoding.
-3. [DVFS, thermal, and performance validation](project-3-dvfs-thermal-validation.md)
+1. [CPU/SoC health diagnostic suite](cpu-soc-diagnostics.md) establishes
+   bounded execution, structured diagnostic results, platform identity, and
+   evidence discipline.
+2. [Safe MMIO diagnostic platform driver](mmio-diagnostic-driver.md) adds a
+   narrow kernel boundary, lifecycle testing, and KUnit-tested decoding.
+3. [DVFS, thermal, and performance validation](dvfs-thermal-validation.md)
    applies the evidence model to controlled whole-system experiments.
 
 A focused 3–4 month effort is a suggested planning envelope, not a guaranteed
@@ -22,18 +22,19 @@ investigation may change the schedule. Advance on evidence gates, not dates.
 
 ## Suggested planning envelope
 
-- Opening phase: complete A01/A02, freeze portfolio conventions, and deliver
-  Project 1 contracts, core, plugins, Orin run, and demo.
-- Middle phase: deliver Project 2 decoder tests, lifecycle implementation,
-  negative safety evidence, target run, and demo.
-- Closing phase: deliver Project 3 harness, pilot controls, repeated trials,
-  comparison report, and the integrated portfolio walkthrough.
+- Opening phase: complete the platform and software baselines, freeze evidence
+  conventions, and deliver the diagnostic contracts, core, plugins, Orin run,
+  and demo.
+- Middle phase: deliver MMIO decoder tests, lifecycle implementation, negative
+  safety evidence, target run, and demo.
+- Closing phase: deliver the DVFS/thermal harness, pilot controls, repeated
+  trials, comparison report, and integrated technical walkthrough.
 
 Do not parallelize target claims before platform identity and evidence naming
 are stable. While hardware is unavailable, progress only host fixtures, KUnit,
 generic platform mechanics, and analysis tests, labeling them accordingly.
 
-## Portfolio-wide evidence gate
+## Project-wide evidence gate
 
 A project moves from **planned** to **current evidence** only when all items
 below are linked from its page or completion report:
@@ -52,7 +53,7 @@ below are linked from its page or completion report:
 If any item is missing, describe the gap and retain the planned label. A design
 page is evidence of planning only, not evidence that its system exists.
 
-## Interview-demo gate
+## Technical demonstration gate
 
 Each project needs a rehearsed five-minute path that can run without network
 access and does all of the following:
@@ -68,9 +69,6 @@ evidence if board access is unavailable. A replay must be labeled as a replay.
 
 ## Completion decision
 
-The portfolio is delivery-ready when all three project acceptance lists and
-both portfolio-wide gates pass, all links resolve, and a fresh environment can
-reproduce the documented build or analysis. Hiring requirements such as degree
-or years of experience remain personal credentials and are not portfolio
-outcomes.
-
+The project set is delivery-ready when all three acceptance lists and both
+project-wide gates pass, all links resolve, and a fresh environment can
+reproduce the documented build or analysis.
