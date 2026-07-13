@@ -4,6 +4,9 @@ A project-driven roadmap for Linux, ARM64, and Tegra system engineering on
 Jetson Orin. It focuses on reproducible system evidence, kernel debugging,
 driver development, and performance analysis.
 
+Browse the rendered documentation on
+[GitHub Pages](https://xulei-leon.github.io/linux-kernel-hacker-roadmap/).
+
 ## Start here
 
 - [Orin system foundations](docs/orin-system-foundations/README.md)
