@@ -42,8 +42,8 @@ export default defineConfig({
       { text: 'System Foundations', link: '/docs/orin-system-foundations/README.html' },
       { text: 'Debugging', link: '/docs/orin-kernel-debugging/README.html' },
       { text: 'Performance', link: '/docs/orin-kernel-performance/README.html' },
-      { text: 'Labs', link: '/labs/orin-kernel/README.html' },
-      { text: 'QEMU', link: '/labs/orin-kernel/qemu-auxiliary/README.html' },
+      { text: 'Labs', link: '/labs/orin-kernel-debugging/README.html' },
+      { text: 'QEMU', link: '/labs/orin-kernel-debugging/qemu-auxiliary/README.html' },
       { text: 'GitHub', link: 'https://github.com/xulei-leon/linux-kernel-hacker-roadmap' },
     ],
     sidebar: [
@@ -77,8 +77,10 @@ export default defineConfig({
       {
         text: 'Labs',
         items: [
-          { text: 'Labs Index', link: '/labs/orin-kernel/README.html' },
-          { text: 'QEMU Auxiliary Environment', link: '/labs/orin-kernel/qemu-auxiliary/README.html' },
+          { text: 'Debugging Labs Index', link: '/labs/orin-kernel-debugging/README.html' },
+          { text: 'Identify the Exact Orin Platform', link: '/labs/orin-kernel-debugging/identify-orin-platform/README.html' },
+          { text: 'Capture a Reproducible Software Baseline', link: '/labs/orin-kernel-debugging/capture-software-baseline/README.html' },
+          { text: 'QEMU Auxiliary Environment', link: '/labs/orin-kernel-debugging/qemu-auxiliary/README.html' },
         ],
       },
     ],

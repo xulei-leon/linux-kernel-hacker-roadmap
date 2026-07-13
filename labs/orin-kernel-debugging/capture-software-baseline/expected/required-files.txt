@@ -1,5 +1,5 @@
-a01-reference.txt
-a01-validation.txt
+platform-reference.txt
+platform-validation.txt
 boot-artifacts.sha256
 boot-selection.txt
 collected-at.txt

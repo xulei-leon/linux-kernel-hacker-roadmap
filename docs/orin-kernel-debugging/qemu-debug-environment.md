@@ -35,7 +35,7 @@ identify the wrong bisect commit.
 ## Lab delivery policy
 
 The retained environment lives at
-[`labs/orin-kernel/qemu-auxiliary/`](../../labs/orin-kernel/qemu-auxiliary/README.md).
+[`labs/orin-kernel-debugging/qemu-auxiliary/`](../../labs/orin-kernel-debugging/qemu-auxiliary/README.md).
 S3 lessons use `-snapshot` or a fresh qcow2 overlay. Each future lesson reuses
 this environment rather than copying a kernel build system.
 

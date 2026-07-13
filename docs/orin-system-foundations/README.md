@@ -54,11 +54,11 @@ Each completed project provides:
 
 ## Runnable starting points
 
-- [Identify the Exact Orin Platform](../../labs/orin-kernel/a01-identify-exact-orin-platform/README.md)
+- [Identify the Exact Orin Platform](../../labs/orin-kernel-debugging/identify-orin-platform/README.md)
   captures and validates board identity.
-- [Capture a Reproducible Software Baseline](../../labs/orin-kernel/a02-capture-software-baseline/README.md)
+- [Capture a Reproducible Software Baseline](../../labs/orin-kernel-debugging/capture-software-baseline/README.md)
   records kernel, device-tree, boot-artifact, and package evidence.
-- [QEMU auxiliary environment](../../labs/orin-kernel/qemu-auxiliary/README.md)
+- [QEMU auxiliary environment](../../labs/orin-kernel-debugging/qemu-auxiliary/README.md)
   provides a verified x86_64 kernel build, boot, and smoke-test bootstrap.
 
 These are current assets. They do not constitute any completed integrated

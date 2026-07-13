@@ -14,7 +14,8 @@
 - Preserve NVIDIA, Jetson, Tegra, Linux, and tool names when they identify real technical platforms or interfaces.
 - Use `docs/orin-system-foundations/`, `docs/orin-kernel-debugging/`, and `docs/orin-kernel-performance/` as the only public documentation directories.
 - Do not use A–O, A01, F01, or similar global identifiers in public article filenames, titles, lesson lists, or cross-references.
-- Keep `labs/orin-kernel/` unchanged except for documentation links and reader-facing labels.
+- Use `labs/orin-kernel-debugging/` for the currently delivered debugging labs;
+  do not create empty lab categories.
 - Do not duplicate shared guides; use descriptive cross-links.
 
 ---

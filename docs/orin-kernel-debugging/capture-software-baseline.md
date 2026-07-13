@@ -35,10 +35,10 @@ file is already available.
 ## Step 1 — Validate the platform identity dependency
 
 ```sh
-cd labs/orin-kernel/a02-capture-software-baseline
-a01="$HOME/kernel-lab/a01-platform-<UTC timestamp>"
-../a01-identify-exact-orin-platform/scripts/validate-evidence.sh \
-  "$a01" ../a01-identify-exact-orin-platform/expected/required-files.txt
+cd labs/orin-kernel-debugging/capture-software-baseline
+platform="$HOME/kernel-lab/platform-identity-<UTC timestamp>"
+../identify-orin-platform/scripts/validate-evidence.sh \
+  "$platform" ../identify-orin-platform/expected/required-files.txt
 ```
 
 Do not continue if the platform bundle checksum, model, architecture, or
@@ -48,16 +48,16 @@ validator again and records its output.
 ## Step 2 — Collect the software baseline
 
 ```sh
-output="$HOME/kernel-lab/a02-software-$(date -u +%Y%m%dT%H%M%SZ)"
-scripts/collect-software-baseline.sh "$a01" "$output"
+output="$HOME/kernel-lab/software-baseline-$(date -u +%Y%m%dT%H%M%SZ)"
+scripts/collect-software-baseline.sh "$platform" "$output"
 scripts/validate-software-baseline.sh "$output" expected/required-files.txt
 ```
 
 The destination must be missing or empty. Expected final messages are:
 
 ```text
-software baseline collected: /home/<user>/kernel-lab/a02-software-<timestamp>
-software baseline validated: /home/<user>/kernel-lab/a02-software-<timestamp>
+software baseline collected: /home/<user>/kernel-lab/software-baseline-<timestamp>
+software baseline validated: /home/<user>/kernel-lab/software-baseline-<timestamp>
 ```
 
 ## Step 3 — Check config provenance first
@@ -83,7 +83,7 @@ so source provenance matters as much as content.
 
 | Evidence | What it constrains | What it does not prove |
 |---|---|---|
-| `a01-reference.txt` | Exact platform identity bundle and manifest used | That the board has not changed since collection |
+| `platform-reference.txt` | Exact platform identity bundle and manifest used | That the board has not changed since collection |
 | `kernel-command-line.txt` | Arguments visible to this running kernel | Which boot entry supplied them |
 | `loaded-modules.txt` | Modules loaded at collection time | All modules installed or previously loaded |
 | `module-tree.txt` | Relative regular files under this release's module tree | That each file matches the running image |
@@ -95,7 +95,7 @@ so source provenance matters as much as content.
 Read the small files directly:
 
 ```sh
-cat "$output/a01-reference.txt"
+cat "$output/platform-reference.txt"
 cat "$output/runtime-fdt.sha256"
 cat "$output/boot-selection.txt"
 cat "$output/boot-artifacts.sha256"
@@ -128,7 +128,7 @@ sha256sum "${output}.tar.xz" > "${output}.tar.xz.sha256"
 ```
 
 Every manifest entry must report `OK`. Keep the platform and software baseline
-archives together; the path and manifest hash in `a01-reference.txt` preserve
+archives together; the path and manifest hash in `platform-reference.txt` preserve
 their relationship.
 
 ## Failure decisions

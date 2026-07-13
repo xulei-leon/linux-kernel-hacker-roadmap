@@ -1,4 +1,4 @@
-# Orin Kernel Labs
+# Orin Kernel Debugging Labs
 
 Runnable labs are added one verified problem at a time. A lab is complete only
 when it includes an explicit trigger, expected evidence, source localization,
@@ -32,7 +32,7 @@ Every executable lesson that uses a demo kernel module must use this exact
 structure:
 
 ```text
-labs/orin-kernel/<topic>/
+labs/orin-kernel-debugging/<topic>/
 ├── README.md
 ├── module/
 │   ├── Makefile
@@ -88,15 +88,14 @@ validation scripts, fixture tests, and an expected evidence contract.
 
 ## Available shared environment
 
-- [Platform Evidence Lab](a01-identify-exact-orin-platform/README.md) —
+- [Platform Evidence Lab](identify-orin-platform/README.md) —
   read-only Orin identity collection and evidence validation.
-- [Software Baseline Lab](a02-capture-software-baseline/README.md) —
+- [Software Baseline Lab](capture-software-baseline/README.md) —
   reproducible config, module, FDT, boot-artifact, and package fingerprints.
 - [QEMU Auxiliary Environment](qemu-auxiliary/README.md) — reusable kernel
   build, boot, and smoke-test infrastructure for generic or destructive labs.
 
 The [debugging guides](../../docs/orin-kernel-debugging/README.md) and
 [performance guides](../../docs/orin-kernel-performance/README.md) are
-on-demand references for the integrated projects. Existing lab paths remain
-stable, but a guide entry does not imply that its runnable lab has been
-delivered.
+on-demand references for the integrated projects. A guide entry does not imply
+that its runnable lab has been delivered.

@@ -292,7 +292,7 @@ After the manual build and boot work once, configure the wrappers owned by this
 lab:
 
 ```sh
-cd labs/orin-kernel/qemu-auxiliary/qemu-kernel
+cd labs/orin-kernel-debugging/qemu-auxiliary/qemu-kernel
 cp lab.env.example lab.env
 ```
 

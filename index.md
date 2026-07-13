@@ -16,9 +16,9 @@ capability through reproducible guides, labs, and integrated projects.
 - Validate DVFS, thermal behavior, and performance regressions.
 
 The project blueprints remain planned. Current runnable evidence is available
-in the [platform evidence lab](./labs/orin-kernel/a01-identify-exact-orin-platform/README.html),
-the [software baseline lab](./labs/orin-kernel/a02-capture-software-baseline/README.html),
-and the [QEMU auxiliary environment](./labs/orin-kernel/qemu-auxiliary/README.html).
+in the [platform evidence lab](./labs/orin-kernel-debugging/identify-orin-platform/README.html),
+the [software baseline lab](./labs/orin-kernel-debugging/capture-software-baseline/README.html),
+and the [QEMU auxiliary environment](./labs/orin-kernel-debugging/qemu-auxiliary/README.html).
 
 Orin is authoritative for Tegra and physical-board claims. QEMU supports
 generic kernel work and destructive experiments, but its results are not Tegra

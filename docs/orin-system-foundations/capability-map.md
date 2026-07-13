@@ -5,9 +5,9 @@ planned. A guide is preparation; only runnable source, tests, raw evidence, and
 documented failure behavior demonstrate execution.
 
 Direct entry points are the
-[platform evidence lab](../../labs/orin-kernel/a01-identify-exact-orin-platform/README.md),
-[software baseline lab](../../labs/orin-kernel/a02-capture-software-baseline/README.md),
-[QEMU auxiliary environment](../../labs/orin-kernel/qemu-auxiliary/README.md),
+[platform evidence lab](../../labs/orin-kernel-debugging/identify-orin-platform/README.md),
+[software baseline lab](../../labs/orin-kernel-debugging/capture-software-baseline/README.md),
+[QEMU auxiliary environment](../../labs/orin-kernel-debugging/qemu-auxiliary/README.md),
 [debugging guides](../orin-kernel-debugging/README.md), and
 [performance guides](../orin-kernel-performance/README.md).
 

@@ -4,9 +4,9 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 lab_dir="$(cd "$script_dir/.." && pwd)"
 repo_root="$(cd "$lab_dir/../../.." && pwd)"
-a01_lab="$repo_root/labs/orin-kernel/a01-identify-exact-orin-platform"
+platform_lab="$repo_root/labs/orin-kernel-debugging/identify-orin-platform"
 
-a01_dir="${1:-}"
+platform_dir="${1:-}"
 output_dir="${2:-}"
 proc_root="${PROC_ROOT:-/proc}"
 sys_root="${SYS_ROOT:-/sys}"
@@ -14,8 +14,8 @@ boot_root="${BOOT_ROOT:-/boot}"
 module_root="${MODULE_ROOT:-/lib/modules}"
 release="${UNAME_RELEASE:-$(uname -r)}"
 
-if [[ -z "$a01_dir" || -z "$output_dir" ]]; then
-  echo "usage: $0 A01_EVIDENCE_DIR OUTPUT_DIR" >&2
+if [[ -z "$platform_dir" || -z "$output_dir" ]]; then
+  echo "usage: $0 PLATFORM_EVIDENCE_DIR OUTPUT_DIR" >&2
   exit 2
 fi
 if [[ -e "$output_dir" ]] && [[ -n "$(find "$output_dir" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ]]; then
@@ -23,19 +23,19 @@ if [[ -e "$output_dir" ]] && [[ -n "$(find "$output_dir" -mindepth 1 -maxdepth 1
   exit 2
 fi
 
-a01_result=""
-if ! a01_result="$($a01_lab/scripts/validate-evidence.sh \
-  "$a01_dir" "$a01_lab/expected/required-files.txt" 2>&1)"; then
-  echo "A01 validation failed: $a01_result" >&2
+platform_result=""
+if ! platform_result="$($platform_lab/scripts/validate-evidence.sh \
+  "$platform_dir" "$platform_lab/expected/required-files.txt" 2>&1)"; then
+  echo "platform evidence validation failed: $platform_result" >&2
   exit 1
 fi
 
 mkdir -p "$output_dir"
-printf '%s\n' "$a01_result" > "$output_dir/a01-validation.txt"
+printf '%s\n' "$platform_result" > "$output_dir/platform-validation.txt"
 printf 'resolved_path=%s\nmanifest_sha256=%s\n' \
-  "$(cd "$a01_dir" && pwd)" \
-  "$(sha256sum "$a01_dir/SHA256SUMS" | awk '{print $1}')" \
-  > "$output_dir/a01-reference.txt"
+  "$(cd "$platform_dir" && pwd)" \
+  "$(sha256sum "$platform_dir/SHA256SUMS" | awk '{print $1}')" \
+  > "$output_dir/platform-reference.txt"
 
 printf '%s\n' "$release" > "$output_dir/kernel-release.txt"
 if [[ -r "$proc_root/cmdline" ]]; then

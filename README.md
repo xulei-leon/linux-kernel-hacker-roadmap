@@ -12,8 +12,8 @@ driver development, and performance analysis.
 - [Future project directions](docs/orin-system-foundations/future-project-directions.md)
 - [Kernel debugging guides](docs/orin-kernel-debugging/README.md)
 - [Kernel performance guides](docs/orin-kernel-performance/README.md)
-- [Runnable labs index](labs/orin-kernel/README.md)
-- [QEMU auxiliary environment](labs/orin-kernel/qemu-auxiliary/README.md)
+- [Kernel debugging labs](labs/orin-kernel-debugging/README.md)
+- [QEMU auxiliary environment](labs/orin-kernel-debugging/qemu-auxiliary/README.md)
 
 The material assumes working C/C++ skills, routine Linux shell use, the ability
 to read kernel code, and experience building or modifying a kernel driver. It

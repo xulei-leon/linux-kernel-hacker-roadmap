@@ -20,10 +20,10 @@ Deliver projects in this order:
 2. [Safe MMIO diagnostic platform driver](../docs/orin-system-foundations/mmio-diagnostic-driver.md)
 3. [DVFS, thermal, and performance validation](../docs/orin-system-foundations/dvfs-thermal-validation.md)
 
-Use the [platform evidence lab](../labs/orin-kernel/a01-identify-exact-orin-platform/README.md)
-and [software baseline lab](../labs/orin-kernel/a02-capture-software-baseline/README.md)
+Use the [platform evidence lab](../labs/orin-kernel-debugging/identify-orin-platform/README.md)
+and [software baseline lab](../labs/orin-kernel-debugging/capture-software-baseline/README.md)
 before making Orin-specific claims. Use the
-[QEMU auxiliary environment](../labs/orin-kernel/qemu-auxiliary/README.md) for
+[QEMU auxiliary environment](../labs/orin-kernel-debugging/qemu-auxiliary/README.md) for
 generic kernel mechanisms and failures that should be isolated from hardware.
 
 A guide entry is guidance, not a delivered lab. A lab is runnable only when its
@@ -151,7 +151,7 @@ fault injection, or real peripheral when a module would be less truthful.
 When a demo module is the smallest truthful reproducer, retain this layout:
 
 ```text
-labs/orin-kernel/<topic>/
+labs/orin-kernel-debugging/<topic>/
 ├── README.md
 ├── module/
 │   ├── Makefile
@@ -170,7 +170,7 @@ labs/orin-kernel/<topic>/
 ```
 
 QEMU-capable lessons reuse
-`labs/orin-kernel/qemu-auxiliary/`; they do not add a lesson-local `qemu/`
+`labs/orin-kernel-debugging/qemu-auxiliary/`; they do not add a lesson-local `qemu/`
 directory. The lesson README documents any specific kernel selection,
 arguments, rootfs preparation, and trigger behavior.
 

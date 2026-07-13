@@ -17,7 +17,7 @@ Follow the complete lesson:
 Run from this directory on Orin:
 
 ```sh
-output="$HOME/kernel-lab/a01-platform-$(date -u +%Y%m%dT%H%M%SZ)"
+output="$HOME/kernel-lab/platform-identity-$(date -u +%Y%m%dT%H%M%SZ)"
 scripts/collect-platform.sh "$output"
 scripts/validate-evidence.sh "$output" expected/required-files.txt
 ```

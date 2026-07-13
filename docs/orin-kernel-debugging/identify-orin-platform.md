@@ -54,7 +54,7 @@ mismatch is a result to investigate, not permission to edit the evidence.
 From the repository root:
 
 ```sh
-cd labs/orin-kernel/a01-identify-exact-orin-platform
+cd labs/orin-kernel-debugging/identify-orin-platform
 sed -n '1,160p' scripts/collect-platform.sh
 sed -n '1,120p' scripts/validate-evidence.sh
 ```
@@ -70,14 +70,14 @@ and refuses an existing, non-empty destination so old and new runs cannot be
 mixed accidentally.
 
 ```sh
-output="$HOME/kernel-lab/a01-platform-$(date -u +%Y%m%dT%H%M%SZ)"
+output="$HOME/kernel-lab/platform-identity-$(date -u +%Y%m%dT%H%M%SZ)"
 scripts/collect-platform.sh "$output"
 ```
 
 Expected final line:
 
 ```text
-evidence collected: /home/<user>/kernel-lab/a01-platform-<UTC timestamp>
+evidence collected: /home/<user>/kernel-lab/platform-identity-<UTC timestamp>
 ```
 
 The personal path and timestamp will differ.
@@ -91,7 +91,7 @@ scripts/validate-evidence.sh "$output" expected/required-files.txt
 Expected result on a matching Orin Nano Super:
 
 ```text
-evidence validated: /home/<user>/kernel-lab/a01-platform-<UTC timestamp>
+evidence validated: /home/<user>/kernel-lab/platform-identity-<UTC timestamp>
 ```
 
 The validator checks required files, every SHA-256 entry, model text containing

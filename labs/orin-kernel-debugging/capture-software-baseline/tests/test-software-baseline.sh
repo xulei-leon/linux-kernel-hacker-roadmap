@@ -7,7 +7,7 @@ repo_root="$(cd "$lab_dir/../../.." && pwd)"
 collect="$lab_dir/scripts/collect-software-baseline.sh"
 validate="$lab_dir/scripts/validate-software-baseline.sh"
 required="$lab_dir/expected/required-files.txt"
-a01_lab="$repo_root/labs/orin-kernel/a01-identify-exact-orin-platform"
+platform_lab="$repo_root/labs/orin-kernel-debugging/identify-orin-platform"
 
 fail() { echo "FAIL: $*" >&2; exit 1; }
 assert_contains() { local c; c="$(cat "$1")"; [[ "$c" == *"$2"* ]] || fail "$1 lacks: $2"; }
@@ -24,23 +24,23 @@ trap 'rm -rf "$tmp"' EXIT
 [[ -x "$collect" ]] || fail "missing executable: $collect"
 [[ -x "$validate" ]] || fail "missing executable: $validate"
 
-mkdir -p "$tmp/a01-root/proc/device-tree" "$tmp/a01-root/proc" \
-  "$tmp/a01-root/sys/devices/soc0" "$tmp/a01-root/etc"
-printf 'NVIDIA Jetson Orin Nano Super Developer Kit\0' > "$tmp/a01-root/proc/device-tree/model"
-printf 'nvidia,p3767-0005\0nvidia,tegra234\0' > "$tmp/a01-root/proc/device-tree/compatible"
-printf 'p3768-0000\0p3767-0005\0' > "$tmp/a01-root/proc/device-tree/nvidia,boardids"
-printf 'serial-1\0' > "$tmp/a01-root/proc/device-tree/serial-number"
-printf 'A01\n' > "$tmp/a01-root/sys/devices/soc0/revision"
-printf 'MemTotal: 7945728 kB\n' > "$tmp/a01-root/proc/meminfo"
-printf 'console=ttyTCU0 root=/dev/mmcblk0p1 rw\n' > "$tmp/a01-root/proc/cmdline"
-printf '# R39 (release), REVISION: 2.0\n' > "$tmp/a01-root/etc/nv_tegra_release"
-printf 'NAME="Ubuntu"\nVERSION="24.04 LTS"\n' > "$tmp/a01-root/etc/os-release"
-printf 'nvidia-l4t-core\t39.2.0\n' > "$tmp/a01-packages.txt"
-PROC_ROOT="$tmp/a01-root/proc" SYS_ROOT="$tmp/a01-root/sys" ETC_ROOT="$tmp/a01-root/etc" \
-NVIDIA_PACKAGES_FILE="$tmp/a01-packages.txt" UNAME_MACHINE=aarch64 \
+mkdir -p "$tmp/platform-root/proc/device-tree" "$tmp/platform-root/proc" \
+  "$tmp/platform-root/sys/devices/soc0" "$tmp/platform-root/etc"
+printf 'NVIDIA Jetson Orin Nano Super Developer Kit\0' > "$tmp/platform-root/proc/device-tree/model"
+printf 'nvidia,p3767-0005\0nvidia,tegra234\0' > "$tmp/platform-root/proc/device-tree/compatible"
+printf 'p3768-0000\0p3767-0005\0' > "$tmp/platform-root/proc/device-tree/nvidia,boardids"
+printf 'serial-1\0' > "$tmp/platform-root/proc/device-tree/serial-number"
+printf 'A01\n' > "$tmp/platform-root/sys/devices/soc0/revision"
+printf 'MemTotal: 7945728 kB\n' > "$tmp/platform-root/proc/meminfo"
+printf 'console=ttyTCU0 root=/dev/mmcblk0p1 rw\n' > "$tmp/platform-root/proc/cmdline"
+printf '# R39 (release), REVISION: 2.0\n' > "$tmp/platform-root/etc/nv_tegra_release"
+printf 'NAME="Ubuntu"\nVERSION="24.04 LTS"\n' > "$tmp/platform-root/etc/os-release"
+printf 'nvidia-l4t-core\t39.2.0\n' > "$tmp/platform-packages.txt"
+PROC_ROOT="$tmp/platform-root/proc" SYS_ROOT="$tmp/platform-root/sys" ETC_ROOT="$tmp/platform-root/etc" \
+NVIDIA_PACKAGES_FILE="$tmp/platform-packages.txt" UNAME_MACHINE=aarch64 \
 UNAME_RELEASE=6.8.12-tegra COLLECTED_AT=2026-07-12T00:00:00Z \
-  "$a01_lab/scripts/collect-platform.sh" "$tmp/a01"
-"$a01_lab/scripts/validate-evidence.sh" "$tmp/a01" "$a01_lab/expected/required-files.txt" >/dev/null
+  "$platform_lab/scripts/collect-platform.sh" "$tmp/platform"
+"$platform_lab/scripts/validate-evidence.sh" "$tmp/platform" "$platform_lab/expected/required-files.txt" >/dev/null
 
 mkdir -p "$tmp/root/proc" "$tmp/root/sys/firmware" "$tmp/root/etc" \
   "$tmp/boot/extlinux" "$tmp/boot/dtb" "$tmp/modules/6.8.12-tegra/kernel/drivers/demo"
@@ -68,14 +68,14 @@ run_collect() {
     DEBIAN_PACKAGES_FILE="$tmp/debian-packages.txt" \
     NVIDIA_PACKAGES_FILE="$tmp/nvidia-packages.txt" UEFI_BOOT_STATE_FILE="$tmp/uefi.txt" \
     UNAME_RELEASE=6.8.12-tegra COLLECTED_AT=2026-07-12T01:00:00Z \
-    "$@" "$collect" "$tmp/a01" "$output"
+    "$@" "$collect" "$tmp/platform" "$output"
 }
 
 run_collect "$tmp/out-override" CONFIG_OVERRIDE="$tmp/override.config"
 "$validate" "$tmp/out-override" "$required"
 assert_contains "$tmp/out-override/kernel-config.txt" 'CONFIG_OVERRIDE=y'
 assert_contains "$tmp/out-override/kernel-config-source.txt" 'operator-override'
-assert_contains "$tmp/out-override/a01-validation.txt" 'evidence validated'
+assert_contains "$tmp/out-override/platform-validation.txt" 'evidence validated'
 assert_contains "$tmp/out-override/module-tree.txt" 'kernel/drivers/demo/a.ko'
 assert_contains "$tmp/out-override/boot-selection.txt" 'DEFAULT primary'
 assert_contains "$tmp/out-override/boot-selection.txt" 'LINUX /boot/Image'
@@ -155,23 +155,23 @@ mv "$tmp/boot/config-6.8.12-tegra" "$tmp/boot/config.off"
 if run_collect "$tmp/out-no-config" 2>"$tmp/no-config.err"; then fail 'missing config accepted'; fi
 assert_contains "$tmp/no-config.err" 'kernel config unavailable'
 
-cp -R "$tmp/a01" "$tmp/a01-non-orin"
-printf 'QEMU Virtual Machine\n' > "$tmp/a01-non-orin/model.txt"
-refresh_manifest "$tmp/a01-non-orin"
-original_a01="$tmp/a01"
-tmp_a01_saved="$tmp/a01-saved"
-mv "$original_a01" "$tmp_a01_saved"
-mv "$tmp/a01-non-orin" "$original_a01"
-if run_collect "$tmp/out-non-orin-a01" CONFIG_OVERRIDE="$tmp/override.config.off" 2>"$tmp/non-orin-a01.err"; then
-  fail 'non-Orin A01 unexpectedly accepted'
+cp -R "$tmp/platform" "$tmp/platform-non-orin"
+printf 'QEMU Virtual Machine\n' > "$tmp/platform-non-orin/model.txt"
+refresh_manifest "$tmp/platform-non-orin"
+original_platform="$tmp/platform"
+saved_platform="$tmp/platform-saved"
+mv "$original_platform" "$saved_platform"
+mv "$tmp/platform-non-orin" "$original_platform"
+if run_collect "$tmp/out-non-orin-platform" CONFIG_OVERRIDE="$tmp/override.config.off" 2>"$tmp/non-orin-platform.err"; then
+  fail 'non-Orin platform evidence unexpectedly accepted'
 fi
-assert_contains "$tmp/non-orin-a01.err" 'A01 validation failed'
-rm -rf "$original_a01"; mv "$tmp_a01_saved" "$original_a01"
+assert_contains "$tmp/non-orin-platform.err" 'platform evidence validation failed'
+rm -rf "$original_platform"; mv "$saved_platform" "$original_platform"
 
-printf 'corrupt\n' >> "$tmp/a01/model.txt"
-if run_collect "$tmp/out-bad-a01" CONFIG_OVERRIDE="$tmp/override.config.off" 2>"$tmp/bad-a01.err"; then
-  fail 'corrupt A01 accepted'
+printf 'corrupt\n' >> "$tmp/platform/model.txt"
+if run_collect "$tmp/out-bad-platform" CONFIG_OVERRIDE="$tmp/override.config.off" 2>"$tmp/bad-platform.err"; then
+  fail 'corrupt platform evidence accepted'
 fi
-assert_contains "$tmp/bad-a01.err" 'A01 validation failed'
+assert_contains "$tmp/bad-platform.err" 'platform evidence validation failed'
 
-echo 'A02 software baseline tests passed'
+echo 'Software baseline tests passed'

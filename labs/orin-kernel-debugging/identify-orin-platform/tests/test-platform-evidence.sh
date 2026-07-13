@@ -143,4 +143,4 @@ if "$validate" "$missing_output" "$no_newline_contract" >"$tmp_dir/no-newline.st
 fi
 assert_contains "$tmp_dir/no-newline.stderr" "missing required evidence: soc-revision.txt"
 
-echo "A01 platform evidence tests passed"
+echo "Platform evidence tests passed"

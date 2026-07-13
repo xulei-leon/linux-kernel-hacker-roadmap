@@ -49,4 +49,5 @@ latency, throughput, power, thermal behavior, or regression analysis.
 
 A guide becomes runnable only when its linked lab provides exact commands,
 expected evidence, failure behavior, verification, and cleanup. The
-[Labs index](../../labs/orin-kernel/README.md) defines that contract.
+[Debugging labs index](../../labs/orin-kernel-debugging/README.md) defines that
+contract.
