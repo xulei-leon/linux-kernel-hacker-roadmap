@@ -1,12 +1,16 @@
 # NVIDIA CPU System Software Roadmap
 
-A project-driven Linux and Tegra system software roadmap aligned with the
-public NVIDIA Senior System Software Engineer, CPU role (JR2019268).
+A project-driven Linux and Tegra system software roadmap for two primary
+targets: NVIDIA Senior System Software Engineer, CPU (JR2019268), and Senior
+Software Engineer - Networking and Virtualization. The current three-project
+delivery sequence remains the CPU-focused core; a networking-specific project
+will be frozen separately before implementation.
 
 ## Start here
 
 - [Role-aligned roadmap](docs/orin-system-software/README.md)
 - [Role competency map](docs/orin-system-software/role-competency-map.md)
+- [Extension-track decision analysis](docs/orin-system-software/extension-track-analysis.md)
 - [Kernel skill library](docs/orin-kernel/README.md)
 - [A01 platform evidence lab](labs/orin-kernel/a01-identify-exact-orin-platform/README.md)
 - [A02 software baseline lab](labs/orin-kernel/a02-capture-software-baseline/README.md)

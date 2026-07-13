@@ -1,9 +1,12 @@
 # NVIDIA CPU System Software Roadmap
 
-This is the canonical entry point for project-based preparation for NVIDIA's
-Senior System Software Engineer, CPU role, JR2019268. The public posting
-describes work in the Tegra system software group on diagnostic software,
-device drivers, SoC features, and full-lifecycle debugging and testing.
+This is the canonical entry point for the CPU half of a CPU + Networking
+portfolio targeting NVIDIA's Senior System Software Engineer, CPU role,
+JR2019268, and Senior Software Engineer - Networking and Virtualization. The
+public CPU posting describes work in the Tegra system software group on
+diagnostic software, device drivers, SoC features, and full-lifecycle debugging
+and testing. The current three-project sequence remains CPU-focused; a
+networking-specific project will be frozen separately before implementation.
 
 Source: [NVIDIA JR2019268](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/China-Shenzhen/Senior-System-Software-Engineer--CPU_JR2019268),
 posted 2026-06-05 and reviewed for this roadmap on 2026-07-13.
@@ -22,6 +25,11 @@ of the supporting kernel material.
 
 Use the [role competency map](role-competency-map.md) to connect each public
 job signal to current evidence and planned deliverables.
+
+Use the [extension-track decision analysis](extension-track-analysis.md) only
+when considering HPC/AI Networking, Enterprise Solution, or Robotics DevTech
+after the CPU + Networking core. Those tracks are conditional options, not
+current capability claims or parallel commitments.
 
 ## Prerequisites
 
