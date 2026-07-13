@@ -30,6 +30,7 @@ export default defineConfig({
     'docs/3-Plan/**',
     'docs/4-Reviews/**',
     'docs/superpowers/**',
+    'project/**',
   ],
   themeConfig: {
     nav: [
