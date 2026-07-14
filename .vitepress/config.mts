@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitepress'
 
-const repoName = 'linux-kernel-hacker-roadmap'
+const repoName = 'tegra-linux-kernel-roadmap'
 
 const debuggingGuides = [
   ['Identify the Exact Orin Platform', '/docs/orin-kernel-debugging/identify-orin-platform.html'],
@@ -27,7 +27,7 @@ const performanceGuides = [
 
 export default defineConfig({
   base: `/${repoName}/`,
-  title: 'Orin Kernel Roadmap',
+  title: 'Tegra Linux Kernel Roadmap',
   description: 'Project-driven Linux, Tegra, kernel debugging, and performance engineering on Jetson Orin.',
   lastUpdated: true,
   srcExclude: [
@@ -55,7 +55,7 @@ export default defineConfig({
           { text: 'QEMU Environment', link: '/labs/orin-kernel-debugging/qemu-auxiliary/README.html' },
         ],
       },
-      { text: 'GitHub', link: 'https://github.com/xulei-leon/linux-kernel-hacker-roadmap' },
+      { text: 'GitHub', link: 'https://github.com/xulei-leon/tegra-linux-kernel-roadmap' },
     ],
     sidebar: {
       '/docs/orin-system-foundations/': [
@@ -110,7 +110,7 @@ export default defineConfig({
       label: 'On this page',
     },
     editLink: {
-      pattern: 'https://github.com/xulei-leon/linux-kernel-hacker-roadmap/edit/main/:path',
+      pattern: 'https://github.com/xulei-leon/tegra-linux-kernel-roadmap/edit/main/:path',
       text: 'Edit this page on GitHub',
     },
     docFooter: {
@@ -126,7 +126,7 @@ export default defineConfig({
     darkModeSwitchLabel: 'Appearance',
     externalLinkIcon: true,
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/xulei-leon/linux-kernel-hacker-roadmap' },
+      { icon: 'github', link: 'https://github.com/xulei-leon/tegra-linux-kernel-roadmap' },
     ],
   },
 })

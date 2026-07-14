@@ -1,11 +1,11 @@
 ---
 layout: home
-title: Jetson Orin System Engineering Roadmap
+title: Tegra Linux Kernel & System Engineering Roadmap
 titleTemplate: false
 
 hero:
-  name: Jetson Orin
-  text: System Engineering Roadmap
+  name: Tegra Linux Kernel
+  text: '& System Engineering Roadmap'
   tagline: Build demonstrable Linux, ARM64, Tegra, kernel debugging, and performance skills through reproducible evidence.
   actions:
     - theme: brand

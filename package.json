@@ -1,5 +1,5 @@
 {
-  "name": "linux-kernel-hacker-roadmap",
+  "name": "tegra-linux-kernel-roadmap",
   "private": true,
   "scripts": {
     "docs:dev": "vitepress dev .",
