@@ -1,17 +1,32 @@
 # Orin Kernel Performance Guides
 
-These guides cover reproducible Linux kernel performance analysis on Jetson
-Orin. They start from a fixed workload and platform baseline, measure before
-changing anything, and preserve raw data plus the limits of each conclusion.
+Use these guides to turn a performance complaint into a controlled workload,
+repeatable measurements, a localized bottleneck, and an explicit regression
+decision on Jetson Orin.
 
-## Measurement policy
+> **Current status:** The guide set is available. Performance conclusions
+> still require workload-specific Orin measurements; QEMU and host results are
+> supporting evidence only.
 
-- Record the board, BSP, kernel, configuration, power mode, cooling, workload,
-  affinity, tool versions, and exact commands.
-- Change one declared independent variable at a time.
-- Retain repeated-run data and invalid trials instead of hiding outliers.
-- Measure instrumentation overhead on the platform being characterized.
-- Keep QEMU, host, replay, and Orin/ARM64 results explicitly separated.
+## Recommended starting order
+
+1. Record the exact [platform identity](../orin-kernel-debugging/identify-orin-platform.md)
+   and [software baseline](../orin-kernel-debugging/capture-software-baseline.md).
+2. Read [Performance Engineering](performance-engineering.md) to define the
+   workload, variables, repetitions, and decision rule.
+3. Use [Kernel Observability](../orin-kernel-debugging/kernel-observability.md)
+   to select the least intrusive instrument for the current hypothesis.
+4. Choose the subsystem guide that owns the dominant symptom.
+
+## Expected outcome
+
+A completed analysis should state:
+
+- the workload, platform, power mode, cooling, affinity, and tool versions;
+- the baseline distribution and invalid-trial policy;
+- the bottleneck hypothesis and evidence that localizes it;
+- instrumentation overhead and important measurement limits;
+- the repeated comparison and explicit pass, fail, or inconclusive decision.
 
 ## Guide map
 
@@ -23,12 +38,15 @@ changing anything, and preserve raw data plus the limits of each conclusion.
 | [Network Performance](network-performance.md) | Localize packet drops, queue imbalance, retransmissions, and throughput regressions |
 | [Power, Thermal, and Frequency](power-thermal-and-frequency.md) | Separate PM defects, thermal behavior, and platform limits from regressions |
 
-## Prerequisite guides
+## Measurement policy
 
-Use the [platform identification](../orin-kernel-debugging/identify-orin-platform.md),
-[software baseline](../orin-kernel-debugging/capture-software-baseline.md), and
-[kernel observability](../orin-kernel-debugging/kernel-observability.md) guides
-before making target-platform performance claims. Use the
-[QEMU debug environment](../orin-kernel-debugging/qemu-debug-environment.md) for
-generic failure injection, but do not present emulated measurements as Tegra
-hardware results.
+- Record the board, BSP, kernel, configuration, power mode, cooling, workload,
+  affinity, tool versions, and exact commands.
+- Change one declared independent variable at a time.
+- Retain repeated-run data and invalid trials instead of hiding outliers.
+- Measure instrumentation overhead on the platform being characterized.
+- Keep QEMU, host, replay, and Orin/ARM64 results explicitly separated.
+
+Use the [QEMU debug environment](../orin-kernel-debugging/qemu-debug-environment.md)
+for generic failure injection, but do not present emulated measurements as
+Tegra hardware results.

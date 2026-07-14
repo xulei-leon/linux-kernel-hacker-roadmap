@@ -1,26 +1,36 @@
 # Orin Kernel Debugging Guides
 
-These guides support reproducible Linux kernel diagnosis on Jetson Orin and in
-QEMU. They are selected by the current failure or project blocker rather than
-completed as a fixed sequence.
+Choose these guides by the current symptom or project blocker. Each guide is a
+focused diagnostic unit for moving from an observed failure to source-level
+evidence and repeatable verification on Jetson Orin or in QEMU.
+
+> **Current status:** The guide set is available as practical diagnosis
+> material. Only topics linked from the labs index have a delivered runnable
+> exercise.
+
+## Start with a trustworthy baseline
+
+Before diagnosing target-board behavior:
+
+1. [Identify the exact Orin platform](identify-orin-platform.md).
+2. [Capture a reproducible software baseline](capture-software-baseline.md).
+3. Confirm the [platform recovery](platform-recovery.md) path before an
+   experiment can affect boot or control of the board.
+4. Move destructive generic-kernel triggers to the
+   [QEMU environment](qemu-debug-environment.md).
 
 The guides assume that you can already modify and build a kernel driver. They
-do not repeat general C, operating-system, or Linux-user material. A runnable
-exercise follows this loop:
+do not repeat general C, operating-system, or Linux-user material.
+
+## Diagnostic outcome
+
+Every investigation should preserve this chain:
 
 > symptom → hypothesis → evidence → source path → root cause → minimal fix → verification
 
-## Platform and safety policy
-
-Orin is authoritative for NVIDIA BSP behavior, Tegra device trees, physical
-buses, DMA/SMMU, power, thermal behavior, and hardware performance. QEMU is the
-default for destructive generic-kernel experiments.
-
-- **S0:** observation only; safe on Orin.
-- **S1:** recoverable module or operation failure; require cleanup and serial
-  access when used on Orin.
-- **S2:** possible oops, panic, stall, or loss of control; use QEMU by default.
-- **S3:** persistent-state risk; use a QEMU snapshot or disposable overlay.
+A completed diagnosis includes the original failure signature, bounded
+collection steps, source localization, the smallest justified change, an
+identical retest, negative verification, and cleanup or recovery evidence.
 
 ## Guide map
 
@@ -39,15 +49,19 @@ default for destructive generic-kernel experiments.
 | [Concurrency and CPU Stalls](concurrency-and-cpu-stalls.md) | Reconstruct races, deadlocks, lifetime errors, and stalls |
 | [Testing, Reporting, and Upstream Work](testing-reporting-and-upstream.md) | Convert a diagnosis and fix into reviewable regression evidence |
 
-## How to use the guides
+## Safety levels
 
-Start with platform identification and the software baseline when target-board
-evidence is required. Use the QEMU environment when a trigger may panic, stall,
-or corrupt persistent state. Move to the
-[performance guides](../orin-kernel-performance/README.md) when the question is
-latency, throughput, power, thermal behavior, or regression analysis.
+Orin is authoritative for NVIDIA BSP behavior, Tegra device trees, physical
+buses, DMA/SMMU, power, thermal behavior, and hardware performance. QEMU is the
+default for destructive generic-kernel experiments.
 
-A guide becomes runnable only when its linked lab provides exact commands,
-expected evidence, failure behavior, verification, and cleanup. The
-[Debugging labs index](../../labs/orin-kernel-debugging/README.md) defines that
-contract.
+- **S0:** observation only; safe on Orin.
+- **S1:** recoverable module or operation failure; require cleanup and serial
+  access when used on Orin.
+- **S2:** possible oops, panic, stall, or loss of control; use QEMU by default.
+- **S3:** persistent-state risk; use a QEMU snapshot or disposable overlay.
+
+Move to the [performance guides](../orin-kernel-performance/README.md) when the
+question is latency, throughput, power, thermal behavior, or regression
+analysis. Use the [labs index](../../labs/orin-kernel-debugging/README.md) to
+find delivered exercises with exact commands and expected evidence.

@@ -4,6 +4,28 @@ Runnable labs are added one verified problem at a time. A lab is complete only
 when it includes an explicit trigger, expected evidence, source localization,
 minimal fix, negative verification, and cleanup.
 
+> **Current status:** The platform evidence lab, software baseline lab, and
+> shared QEMU environment are available. Other guide topics do not imply a
+> delivered runnable lab.
+
+## Recommended starting order
+
+1. Run the [Platform Evidence Lab](identify-orin-platform/README.md) on the
+   target Orin.
+2. Run the [Software Baseline Lab](capture-software-baseline/README.md) before
+   changing the kernel, modules, device tree, boot configuration, or packages.
+3. Prepare the [QEMU Auxiliary Environment](qemu-auxiliary/README.md) for
+   generic kernel builds and destructive experiments.
+4. Select later labs only when they unblock an integrated-project acceptance
+   criterion.
+
+## Expected lab output
+
+A completed lab produces versioned inputs, exact bounded commands, raw
+evidence, stable failure and success signatures, negative verification, and a
+cleanup or recovery result. The output must be linkable from the integrated
+project it supports.
+
 ## Experiment delivery contract
 
 Every new lab must name the integrated project and acceptance blocker it
