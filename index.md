@@ -7,6 +7,9 @@ hero:
   name: Tegra Linux Kernel
   text: '& System Engineering Roadmap'
   tagline: Build demonstrable Linux, ARM64, Tegra, kernel debugging, and performance skills through reproducible evidence.
+  image:
+    src: /images/jetson-orin-nano-super-developer-kit.jpg
+    alt: NVIDIA Jetson Orin Nano Super Developer Kit (8GB)
   actions:
     - theme: brand
       text: Start with foundations
